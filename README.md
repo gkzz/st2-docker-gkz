@@ -3,6 +3,14 @@
 [![Circle CI Build Status](https://circleci.com/gh/StackStorm/st2-docker/tree/master.svg?style=shield)](https://circleci.com/gh/StackStorm/st2-docker)
 [![Go to Docker Hub](https://img.shields.io/badge/Docker%20Hub-%E2%86%92-blue.svg)](https://hub.docker.com/r/stackstorm/stackstorm/)
 
+## Demo
+
+- Make Hubot Restart
+<img src="/docs/demo/restart-hubot.gif" alt="restart-hubot" style="max-width:100%;">
+
+- Show Ansible's Pack
+<img src="/docs/demo/ack-show-ansible.gif" alt="show-ansible-pack" style="max-width:100%;">
+
 
 ## READ FIRST!!
 
