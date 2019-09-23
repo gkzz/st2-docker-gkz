@@ -1,4 +1,7 @@
 FROM ubuntu:trusty
+#FROM python:2.7.16-slim-stretch
+#FROM debian:jessie
+#FROM debian:stretch-slim
 
 # let Upstart know it's in a container
 ENV container docker
@@ -9,7 +12,6 @@ COPY config/init-fake.conf /etc/init/fake-container-events.conf
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
     && apt-get install -y \
-      gettext-base \ 
       openssh-server \
       sudo \
       curl \
@@ -21,7 +23,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
       crudini \
       uuid-runtime \
       apache2-utils \
-      bash-completion
+      bash-completion \
+
 
 # enable bash-completion
 RUN dpkg-divert /etc/bash.bashrc && \
@@ -139,7 +142,37 @@ COPY bin/entrypoint-1ppc.sh /st2-docker/bin/entrypoint-1ppc.sh
 COPY bin/inject_env.py /st2-docker/bin/inject_env.py
 COPY config/nginx.st2-1ppc.conf.tpl /etc/nginx/conf.d/st2-1ppc.conf.tpl
 
+
 # Default username/password is used unless overridden by supplying ST2_USER and/or ST2_PASSWORD
 # environment variables to `docker run` after the name of the image:
 #   docker run -e ST2_USER... image
+
+COPY config/st2chatops.env /opt/stackstorm/chatops/st2chatops.env
+
+#ENV ST2_API_KEY=$(st2 apikey create -k -m '{"name": "'$YOURBOTNAME'"}')
+#RUN sed \
+#    #-i -e 's/export ST2_API_KEY=\"${ST2_API_KEY}\"/export ST2_API_KEY='"$ST2_API_KEY"'/' \
+#    -i -e 's/export HUBOT_ADAPTER=($HUBOT_ADAPTER)/export HUBOT_ADAPTER=slack/' \
+#    -i -e 's/export HUBOT_SLACK_TOKEN=($HUBOT_SLACK_TOKEN)/export HUBOT_SLACK_TOKEN='"$HUBOT_SLACK_TOKEN"'/' \
+#    /opt/stackstorm/chatops/st2chatops.env
+#    #./images/stackstorm/config/st2chatops.env
+
+#RUN export ST2_API_KEY=$(st2 apikey create -k -m '{"name": "'$YOURBOTNAME'"}') ; \
+#    && sed \
+#    -i -e 's/export ST2_API_KEY=\"${ST2_API_KEY}\"/export ST2_API_KEY='"$ST2_API_KEY"'/' \
+#    -i -e 's/# export HUBOT_ADAPTER=slack/export HUBOT_ADAPTER=slack/' \
+#    -i -e 's/# export HUBOT_SLACK_TOKEN=xoxb-CHANGE-ME-PLEASE/export HUBOT_SLACK_TOKEN='"$HUBOT_SLACK_TOKEN"'/' \
+#    /opt/stackstorm/chatops/st2chatops.env
+#RUN st2ctl reload --register-all && service st2chatops restart
+
+
+#RUN sudo sed -i -e 's/# export HUBOT_ADAPTER=slack/export HUBOT_ADAPTER=slack/' \
+#        -i -e 's/# export HUBOT_SLACK_TOKEN=xoxb-CHANGE-ME-PLEASE/export HUBOT_SLACK_TOKEN='"$HUBOT_SLACK_TOKEN"'/' \
+#        /opt/stackstorm/chatops/st2chatops.env
+
+#RUN sudo sed -i -e 's/# export HUBOT_ADAPTER=slack/export HUBOT_ADAPTER=slack/' /opt/stackstorm/chatops/st2chatops.env
+#RUN sudo sed -i -e 's/# export HUBOT_SLACK_TOKEN=xoxb-CHANGE-ME-PLEASE/export HUBOT_SLACK_TOKEN='"$HUBOT_SLACK_TOKEN"'/' /opt/stackstorm/chatops/st2chatops.env
+
+        
+
 ENTRYPOINT ["/st2-docker/bin/entrypoint.sh"]

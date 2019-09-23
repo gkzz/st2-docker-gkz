@@ -72,4 +72,11 @@ fi
 
 ( cd /etc/nginx/conf.d && ln -sf st2-base.cnf st2.conf )
 
+sed -i 's/# export HUBOT_ADAPTER=slack/export HUBOT_ADAPTER=slack/' /opt/stackstorm/chatops/st2chatops.env
+sed -i 's/# export HUBOT_SLACK_TOKEN=xoxb-CHANGE-ME-PLEASE/export HUBOT_SLACK_TOKEN='"$HUBOT_SLACK_TOKEN"'/' /opt/stackstorm/chatops/st2chatops.env
+
+
+#export ST2_API_KEY=$(st2 apikey create -k -m '{"name": "'$YOURBOTNAME'"}')
+#st2ctl reload --register-all && service st2chatops restart
+
 exec /sbin/init

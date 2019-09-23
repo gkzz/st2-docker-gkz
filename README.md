@@ -25,6 +25,6 @@ git clone https://github.com/gkzz/st2-docker-gkz.git
 cd st2-docker-gkz
 make env
 export HUBOT_SLACK_TOKEN=xoxb-your-token
-docker-compose up -d
+docker-compose -f docker-compose-dev.yml up -d
 docker-compose exec stackstorm bash
 ```
