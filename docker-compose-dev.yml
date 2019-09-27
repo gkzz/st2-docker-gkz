@@ -2,6 +2,7 @@ version: '3'
 
 services:
   stackstorm:
+    &stackstorm
     image: stackstorm/stackstorm:${ST2_IMAGE_TAG:-latest}
     build:
       context: ./images/stackstorm/
@@ -39,6 +40,15 @@ services:
       - ./conf/stackstorm.env:/st2-docker/env
       #- ./images/stackstorm/config/st2chatops.env:/opt/stackstorm/chatops/st2chatops.env
     dns_search: .
+  
+  st2hubot:
+    <<: *stackstorm
+    container_name: st2hubot
+    build:
+        context: ./images/stackstorm/
+        dockerfile: Dockerfile.hubot
+    volumes:
+      - ./images/stackstorm/bin/sed-st2chatops-env.sh:/st2-docker/bin/sed-st2chatops-env.sh
 
 ### External Services
 

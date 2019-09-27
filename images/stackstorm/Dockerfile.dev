@@ -175,4 +175,4 @@ COPY config/nginx.st2-1ppc.conf.tpl /etc/nginx/conf.d/st2-1ppc.conf.tpl
 
         
 
-ENTRYPOINT ["/st2-docker/bin/entrypoint.sh"]
+RUN ["/bin/bash", "-c", "/st2-docker/bin/entrypoint.sh"]
