@@ -72,7 +72,7 @@ fi
 
 ( cd /etc/nginx/conf.d && ln -sf st2-base.cnf st2.conf )
 
-export ST2_API_KEY=$(st2 apikey create -k -m '{"name": "'$YOURBOTNAME'"}')
+export ST2_API_KEY=$(st2 apikey create -k -m '{"name": "'$YOURBOTNAME'"}'); \
 sed -i -e 's/export ST2_API_KEY="${ST2_API_KEY}"/export ST2_API_KEY='"$ST2_API_KEY"'/' \
     -i -e 's/# export HUBOT_ADAPTER=slack/export HUBOT_ADAPTER=slack/' \
     -i -e 's/# export HUBOT_SLACK_TOKEN=xoxb-CHANGE-ME-PLEASE/export HUBOT_SLACK_TOKEN='"$HUBOT_SLACK_TOKEN"'/' \
