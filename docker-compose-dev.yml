@@ -4,12 +4,13 @@ services:
   stackstorm:
     image: stackstorm/stackstorm:${ST2_IMAGE_TAG:-latest}
     build:
-      context:
+      context: ./images/stackstorm/
       dockerfile: Dockerfile.dev
 
     environment:
       - HUBOT_ADAPTER=slack
-      - HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN #xoxb-aaaa
+      - HUBOT_SLACK_TOKEN #xoxb-aaaa
+      - YOURBOTNAME
     env_file:
       - conf/stackstorm.env
       - conf/mongo.env
