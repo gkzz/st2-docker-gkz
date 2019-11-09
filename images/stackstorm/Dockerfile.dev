@@ -125,8 +125,6 @@ COPY config/nginx.st2-1ppc.conf.tpl /etc/nginx/conf.d/st2-1ppc.conf.tpl
 #COPY ./bin/add-ansible-pack.sh /st2-docker/bin/add-ansible-pack.sh
 #RUN chmod +x /st2-docker/bin/activate-hubot.sh && \
 #    chmod +x /st2-docker/bin/add-ansible-pack.sh
-#
-
 
 COPY ./config/slack.yaml.tmpl /opt/stackstorm/configs/slack.yaml
 COPY ./bin/add-slack-pack.sh /st2-docker/bin/add-slack-pack.sh

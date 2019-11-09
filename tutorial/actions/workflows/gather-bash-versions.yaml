@@ -1,0 +1,61 @@
+---
+verions: 1.0
+
+description:
+  An Orquesta workflow that gathers Bash versions and reports them to an HTTP API
+
+input:
+  - mockable_demo
+  - component
+  
+tasks:
+  check_bash_major_version:
+    action: tutorials.check-bash-version
+    input:
+      major: true
+      minor: false
+    next:
+      when: <% succeeded() %>
+      publish:
+        - major: <% result().stdout %>
+      do:
+        - check_bash_minor_versions
+  
+  check_bash_mainor_version:
+    action: tutorials.check-bash-version
+    input:
+      major: false
+      minor: true
+    next:
+      when: <% succeeded() %>
+      publish:
+        - major: <% result().stdout %>
+      do:
+        - report_bash_versions
+  
+  report_bash_version:
+    action: tutorials.check-bash-version
+    input:
+      major: false
+      minor: true
+    next:
+      when: <% succeeded() %>
+      publish:
+        - major: <% result().stdout %>
+      do:
+        - report_bash_versions
+  
+  report_bash_versions:
+    action: core.http
+    input:
+      method: POST
+      url: "http://<% ctx().mockable_demo %>.mockable.io/versions"
+      headers:
+        Content-Type: application/json
+      body: "{
+        \"component\": \"<% ctx().component %>\",
+        \"major\": \"<% ctx().major %>\",
+        \"minor\": \"<% ctx().minor %>\"
+      }"
+        
+    

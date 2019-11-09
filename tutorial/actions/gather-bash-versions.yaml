@@ -1,0 +1,17 @@
+---
+name: gather-node-versions
+description: Get the version string of Bash and report it to an HTTP API
+pack: tutorials
+runner_type: orquesta
+entry_point: workflows/gatherdemo-bash-versions.yaml
+enabled: true
+parameters:
+  mockable_demo:
+    type: string
+    description: The mockable.io demo subdomain
+    required: true
+    default: demo2872707
+  component:
+    type: string
+    required: true
+    description: The component to report versions

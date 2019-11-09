@@ -1,0 +1,13 @@
+---
+name: gather-node-versions
+description: Get the version of installed software
+pack: tutorials
+runner_type: aciton-chain
+entry_point: workflows/gatherdemo-versions.yaml
+enabled: true
+parameters:
+  mockable_demo:
+    type: string
+    description: The mockable.io demo subdomain
+    required: true
+    default: demo2872707
