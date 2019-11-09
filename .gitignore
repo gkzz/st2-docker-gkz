@@ -4,9 +4,15 @@ conf
 
 packs.dev/*
 !packs.dev/tutorial
+!packs.dev/slack-demo
 packs.dev/tutorial/*
+!packs.dev/slack-demo/*
 !packs.dev/tutorial/actions
+!packs.dev/slack-demo/actions
 packs.dev/tutorial/actions/*
+!packs.dev/slack-demo/actions/*
 !packs.dev/tutorial/actions/.gitkeep
+!packs.dev/slack-demo/actions/.gitkeep
 
 packs.dev/tutorial/actions/.gitkeep
+packs.dev/slack-demo/actions/.gitkeep
