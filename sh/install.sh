@@ -48,7 +48,7 @@ if [ "$DOCKER_EXISTS" -ne 0 ]; then
 else
     echo "Docker is Already Installed"
     docker --version
-    echo "###########################"
+    echo -n "###########################"
 fi
 
 if [ "$DC_EXISTS" -ne 0 ]; then
@@ -56,7 +56,7 @@ if [ "$DC_EXISTS" -ne 0 ]; then
 else
     echo "Docker Compose is Already Installed"
     docker-compose --version
-    echo "###########################"
+    echo -n "###########################"
 fi
 
 if [ "$MAKE_EXISTS" -ne 0 ]; then
@@ -64,5 +64,5 @@ if [ "$MAKE_EXISTS" -ne 0 ]; then
 else
     echo "Make is Already Installed!"
     make --version
-    echo "###########################"
+    echo -n "###########################"
 fi
