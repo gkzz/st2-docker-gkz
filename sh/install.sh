@@ -2,9 +2,9 @@
 
 # https://docs.docker.com/install/linux/docker-ce/ubuntu
 
-DOCKER_EXISTS=$(docker --version)
-DC_EXISTS=$(docker-compose --version)
-MAKE_EXISTS=$(make --version)
+DOCKER_EXISTS=$(docker --version | echo "$?")
+DC_EXISTS=$(docker-compose --version | echo "$?")
+MAKE_EXISTS=$(make --version | echo "$?")
 
 
 function install_docker {
@@ -43,26 +43,20 @@ function install_dc {
 
 }
 
-if [ ! $DOCKER_EXISTS ]; then
+if [ "$DOCKER_EXISTS" -ne 0 ]; then
     install_docker
 else
     echo "$DOCKER_EXISTS"
 fi
 
-if [ ! $DC_EXISTS ]; then
+if [ "$DC_EXISTS" -ne 0 ]; then
     install_dc 
 else
     echo "$DC_EXISTS"
 fi
 
-if [ ! $MAKE_EXISTS ]; then
+if [ "$MAKE_EXISTS" -ne 0 ]; then
     sudo apt-get install build-essential
 else
     echo "$MAKE_EXISTS"
 fi
-
-
-
-
-
-sudo apt-get install build-essential
