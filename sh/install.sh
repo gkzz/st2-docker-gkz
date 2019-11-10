@@ -2,9 +2,9 @@
 
 # https://docs.docker.com/install/linux/docker-ce/ubuntu
 
-DOCKER_EXISTS=$(docker --version | echo "$?")
-DC_EXISTS=$(docker-compose --version | echo "$?")
-MAKE_EXISTS=$(make --version | echo "$?")
+DOCKER_EXISTS=$(ls /var/run/ | grep -E "^docker$" | echo "$?")
+DC_EXISTS=$(ls /usr/local/bin/ | grep -E "^docker-compose$" | echo "$?")
+MAKE_EXISTS=$(ls /usr/bin/ | grep -E "^make$" | echo "$?")
 
 
 function install_docker {
