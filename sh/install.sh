@@ -26,7 +26,7 @@ function install_docker {
        $(lsb_release -cs) \
        stable"
     
-    sudo apt-get update
+    sudo apt-get update -y
     
     sudo apt-get install docker-ce docker-ce-cli containerd.io
 
@@ -60,7 +60,7 @@ else
 fi
 
 if [ "$MAKE_EXISTS" != "make" ]; then
-    sudo apt-get install build-essential
+    sudo apt-get install build-essential -y
 else
     echo -e "\n###########################"
     echo "Make is Already Installed!"
