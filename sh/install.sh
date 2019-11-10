@@ -2,9 +2,9 @@
 
 # https://docs.docker.com/install/linux/docker-ce/ubuntu
 
-DOCKER_EXISTS=$(ls /var/run/ | grep -E "^docker$" | echo "$?")
-DC_EXISTS=$(ls /usr/local/bin/ | grep -E "^docker-compose$" | echo "$?")
-MAKE_EXISTS=$(ls /usr/bin/ | grep -E "^make$" | echo "$?")
+DOCKER_EXISTS=$(ls /var/run/ | grep -E "^docker$" | awk "{print $1}")
+DC_EXISTS=$(ls /usr/local/bin/ | grep -E "^docker-compose$" | awk "{print $1}")
+MAKE_EXISTS=$(ls /usr/bin/ | grep -E "^make$" | awk "{print $1}")
 
 
 function install_docker {
@@ -43,7 +43,7 @@ function install_dc {
 
 }
 
-if [ "$DOCKER_EXISTS" -ne 0 ]; then
+if [ "$DOCKER_EXISTS" -ne "docker" ]; then
     install_docker
 else
     echo -e "\n###########################"
@@ -51,7 +51,7 @@ else
     docker --version
 fi
 
-if [ "$DC_EXISTS" -ne 0 ]; then
+if [ "$DC_EXISTS" -ne "docker-compose" ]; then
     install_dc 
 else
     echo -e "\n###########################"
@@ -59,7 +59,7 @@ else
     docker-compose --version
 fi
 
-if [ "$MAKE_EXISTS" -ne 0 ]; then
+if [ "$MAKE_EXISTS" -ne "make" ]; then
     sudo apt-get install build-essential
 else
     echo -e "\n###########################"
