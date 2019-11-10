@@ -54,7 +54,7 @@ docker-compose down -v
 
 if [ "$BUILD_FLAG" -eq 1  ]; then
   echo 'Run "docker-compose up -d --build"'
-  docker-compose up -d --build
+  docker-compose -f docker-compose-dev.yml up -d --build
 elif [ "$BUILD_FLAG" -eq 0 ]; then
   echo 'Not Run "docker-compose up -d --build"'
 else
