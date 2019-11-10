@@ -46,17 +46,17 @@ function install_dc {
 if [ "$DOCKER_EXISTS" -ne 0 ]; then
     install_docker
 else
-    echo "$DOCKER_EXISTS"
+    docker --version
 fi
 
 if [ "$DC_EXISTS" -ne 0 ]; then
     install_dc 
 else
-    echo "$DC_EXISTS"
+    docker-compose --version
 fi
 
 if [ "$MAKE_EXISTS" -ne 0 ]; then
     sudo apt-get install build-essential
 else
-    echo "$MAKE_EXISTS"
+    make --version
 fi
