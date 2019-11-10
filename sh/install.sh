@@ -43,7 +43,7 @@ function install_dc {
 
 }
 
-if [ "$DOCKER_EXISTS" -ne "docker" ]; then
+if [ "$DOCKER_EXISTS" != "docker" ]; then
     install_docker
 else
     echo -e "\n###########################"
@@ -51,7 +51,7 @@ else
     docker --version
 fi
 
-if [ "$DC_EXISTS" -ne "docker-compose" ]; then
+if [ "$DC_EXISTS" != "docker-compose" ]; then
     install_dc 
 else
     echo -e "\n###########################"
@@ -59,7 +59,7 @@ else
     docker-compose --version
 fi
 
-if [ "$MAKE_EXISTS" -ne "make" ]; then
+if [ "$MAKE_EXISTS" != "make" ]; then
     sudo apt-get install build-essential
 else
     echo -e "\n###########################"
