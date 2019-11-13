@@ -9,4 +9,6 @@ sed -i -e 's|webhook_url: "https://hooks.slack.com/services/<replace me>"|webhoo
     -i -e 's|- "<DST_CHANNEL>"|- "'"$DST_CHANNEL"'"|' \
     /opt/stackstorm/configs/slack.yaml
 
-st2ctl reload --register-all 
+st2ctl reload --register-all
+
+st2 run slack.post_message message="Hello World! $HOSTNAME by $SLACKBOT_NAME"

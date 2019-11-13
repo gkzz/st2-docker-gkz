@@ -1,0 +1,7 @@
+---
+name: orquesta-examples-slack
+pack: mydemo
+description: Run a workflow that runs other workflows. Orcheseption.
+runner_type: orquesta
+entry_point: workflows/orquesta-examples-slack.yaml
+enabled: true
