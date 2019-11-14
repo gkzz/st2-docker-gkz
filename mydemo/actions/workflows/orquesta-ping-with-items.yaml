@@ -10,7 +10,7 @@ input:
 tasks:
   task1:
     with: <% ctx(ips) %>
-    action: core.local cmd=<% item() %>
+    action: core.local cmd="ping -c 5 -w 5 <% item() %>"
 
 output:
   - items: <% task(task1).result.items.select($.result.stdout) %>

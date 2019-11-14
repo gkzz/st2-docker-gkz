@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export ST2_API_KEY=$(st2 apikey create -k -m '{"used_by": "my integration"}')
+
 st2 pack install slack
 
 sed -i -e 's|webhook_url: "https://hooks.slack.com/services/<replace me>"|webhook_url: "'"$INCOMING_WEBHOOK_URL"'"|' \
