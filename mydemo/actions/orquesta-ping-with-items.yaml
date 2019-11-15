@@ -22,20 +22,31 @@ notify:
   on-complete:
     routes:
     - slack
-    message: >
-        'Action run by user: "{{action_context.user}}"
-        Params: "{{action_parameters.cmd}}"'
-  on-success:
-    routes:
-    - slack
-    message: >
-      'Action was successful
-      stdout: "{{action_results.stdout}}"
-      stderr: "{{action_results.stderr}})"'
-  on-failure:
-    routes:
-    - slack
-    message: >
-      'Action was failed
-      stdout: "{{action_results.stdout}}"
-      stderr: "{{action_results.stderr}})"'
+    data:
+       stdout: "stdout: {{action_results.stdout}}"
+       stderr: "stderr: {{action_results.stdout}}"
+  #  message: "Action User: {{action_context.user}}"
+  #  data:
+  #    cmd: "Action Params: {{action_parameters.cmd}}"
+  #    stdout: "Action stdout: {{action_results.stdout}}"
+  #    stderr: "Action stderr: {{action_results.stderr}}"
+  #on-success:
+  #  routes:
+  #  - slack
+  #  message: "Action User: {{action_context.user}}"
+  #  data:
+  #   cmd: "Action Params: {{action_parameters.cmd}}"
+  #    stdout: "Action stdout: {{action_results.stdout}}"
+  #     stdout: "{{action_results.stdout}}"
+  #    stderr: "Action stderr: {{action_results.stderr}}"
+  #on-success:
+  #  routes:
+  #  - slack
+  #  data:
+  #    stdout: "Action stdout: {{action_results.stdout}}"
+  #    stderr: "Action stderr: {{action_results.stderr}}"
+  #on-failure:
+  #  routes:
+  #  - slack
+  #  data:
+  #    stdout: 'Action stdout: {{action_results.stdout}}'
