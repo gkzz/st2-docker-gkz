@@ -1,5 +1,6 @@
 ---
 name: orquesta-ping-with-items
+pack: mydemo
 
 # ref
 # https://github.com/StackStorm/st2/blob/master/contrib/examples/actions/orquesta-with-items.yaml
@@ -16,3 +17,25 @@ parameters:
       - localhost
       - www.google.com
       - stackstorm.com
+
+notify:
+  on-complete:
+    routes:
+    - slack
+    message: >
+        'Action run by user: "{{action_context.user}}"
+        Params: "{{action_parameters.cmd}}"'
+  on-success:
+    routes:
+    - slack
+    message: >
+      'Action was successful
+      stdout: "{{action_results.stdout}}"
+      stderr: "{{action_results.stderr}})"'
+  on-failure:
+    routes:
+    - slack
+    message: >
+      'Action was failed
+      stdout: "{{action_results.stdout}}"
+      stderr: "{{action_results.stderr}})"'
