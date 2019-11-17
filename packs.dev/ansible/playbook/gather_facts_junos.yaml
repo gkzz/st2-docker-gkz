@@ -20,14 +20,14 @@
     
     - name: Use the attachments API
       slack:
-      username: "{{ lookup('env', 'SLACKBOT_NAME') }}"
-      token: "{{ lookup('env', 'SLACKBOT_TOKEN') }}"
-      channel: '#dev'
-      attachments:
-        - text: Display Junos Facts
-          color: '#ff00dd'
-          title: "{{ inventory_hostname }}"
-          fields:
-            - title: "Gather Facts"
-              value: "{{ junos.facts }}"
-              short: True
+        username: "{{ lookup('env', 'SLACKBOT_NAME') }}"
+        token: "{{ lookup('env', 'SLACKBOT_TOKEN') }}"
+        channel: '#dev'
+        attachments:
+          - text: Display Junos Facts
+            color: '#ff00dd'
+            title: "{{ inventory_hostname }}"
+            fields:
+              - title: "Gather Facts"
+                value: "{{ junos.facts }}"
+                short: True
