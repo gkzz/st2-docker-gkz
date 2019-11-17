@@ -43,9 +43,8 @@ services:
       - ./runtime/st2.d:/st2-docker/st2.d
       - ./conf/stackstorm.env:/st2-docker/env
       - ./opt/reload.d:/st2-docker/opt/reload.d
-      - ./opt/reload.sh:/st2-docker/opt/reload.sh
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/ubuntu/flask-docker:/usr/flask-docker
+      - /home/ubuntu/flask-docker:/usr/src/flask-docker
     dns_search: .
 
 ### External Services
