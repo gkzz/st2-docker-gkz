@@ -16,6 +16,11 @@ services:
       - SLACKBOT_TOKEN
       - INCOMING_WEBHOOK_URL
       - DST_CHANNEL
+      - SSH_USER
+      - SSH_PASS
+      - WEBAPP_IP
+      - JUNOS_PORT
+      - JUNOS_IP
     env_file:
       - conf/stackstorm.env
       - conf/mongo.env
