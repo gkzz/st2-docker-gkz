@@ -42,7 +42,7 @@ services:
       - ./runtime/entrypoint.d:/st2-docker/entrypoint.d
       - ./runtime/st2.d:/st2-docker/st2.d
       - ./conf/stackstorm.env:/st2-docker/env
-      - ./opt/reload.d:/st2-docker/opt/reload.d
+      - ./images/stackstorm/opt:/st2-docker/opt
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/ubuntu/flask-docker:/usr/src/flask-docker
     dns_search: .
