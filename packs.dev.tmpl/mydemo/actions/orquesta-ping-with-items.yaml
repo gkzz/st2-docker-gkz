@@ -1,0 +1,52 @@
+---
+name: orquesta-ping-with-items
+pack: mydemo
+
+# ref
+# https://github.com/StackStorm/st2/blob/master/contrib/examples/actions/orquesta-with-items.yaml
+
+description: A workflow demonstrating with items.
+runner_type: orquesta
+entry_point: workflows/orquesta-ping-with-items.yaml
+enabled: true
+parameters:
+  ips:
+    required: true
+    type: array
+    default:
+      - localhost
+      - www.google.com
+      - stackstorm.com
+
+notify:
+  on-complete:
+    routes:
+    - slack
+    data:
+       stdout: "stdout: {{action_results.stdout}}"
+       stderr: "stderr: {{action_results.stdout}}"
+  #  message: "Action User: {{action_context.user}}"
+  #  data:
+  #    cmd: "Action Params: {{action_parameters.cmd}}"
+  #    stdout: "Action stdout: {{action_results.stdout}}"
+  #    stderr: "Action stderr: {{action_results.stderr}}"
+  #on-success:
+  #  routes:
+  #  - slack
+  #  message: "Action User: {{action_context.user}}"
+  #  data:
+  #   cmd: "Action Params: {{action_parameters.cmd}}"
+  #    stdout: "Action stdout: {{action_results.stdout}}"
+  #     stdout: "{{action_results.stdout}}"
+  #    stderr: "Action stderr: {{action_results.stderr}}"
+  #on-success:
+  #  routes:
+  #  - slack
+  #  data:
+  #    stdout: "Action stdout: {{action_results.stdout}}"
+  #    stderr: "Action stderr: {{action_results.stderr}}"
+  #on-failure:
+  #  routes:
+  #  - slack
+  #  data:
+  #    stdout: 'Action stdout: {{action_results.stdout}}'
