@@ -126,6 +126,7 @@ COPY config/nginx.st2-1ppc.conf.tpl /etc/nginx/conf.d/st2-1ppc.conf.tpl
 
 COPY ./config/slack.yaml.tmpl /opt/stackstorm/configs/slack.yaml
 COPY ./opt/reload.sh /st2-docker/opt/reload.sh
+COPY ./opt/reload.d/* /st2-docker/opt/reload.d/
 
 # add docker group
 ARG DOCKER_GROUP_ID
