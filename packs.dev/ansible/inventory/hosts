@@ -5,4 +5,4 @@
 webapp ansible_host=<WEBAPP_IP>
 
 [junos]
-jumper ansible_port=<port> ansible_host=<ip>
+jumper ansible_port=<JUNOS_PORT> ansible_host=<JUNOS_IP>
