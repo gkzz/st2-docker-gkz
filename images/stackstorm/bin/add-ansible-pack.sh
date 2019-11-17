@@ -9,8 +9,9 @@ if ! echo ${ANSIBLE_OUTPUT} > /dev/null 2>&1; then
     echo "[ Failed ] Add Ansible Pack"
 else
     echo "[ Succeeded ] Add Ansible Pack"
+    cp packs.dev/ansible/ansible.cfg /opt/stackstorm/packs/ansible/
     st2 run ansible.playbook \
-    inventory_file=/st2-docker/config/ansible-pack/inventory/hosts \
-    playbook=/st2-docker/config/ansible-pack/playbook/ping.yaml
+    inventory_file=/packs.dev/ansible/inventory/hosts \
+    playbook=/packs.dev/ansible/playbook/ping.yaml
 fi
 echo "ANSIBLE_PACK_INSTALLED: ${OUTPUT}" 
