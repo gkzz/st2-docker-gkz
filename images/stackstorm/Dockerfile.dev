@@ -125,7 +125,7 @@ COPY config/nginx.st2-1ppc.conf.tpl /etc/nginx/conf.d/st2-1ppc.conf.tpl
 
 
 COPY ./config/slack.yaml.tmpl /opt/stackstorm/configs/slack.yaml
-COPY ./bin/add-ansible-pack.sh /st2-docker/bin/add-ansible-pack.sh
-COPY ./bin/add-slack-pack.sh /st2-docker/bin/add-slack-pack.sh
-COPY ./bin/create-pack-mydemo.sh /st2-docker/bin/create-pack-mydemo.sh
+#COPY ./bin/add-ansible-pack.sh /st2-docker/bin/add-ansible-pack.sh
+#COPY ./bin/add-slack-pack.sh /st2-docker/bin/add-slack-pack.sh
+#COPY ./bin/create-pack-mydemo.sh /st2-docker/bin/create-pack-mydemo.sh
 ENTRYPOINT ["/st2-docker/bin/entrypoint.sh"]
