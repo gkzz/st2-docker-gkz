@@ -126,4 +126,16 @@ COPY config/nginx.st2-1ppc.conf.tpl /etc/nginx/conf.d/st2-1ppc.conf.tpl
 
 COPY ./config/slack.yaml.tmpl /opt/stackstorm/configs/slack.yaml
 COPY ./opt/* /opt/
+
+# add docker group
+ARG DOCKER_GROUP_ID
+#RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} jenkins
+
+# install docker, docker-compose
+ENV DOCKER_VERSION 18.09.1
+RUN curl -fL -o docker.tgz "https://download.docker.com/linux/static/test/x86_64/docker-$DOCKER_VERSION.tgz" && \
+    tar --strip-component=1 -xvaf docker.tgz -C /usr/bin
+
+RUN curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
 ENTRYPOINT ["/st2-docker/bin/entrypoint.sh"]

@@ -6,6 +6,8 @@ services:
     build:
       context: ./images/stackstorm
       dockerfile: Dockerfile.dev
+      args:
+        - DOCKER_GROUP_ID=${DOCKER_GROUP_ID}
 
     ### tail ~/.bashrc
     # export SLACKBOT_NAME='xxx'
@@ -40,6 +42,7 @@ services:
       - ./runtime/entrypoint.d:/st2-docker/entrypoint.d
       - ./runtime/st2.d:/st2-docker/st2.d
       - ./conf/stackstorm.env:/st2-docker/env
+      - /var/run/docker.sock:/var/run/docker.sock
     dns_search: .
 
 ### External Services
