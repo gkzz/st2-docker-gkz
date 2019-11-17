@@ -1,0 +1,33 @@
+---
+- hosts: junos
+  connection: netconf
+  gather_facts: no
+
+  # ref
+  # slack – Send Slack notifications
+  # https://docs.ansible.com/ansible/latest/modules/slack_module.html?highlight=slack
+  # Ansible ネットワークモジュールにおける facts の扱い
+  # https://tekunabe.hatenablog.jp/entry/2018/05/04/ansible_net_facts
+
+  tasks:
+    - name: facts
+      junos_facts:
+      register: junos
+
+    - name: debug
+      debug:
+        msg: "{{ junos.facts }}"
+    
+    - name: Use the attachments API
+      slack:
+      username: "{{ lookup('env', 'SLACKBOT_NAME') }}"
+      token: "{{ lookup('env', 'SLACKBOT_TOKEN') }}"
+      channel: '#dev'
+      attachments:
+        - text: Display Junos Facts
+          color: '#ff00dd'
+          title: "{{ inventory_hostname }}"
+          fields:
+            - title: "Gather Facts"
+              value: "{{ junos.facts }}"
+              short: True

@@ -1,0 +1,5 @@
+---
+# file: group_vars/junos
+ansible_connection: ssh 
+ansible_ssh_user: <ssh_user>
+ansible_ssh_pass: <ssh_pass>

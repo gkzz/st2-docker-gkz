@@ -2,6 +2,10 @@
 - hosts: localhost
   become: yes
   connection: local
+
+  # Ansible ネットワークモジュールにおける facts の扱い
+  # https://tekunabe.hatenablog.jp/entry/2018/05/04/ansible_net_facts
+
   tasks:
     - shell: ping -c 5 -w 5 localhost
       register: result_shell
@@ -11,3 +15,20 @@
     - name: debug result_shell.stderr
       debug:
         msg: "{{ result_shell.stderr }}"
+    
+    - name: Use the attachments API
+      slack:
+      username: "{{ lookup('env', 'SLACKBOT_NAME') }}"
+      token: "{{ lookup('env', 'SLACKBOT_TOKEN') }}"
+      channel: '#dev'
+      attachments:
+        - text: Display Result Ping Communicate
+          color: '#ff00dd'
+          title: "{{ inventory_hostname }}"
+          fields:
+            - title: "[STDOUT] Ping Communicate"
+              value: "{{ result_shell.stdout }}"
+              short: True
+            - title: "[STDERR] Ping Communicate"
+              value: "{{ result_shell.stderr }}"
+              short: True
