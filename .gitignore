@@ -2,6 +2,10 @@
 .
 ..
 
+# env
+.env
+*.env
+
 # vscode
 .vscode
 
