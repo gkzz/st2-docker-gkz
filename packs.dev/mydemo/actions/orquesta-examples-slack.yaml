@@ -1,0 +1,17 @@
+---
+name: orquesta-examples-slack
+pack: mydemo
+description: Run a workflow that runs other workflows. Orcheseption.
+runner_type: orquesta
+entry_point: workflows/orquesta-examples-slack.yaml
+enabled: true
+
+notify:
+   on-complete:
+     routes:
+     - slack
+     message: '"@channel: Action succeeded."'
+   on-success:
+     routes:
+     - slack
+     message: '"@channel: Woohoo!"'

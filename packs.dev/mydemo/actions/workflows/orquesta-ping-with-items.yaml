@@ -1,0 +1,16 @@
+version: 1.0
+# ref
+# https://github.com/StackStorm/st2/blob/master/contrib/examples/actions/workflows/orquesta-with-items.yaml
+
+description: A workflow demonstrating with items.
+
+input:
+  - ips
+
+tasks:
+  ping_with_items:
+    with: <% ctx(ips) %>
+    action: core.local cmd="ping -c 5 -w 5 <% item() %>"
+
+output:
+  - items: <% task(ping_with_items).result.items.select($.result.stdout) %>

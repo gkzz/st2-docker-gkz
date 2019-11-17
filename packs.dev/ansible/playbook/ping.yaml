@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  become: yes
+  connection: local
+  tasks:
+    - shell: ping -c 5 -w 5 localhost
+      register: result_shell
+    - name: debug result_shell.stdout
+      debug:
+        msg: "{{ result_shell.stdout }}"
+    - name: debug result_shell.stderr
+      debug:
+        msg: "{{ result_shell.stderr }}"
