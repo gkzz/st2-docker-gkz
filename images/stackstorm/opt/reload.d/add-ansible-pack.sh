@@ -9,7 +9,7 @@ if ! echo ${ANSIBLE_OUTPUT} > /dev/null 2>&1; then
     echo "[ Failed ] Add Ansible Pack"
 else
     echo "[ Succeeded ] Add Ansible Pack"
-    cp -r /opt/stackstorm/packs.dev/ansible/* /opt/stackstorm/packs/ansible/*
+    cp -r /opt/stackstorm/packs.dev/ansible/* /opt/stackstorm/packs/ansible/
     st2 run ansible.playbook \
     inventory_file=/opt/stackstorm/packs/ansible/inventory/hosts \
     playbook=/opt/stackstorm/packs/ansible/playbook/ping.yaml
