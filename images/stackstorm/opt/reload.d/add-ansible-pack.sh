@@ -13,7 +13,7 @@ else
     sed -i -e 's|ansible_ssh_user: <JUNOS_USER>|ansible_ssh_user: '"$JUNOS_USER"'|' \
         -i -e 's|ansible_ssh_pass: <JUNOS_PASS>|ansible_ssh_pass: '"$JUNOS_PASS"'|' \
         /opt/stackstorm/packs/ansible/inventory/group_vars/junos
-char 5
+
     sed -i -e 's|webapp ansible_host=<WEBAPP_IP>|webapp ansible_host='"$WEBAPP_IP"'|' \
         -i -e 's|jumper ansible_port=<JUNOS_PORT> ansible_host=<JUNOS_IP>| \
                 jumper ansible_port='"$JUNOS_PORT"' ansible_host='"$JUNOS_IP"'|' \
