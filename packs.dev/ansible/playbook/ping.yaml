@@ -9,26 +9,34 @@
   tasks:
     - shell: ping -c 5 -w 5 localhost
       register: result_shell
+      failed_when: >
+          ("No such file or directory" in result_shell.stdout) or
+          (result_shell.stderr != '') or
+          (result_shell.rc == 10)
+      changed_when: false
+
     - name: debug result_shell.stdout
       debug:
-        msg: "{{ result_shell.stdout }}"
+        msg: "{{ result_shell.stdout | default('None', true) }}"
     - name: debug result_shell.stderr
       debug:
-        msg: "{{ result_shell.stderr }}"
-    
+        msg: "{{ result_shell.stderr | default('None', true) }}"
+
     - name: Use the attachments API
       slack:
-        username: "{{ lookup('env', 'SLACKBOT_NAME') }}"
-        token: "{{ lookup('env', 'SLACKBOT_TOKEN') }}"
-        channel: '#dev'
+        username: "{{ lookup('env', 'SLACKBOT_NAME') | default('ansibleBot')  }}"
+        token: "{{ lookup('env', 'INCOMING_WEBHOOK_URL_SLACKFORMAT') }}"
+        channel: "{{ lookup('env', 'DST_CHANNEL') }}"
         attachments:
-          - text: Display Result Ping Communicate
-            color: '#ff00dd'
-            title: "{{ inventory_hostname }}"
+          - title: Display Result Ping Communicate
+            text: "{{ inventory_hostname }}"
+            color: "#ff00dd"
             fields:
               - title: "[STDOUT] Ping Communicate"
-                value: "{{ result_shell.stdout }}"
-                short: True
+                value: "{{ result_shell.stdout | default('None', true)}}"
+                #short: True
+                short: False
               - title: "[STDERR] Ping Communicate"
-                value: "{{ result_shell.stderr }}"
-                short: True
+                value: "{{ result_shell.stderr | default('None', true)}}"
+                #short: True
+                short: False

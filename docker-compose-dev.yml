@@ -15,6 +15,7 @@ services:
       - SLACKBOT_NAME
       - SLACKBOT_TOKEN
       - INCOMING_WEBHOOK_URL
+      - INCOMING_WEBHOOK_URL_SLACKFORMAT
       - DST_CHANNEL
       - WEBAPP_IP
       - JUNOS_USER
@@ -47,7 +48,6 @@ services:
       - ./runtime/entrypoint.d:/st2-docker/entrypoint.d
       - ./runtime/st2.d:/st2-docker/st2.d
       - ./conf/stackstorm.env:/st2-docker/env
-      #- ./images/stackstorm/opt:/st2-docker/opt
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/ubuntu/flask-docker:/usr/src/flask-docker
     dns_search: .

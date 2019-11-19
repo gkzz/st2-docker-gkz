@@ -16,18 +16,18 @@
 
     - name: debug
       debug:
-        msg: "{{ junos.facts }}"
+        msg: "{{ junos.facts | default('None', true) }}"
     
     - name: Use the attachments API
       slack:
-        username: "{{ lookup('env', 'SLACKBOT_NAME') }}"
-        token: "{{ lookup('env', 'SLACKBOT_TOKEN') }}"
-        channel: '#dev'
+        username: "{{ lookup('env', 'SLACKBOT_NAME') | default('ansibleBot')  }}"
+        token: "{{ lookup('env', 'INCOMING_WEBHOOK_URL_SLACKFORMAT') }}"
+        channel: "{{ lookup('env', 'DST_CHANNEL') }}"
         attachments:
-          - text: Display Junos Facts
+          - title: Display Junos Facts
+            text: "{{ inventory_hostname }}"
             color: '#ff00dd'
-            title: "{{ inventory_hostname }}"
             fields:
               - title: "Gather Facts"
-                value: "{{ junos.facts }}"
-                short: True
+                value: "{{ junos.facts | default('None', true) }}"
+                short: False

@@ -15,8 +15,7 @@ else
         /opt/stackstorm/packs/ansible/inventory/group_vars/junos
 
     sed -i -e 's|webapp ansible_host=<WEBAPP_IP>|webapp ansible_host='"$WEBAPP_IP"'|' \
-        -i -e 's|jumper ansible_port=<JUNOS_PORT> ansible_host=<JUNOS_IP>| \
-                jumper ansible_port='"$JUNOS_PORT"' ansible_host='"$JUNOS_IP"'|' \
+        -i -e 's|jumper ansible_port=<JUNOS_PORT> ansible_host=<JUNOS_IP>|jumper ansible_port='"$JUNOS_PORT"' ansible_host='"$JUNOS_IP"'|' \
         /opt/stackstorm/packs/ansible/inventory/hosts
 
     st2 run ansible.playbook \
