@@ -1,8 +1,8 @@
 [local]
 127.0.0.1
 
-[webapp]
-webapp ansible_host=<WEBAPP_IP>
+[web]
+ansible_host=<WEBAPP_IP>
 
 [junos]
-jumper ansible_port=<JUNOS_PORT> ansible_host=<JUNOS_IP>
+ansible_port=<JUNOS_PORT> ansible_host=<JUNOS_IP>
