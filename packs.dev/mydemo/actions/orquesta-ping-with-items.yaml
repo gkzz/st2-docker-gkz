@@ -25,28 +25,3 @@ notify:
     data:
        stdout: "stdout: {{action_results.stdout}}"
        stderr: "stderr: {{action_results.stdout}}"
-  #  message: "Action User: {{action_context.user}}"
-  #  data:
-  #    cmd: "Action Params: {{action_parameters.cmd}}"
-  #    stdout: "Action stdout: {{action_results.stdout}}"
-  #    stderr: "Action stderr: {{action_results.stderr}}"
-  #on-success:
-  #  routes:
-  #  - slack
-  #  message: "Action User: {{action_context.user}}"
-  #  data:
-  #   cmd: "Action Params: {{action_parameters.cmd}}"
-  #    stdout: "Action stdout: {{action_results.stdout}}"
-  #     stdout: "{{action_results.stdout}}"
-  #    stderr: "Action stderr: {{action_results.stderr}}"
-  #on-success:
-  #  routes:
-  #  - slack
-  #  data:
-  #    stdout: "Action stdout: {{action_results.stdout}}"
-  #    stderr: "Action stderr: {{action_results.stderr}}"
-  #on-failure:
-  #  routes:
-  #  - slack
-  #  data:
-  #    stdout: 'Action stdout: {{action_results.stdout}}'

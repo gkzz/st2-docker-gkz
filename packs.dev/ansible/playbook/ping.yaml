@@ -21,20 +21,3 @@
     - name: debug result_shell.stderr
       debug:
         msg: "{{ result_shell.stderr | default('None', true) }}"
-
-    - name: Use the attachments API
-      slack:
-        username: "{{ lookup('env', 'SLACKBOT_NAME') | default('ansibleBot') }}"
-        token: "{{ lookup('env', 'INCOMING_WEBHOOK_URL_SLACKFORMAT') }}"
-        channel: "{{ lookup('env', 'DST_CHANNEL') }}"
-        attachments:
-          - title: Display Result Ping Communicate
-            text: "{{ inventory_hostname }}"
-            color: "#ff00dd"
-            fields:
-              - title: "[STDOUT] Ping Communicate"
-                value: "{{ result_shell.stdout | default('None', true) }}"
-                short: False
-              - title: "[STDERR] Ping Communicate"
-                value: "{{ result_shell.stderr | default('None', true) }}"
-                short: False

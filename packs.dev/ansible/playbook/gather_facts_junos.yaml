@@ -17,17 +17,3 @@
     - name: debug
       debug:
         msg: "{{ junos.facts | default('None', true) }}"
-    
-    - name: Use the attachments API
-      slack:
-        username: "{{ lookup('env', 'SLACKBOT_NAME') | default('ansibleBot')  }}"
-        token: "{{ lookup('env', 'INCOMING_WEBHOOK_URL_SLACKFORMAT') }}"
-        channel: "{{ lookup('env', 'DST_CHANNEL') }}"
-        attachments:
-          - title: Display Junos Facts
-            text: "{{ inventory_hostname }}"
-            color: '#ff00dd'
-            fields:
-              - title: "Gather Facts"
-                value: "{{ junos.facts | default('None', true) }}"
-                short: False

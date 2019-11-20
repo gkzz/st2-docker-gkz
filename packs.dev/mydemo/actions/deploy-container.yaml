@@ -1,0 +1,16 @@
+---
+name: deploy-container
+pack: mydemo
+description: Deploy Container
+runner_type: orquesta
+entry_point: workflow/deploy-contianer.yaml
+parameters:
+  containers_name:
+    required: true
+    type: array
+    default:
+      - flask
+      - nginx
+  working_dir:
+    type: string
+    default: /usr/src/flask-docker
