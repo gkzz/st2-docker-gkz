@@ -24,6 +24,7 @@ tasks:
     action: >
       core.local cmd="cd <% ctx().working_dir %> && 
                       docker-compose up -d --build"
+    input: working_dir
     next:
       - when: <% succeeded() %>
         publish: msg=<% result() %>
