@@ -110,8 +110,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ABF5BD827B
     && mkdir -p /etc/ssl/st2 \
     && mkdir /var/run/sshd \
     && openssl req -x509 -newkey rsa:2048 -keyout /etc/ssl/st2/st2.key -out /etc/ssl/st2/st2.crt -days 3650 -nodes -subj '/O=st2 self signed/CN=localhost'
-#EXPOSE 22 443
-EXPOSE 22 4443
+EXPOSE 22 443
+
 COPY bin/entrypoint.sh /st2-docker/bin/entrypoint.sh
 COPY bin/st2.sh /st2-docker/bin/st2.sh
 COPY config/local.conf /etc/init/local.conf
@@ -131,7 +131,7 @@ COPY ./opt/. /st2-docker/opt/
 
 # add docker group
 ARG DOCKER_GROUP_ID
-#RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} root
+RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} root
 
 # install docker, docker-compose
 ENV DOCKER_VERSION 18.09.1
