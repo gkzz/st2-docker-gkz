@@ -18,7 +18,7 @@ tasks:
         do: rebuild_container
       - when: <% failed() %>
         publish: msg=<% result() %>
-        do: post-on-slack
+        do: post_on_slack
   
   rebuild_container:
     action: >
