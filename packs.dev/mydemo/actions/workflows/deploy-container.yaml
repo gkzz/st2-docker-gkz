@@ -10,9 +10,9 @@ tasks:
   stop_rm_container:
     with: <% ctx(containers_name) %>
     action: >
-      core.local cmd="for i in ${docker container ls | grep -E "flask-docker_<% item() %>.*Up" | awk '{print $1}'}; do 
-                    docker container stop $i && docker container rm $i; done"
-                  cwd=<% ctx().working_dir %>
+      core.local 
+      cmd="for i in $(docker container ls | grep -E 'flask-docker_<% item() %>.*Up' | awk '{print $1}'); do 
+            docker container stop $i && docker container rm $i; done"
     next:
       - when: <% succeeded() %>
         do: rebuild_container
@@ -21,10 +21,10 @@ tasks:
         do: post_on_slack
   
   rebuild_container:
-    action: >
-      core.local cmd="cd <% ctx().working_dir %> && 
-                      docker-compose up -d --build"
-    input: working_dir
+    action: core.local 
+    input:
+      cmd: docker-compose up -d --build
+      cwd: <% ctx().working_dir %> 
     next:
       - when: <% succeeded() %>
         publish: msg=<% result() %>

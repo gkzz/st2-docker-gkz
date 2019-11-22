@@ -1,4 +1,7 @@
 FROM ubuntu:trusty
+
+USER root
+
 # let Upstart know it's in a container
 ENV container docker
 COPY config/init-fake.conf /etc/init/fake-container-events.conf
@@ -129,7 +132,7 @@ COPY ./opt/. /st2-docker/opt/
 
 # add docker group
 ARG DOCKER_GROUP_ID
-#RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} jenkins
+#RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} stanley
 
 # install docker, docker-compose
 ENV DOCKER_VERSION 18.09.1
@@ -137,5 +140,7 @@ RUN curl -fL -o docker.tgz "https://download.docker.com/linux/static/test/x86_64
     tar --strip-component=1 -xvaf docker.tgz -C /usr/bin
 
 RUN curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
+USER stanley
 
 ENTRYPOINT ["/st2-docker/bin/entrypoint.sh"]
