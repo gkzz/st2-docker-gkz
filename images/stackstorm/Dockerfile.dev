@@ -131,7 +131,7 @@ COPY ./opt/. /st2-docker/opt/
 
 # add docker group
 ARG DOCKER_GROUP_ID
-RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} root
+#RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} root
 
 # install docker, docker-compose
 ENV DOCKER_VERSION 18.09.1
