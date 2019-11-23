@@ -50,7 +50,7 @@ services:
       - ./runtime/st2.d:/st2-docker/st2.d
       - ./conf/stackstorm.env:/st2-docker/env
       - /var/run/docker.sock:/var/run/docker.sock
-      - /app:/usr/src/app/flask-docker
+      - /app:/usr/src/app
     dns_search: .
 
 ### External Services
