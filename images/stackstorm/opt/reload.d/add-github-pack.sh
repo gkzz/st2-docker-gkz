@@ -8,7 +8,7 @@ sed -i -e 's|token: "{{system.github_oauth_token}}"|token: "'"$GITHUB_OAUTH_TOKE
     -i -e 's|password: "<TOKEN_OWNERPASSWORD>"|password: "'"$TOKEN_OWNERPASSWORD"'"|' \
     -i -e 's|    - user: "<REPO_OWNERNAME>"|    - user: "'"$REPO_OWNERNAME"'"|' \
     -i -e 's|      name: "<REPO_ACCTNAME>"|      name: "'"$REPO_ACCTNAME"'"|' \
-    /opt/stackstorm/configs/slack.yaml
+    /opt/stackstorm/configs/github.yaml
 
 st2ctl reload --register-all
 

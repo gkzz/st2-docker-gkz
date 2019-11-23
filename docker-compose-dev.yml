@@ -22,7 +22,11 @@ services:
       - JUNOS_PASS
       - JUNOS_PORT
       - JUNOS_IP
-      - ST2_GITHUB_WWEBHOOK
+      - GITHUB_OAUTH_TOKEN
+      - TOKEN_OWNERNAME
+      - TOKEN_OWNERPASSWORD
+      - REPO_OWNERNAME
+      - REPO_ACCTNAME
     env_file:
       - conf/stackstorm.env
       - conf/mongo.env

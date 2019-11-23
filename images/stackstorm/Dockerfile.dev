@@ -127,7 +127,7 @@ COPY config/nginx.st2-1ppc.conf.tpl /etc/nginx/conf.d/st2-1ppc.conf.tpl
 
 
 COPY ./config/slack.yaml.tmpl /opt/stackstorm/configs/slack.yaml
-COPY ./config/gihub.yaml.tmpl /opt/stackstorm/configs/github.yaml
+COPY ./config/github.yaml.tmpl /opt/stackstorm/configs/github.yaml
 COPY ./opt/. /st2-docker/opt/
 
 # add docker group
