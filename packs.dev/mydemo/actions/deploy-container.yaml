@@ -13,4 +13,4 @@ parameters:
       - nginx
   working_dir:
     type: string
-    default: /usr/src/flask-docker
+    default: /usr/src/app/flask-docker
