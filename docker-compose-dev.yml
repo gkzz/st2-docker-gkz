@@ -22,6 +22,7 @@ services:
       - JUNOS_PASS
       - JUNOS_PORT
       - JUNOS_IP
+      - ST2_GITHUB_WWEBHOOK
     env_file:
       - conf/stackstorm.env
       - conf/mongo.env
@@ -49,7 +50,7 @@ services:
       - ./runtime/st2.d:/st2-docker/st2.d
       - ./conf/stackstorm.env:/st2-docker/env
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/ubuntu/flask-docker:/usr/src/flask-docker
+      - /app:/usr/src/app/flask-docker
     dns_search: .
 
 ### External Services
