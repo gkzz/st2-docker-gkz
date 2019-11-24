@@ -2,7 +2,7 @@
 127.0.0.1
 
 [web]
-ansible_host=<WEBAPP_IP>
+<WEBAPP_IP>
 
 [junos]
-ansible_port=<JUNOS_PORT> ansible_host=<JUNOS_IP>
+<JUNOS_IP>

@@ -1,19 +1,14 @@
 ---
 - hosts: junos
-  connection: netconf
+  connection: network_cli
   gather_facts: no
 
-  # ref
-  # slack – Send Slack notifications
-  # https://docs.ansible.com/ansible/latest/modules/slack_module.html?highlight=slack
-  # Ansible ネットワークモジュールにおける facts の扱い
-  # https://tekunabe.hatenablog.jp/entry/2018/05/04/ansible_net_facts
-
   tasks:
-    - name: facts
-      junos_facts:
-      register: junos
+    - name: show version
+      junos_command:
+        commands: show version
+      register: result
+      when: ansible_network_os == "junos"
+    - debug: 
+        msg: "{{ result.stdout_lines[0] }}"
 
-    - name: debug
-      debug:
-        msg: "{{ junos.facts | default('None', true) }}"

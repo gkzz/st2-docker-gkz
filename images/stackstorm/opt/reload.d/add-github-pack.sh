@@ -21,24 +21,3 @@ else
     st2 rule enable github.deploy_pack_on_deployment_event
 fi
 echo "GITHUB_PACK_INSTALLED: ${OUTPUT}" 
-
----
-token: "{{system.github_oauth_token}}"
-user: "<TOKEN_OWNERNAME>"
-password: "<TOKEN_OWNERPASSWORD>"
-github_type: "online"
-web_url: "https://github.example.com"
-base_url: "https://github.example.com/api/v3"
-deployment_environment: "development"
-repository_sensor:
-  event_type_whitelist:
-    - "IssuesEvent"
-    - "IssueCommentEvent"
-    - "ForkEvent"
-    - "WatchEvent"
-    - "ReleaseEvent"
-    - "PushEvent"
-  repositories:
-    - user: "<REPO_OWNERNAME>"
-      name: "<REPO_ACCTNAME>"
-  count: 30  # Maximum number of old events to retrieve
