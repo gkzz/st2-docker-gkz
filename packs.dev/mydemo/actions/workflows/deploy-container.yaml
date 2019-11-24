@@ -23,3 +23,16 @@ tasks:
       cmd: sudo docker-compose up -d --build
       cwd: <% ctx().working_dir %> 
       timeout: 600
+  
+      next:
+      - when: <% succeeded() %>
+        publish: msg=<% result().stdout %>
+        do: finish
+      - when: <% failed() %>
+        publish: msg=<% result().stderr %>
+        do: finish
+  
+  finish:
+    action: slack.post_message
+    input:
+      message: <% ctx().msg %>

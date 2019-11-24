@@ -27,19 +27,17 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: main
-        
-  main:
-    action: mydemo.deploy-container
-    next:
-      - when: <% succeeded() %>
-        publish: msg=<% result().stdout %>
-        do: finish
       - when: <% failed() %>
         publish: msg=<% result().stderr %>
         do: finish
+        
+  main:
+    action: mydemo.deploy-container
   
+
   finish:
     action: slack.post_message
     input:
       message: <% ctx().msg %>
+
         
