@@ -5,16 +5,23 @@ description: "run mydemo per 60 secs"
 enabled: true
 
 trigger:
-    type: "core.st2.IntervalTimer"
-    parameters:
-        unit: seconds
-        #delta: 60
-        delta: 300
+  type: "core.st2.IntervalTimer"
+  parameters:
+    unit: seconds
+    delta: 30
+    #delta: 300
+
+#action:
+#    ref: "mydemo.dpeloy-container"
+#    parameters:
+#        containers_name:
+#          - flask
+#          - nginx
+#        working_dir: /usr/src/app/flask-docker
 
 action:
-    ref: "mydemo.dpeloy-container"
-    parameters:
-        containers_name:
-          - flask
-          - nginx
-        working_dir: /usr/src/app/flask-docker
+  ref: "mydemo.deploy-container-init"
+  parameters:
+    working_dir: /usr/src/app/flask-docker
+    branch: master
+

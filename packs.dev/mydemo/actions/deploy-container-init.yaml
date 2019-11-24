@@ -1,0 +1,15 @@
+---
+name: deploy-container-init
+pack: mydemo
+description: Deploy Container Init
+runner_type: orquesta
+entry_point: workflows/deploy-container-init.yaml
+parameters:
+  working_dir:
+    required: true
+    type: string
+    default: /usr/src/app/flask-docker
+  branch:
+    required: true
+    type: string
+    default: master

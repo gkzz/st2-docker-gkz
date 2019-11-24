@@ -1,0 +1,45 @@
+version: 1.0
+
+description: deploy-container-init
+
+input:
+  - working_dir
+  - branch
+
+tasks:
+  fetch:
+    action: >
+      core.local 
+      cmd="git fetch"
+      cwd=<% ctx().working_dir %>
+    next:
+      - when: <% succeeded() and (ctx().branch != null) %>
+        do: pull
+      - when: <% failed() %>
+        publish: msg=<% result().stderr %>
+        do: finish
+  
+  pull:
+    action: core.local
+    input:
+      cmd: git merge origin/<% ctx().branch %> 
+      cwd: <% ctx().working_dir %>
+    next:
+      - when: <% succeeded() %>
+        do: main
+        
+  main:
+    action: mydemo.deploy-container
+    next:
+      - when: <% succeeded() %>
+        publish: msg=<% result().stdout %>
+        do: finish
+      - when: <% failed() %>
+        publish: msg=<% result().stderr %>
+        do: finish
+  
+  finish:
+    action: slack.post_message
+    input:
+      message: <% ctx().msg %>
+        

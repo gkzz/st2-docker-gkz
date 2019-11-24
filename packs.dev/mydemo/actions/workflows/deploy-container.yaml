@@ -16,9 +16,6 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: rebuild_container
-      - when: <% failed() %>
-        publish: msg=<% result().stderr %>
-        do: post_on_slack
   
   rebuild_container:
     action: core.local 
@@ -26,15 +23,3 @@ tasks:
       cmd: sudo docker-compose up -d --build
       cwd: <% ctx().working_dir %> 
       timeout: 600
-    next:
-      - when: <% succeeded() %>
-        publish: msg=<% result().stdout %>
-        do: post_on_slack
-      - when: <% failed() %>
-        publish: msg=<% result().stderr %>
-        do: post_on_slack
-  
-  post_on_slack:
-    action: slack.post_message
-    input:
-      message: <% ctx().msg %>
