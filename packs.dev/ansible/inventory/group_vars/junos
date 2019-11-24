@@ -2,6 +2,6 @@
 # file: group_vars/junos
 ansible_connection: network_cli 
 ansible_network_os: junos
-ansible_port: 49002
-ansible_ssh_user: jcluser
-ansible_ssh_pass: Juniper!1
+ansible_port: <JUNOS_PORT>
+ansible_ssh_user: <JUNOS_USER>
+ansible_ssh_pass: <JUNOS_PASS>

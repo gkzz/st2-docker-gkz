@@ -8,9 +8,13 @@ trigger:
     type: "core.st2.IntervalTimer"
     parameters:
         unit: seconds
-        delta: 60
+        #delta: 60
+        delta: 300
 
 action:
-    ref: "slack.post_message"
+    ref: "mydemo.dpeloy-container"
     parameters:
-        message: "Hello: {{ trigger }}"
+        containers_name:
+          - flask
+          - nginx
+        working_dir: /usr/src/app/flask-docker
