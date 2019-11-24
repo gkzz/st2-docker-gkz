@@ -10,7 +10,7 @@ tasks:
   fetch:
     action: >
       core.local 
-      cmd="git fetch"
+      cmd="sudo git fetch"
       cwd=<% ctx().working_dir %>
     next:
       - when: <% succeeded() and (ctx().branch != null) %>
@@ -22,7 +22,7 @@ tasks:
   pull:
     action: core.local
     input:
-      cmd: git merge origin/<% ctx().branch %> 
+      cmd: sudo git merge origin/<% ctx().branch %> 
       cwd: <% ctx().working_dir %>
     next:
       - when: <% succeeded() %>
