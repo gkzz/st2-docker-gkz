@@ -17,7 +17,7 @@ tasks:
         do: pull
       - when: <% failed() %>
         publish: msg=<% result().stderr %>
-        do: finish
+        do: last
   
   pull:
     action: core.local
@@ -29,15 +29,27 @@ tasks:
         do: main
       - when: <% failed() %>
         publish: msg=<% result().stderr %>
-        do: finish
+        do: last
         
   main:
     action: mydemo.deploy-container
-  
+    next:
+      - when: <% succeeded() %>
+        publish: msg=<% result().output.output %>
+        do: last
+      - when: <% failed() %>
+        publish: msg=<% result().output.output %>
+        do: last
 
-  finish:
+  last:
     action: slack.post_message
     input:
       message: <% ctx().msg %>
+    next:
+      - when: <% succeeded() %>
+        publish: msg=<% result().stdout %>
+      - when: <% failed() %>
+        publish: msg=<% result().stderr %>
 
-        
+output:
+  - output: <% ctx().msg %>
