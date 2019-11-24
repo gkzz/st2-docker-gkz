@@ -24,9 +24,9 @@ else
     inventory_file=/opt/stackstorm/packs/ansible/inventory/hosts \
     playbook=/opt/stackstorm/packs/ansible/playbook/ping.yaml
 
-    st2 run ansible.playbook \
-    inventory_file=/opt/stackstorm/packs/ansible/inventory/hosts \
-    playbook=/opt/stackstorm/packs/ansible/playbook/gather_facts_junos.yaml
+    #st2 run ansible.playbook \
+    #inventory_file=/opt/stackstorm/packs/ansible/inventory/hosts \
+    #playbook=/opt/stackstorm/packs/ansible/playbook/gather_facts_junos.yaml
 
 fi
 echo "ANSIBLE_PACK_INSTALLED: ${OUTPUT}" 
