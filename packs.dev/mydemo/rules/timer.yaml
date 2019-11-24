@@ -1,0 +1,16 @@
+---
+name: "timer"
+pack: "mydemo"
+description: "run mydemo per 60 secs"
+enabled: true
+
+trigger:
+    type: "core.st2.IntervalTimer"
+    parameters:
+        unit: seconds
+        delta: 60
+
+action:
+    ref: "slack.post_message"
+    parameters:
+        message: "Hello: {{ trigger }}"
