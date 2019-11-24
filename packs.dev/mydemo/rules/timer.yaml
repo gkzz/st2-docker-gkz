@@ -8,16 +8,8 @@ trigger:
   type: "core.st2.IntervalTimer"
   parameters:
     unit: seconds
-    delta: 30
-    #delta: 300
-
-#action:
-#    ref: "mydemo.dpeloy-container"
-#    parameters:
-#        containers_name:
-#          - flask
-#          - nginx
-#        working_dir: /usr/src/app/flask-docker
+    #delta: 30
+    delta: 300
 
 action:
   ref: "mydemo.deploy-container-init"

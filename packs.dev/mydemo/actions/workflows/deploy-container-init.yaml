@@ -21,6 +21,7 @@ tasks:
 
   pull:
     action: core.local 
+    input:
       cmd: sudo git pull
       cwd: <% ctx().working_dir %>
     next:
