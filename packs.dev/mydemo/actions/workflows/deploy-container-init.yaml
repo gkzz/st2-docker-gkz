@@ -7,26 +7,27 @@ input:
   - branch
 
 tasks:
-  fetch:
+  checkout:
     action: >
-      core.local 
-      cmd="sudo git fetch"
+      core.local
+      cmd="sudo git checkout <% ctx().branch %>"
       cwd=<% ctx().working_dir %>
     next:
-      - when: <% succeeded() and (ctx().branch != null) %>
+      - when: <% succeeded() %>
         do: pull
       - when: <% failed() %>
         publish: msg=<% result().stderr %>
         do: last
-  
+
   pull:
-    action: core.local
-    input:
-      cmd: sudo git merge origin/<% ctx().branch %> 
+    action: core.local 
+      cmd: sudo git pull
       cwd: <% ctx().working_dir %>
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() and (result().stdout != 'Already up-to-date.') %>
         do: main
+      - when: <% succeeded() %>
+        publish: msg=<% result().stdout %>
       - when: <% failed() %>
         publish: msg=<% result().stderr %>
         do: last
