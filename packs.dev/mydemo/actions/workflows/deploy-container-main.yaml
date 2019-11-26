@@ -1,6 +1,6 @@
 version: 1.0
 
-description: deploy-container
+description: deploy-container-main
 
 input:
   - containers_name

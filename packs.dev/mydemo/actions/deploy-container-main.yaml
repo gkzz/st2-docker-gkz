@@ -3,7 +3,7 @@ name: deploy-container
 pack: mydemo
 description: Deploy Container
 runner_type: orquesta
-entry_point: workflows/deploy-container.yaml
+entry_point: workflows/deploy-container-main.yaml
 parameters:
   containers_name:
     required: true
