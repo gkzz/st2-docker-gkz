@@ -5,7 +5,7 @@ description: deploy-container-main
 input:
   - containers_name
   - working_dir
-  - rebuilding_seconds
+  - rebuilding_timeout
 
 tasks:
   stop_rm_container:
@@ -25,7 +25,7 @@ tasks:
     input:
       cmd: sudo docker-compose up -d --build
       cwd: <% ctx().working_dir %> 
-      timeout: <% ctx().rebuilding_seconds %> 
+      timeout: <% ctx().rebuilding_timeout %> 
     next:
       - when: <% succeeded() %>
         publish: msg=<% result().stdout %>

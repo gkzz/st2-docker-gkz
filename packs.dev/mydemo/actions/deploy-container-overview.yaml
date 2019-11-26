@@ -19,7 +19,7 @@ parameters:
     default:
       - flask-docker_flask
       - flask-docker_nginx
-  rebuilding_time:
+  rebuilding_timeout:
     required: true
     type: integer
     default: 600

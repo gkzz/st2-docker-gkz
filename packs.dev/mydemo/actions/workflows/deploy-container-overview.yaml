@@ -6,7 +6,7 @@ input:
   - working_dir
   - branch
   - containers_name
-  - rebuilding_time
+  - rebuilding_timeout
 
 tasks:
   init:
@@ -28,7 +28,7 @@ tasks:
     input:
       containers_name:  <% ctx().containers_name %>
       working_dir:  <% ctx().working_dir %>
-      rebuilding_seconds:  <% ctx().rebuilding_seconds %>
+      rebuilding_timeout:  <% ctx().rebuilding_timeout %>
     next:
       - when: <% succeeded() %>
         publish: msg=<% result().output.output %>

@@ -11,6 +11,6 @@ parameters:
   working_dir:
     required: true
     type: string
-  rebuilding_time:
+  rebuilding_timeout:
     required: true
     type: integer
