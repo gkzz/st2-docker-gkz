@@ -1,5 +1,5 @@
 ---
-name: deploy-container
+name: deploy-container-main
 pack: mydemo
 description: Deploy Container
 runner_type: orquesta
