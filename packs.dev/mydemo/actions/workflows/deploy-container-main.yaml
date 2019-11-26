@@ -10,15 +10,21 @@ input:
 tasks:
   stop_rm_container:
     with: <% ctx(containers_name) %>
-    action: >
-      core.local 
-      cmd="for i in $(docker container ls | grep -E '<% item() %>.*Up' | awk '{print $1}'); do 
-            docker container stop $i && docker container rm $i; done"
+    action: core.local
+    input: 
+      cmd: >
+        for i in $(docker container ls | grep -E '<% item() %>.*Up' | awk '{print $1}'); do 
+        docker container stop $i && docker container rm $i; done
     next:
       - when: <% succeeded() %>
         do: rebuild_container
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
       - when: <% failed() %>
-        publish: msg=<% result().stderr %>
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
   
   rebuild_container:
     action: core.local 
@@ -28,9 +34,14 @@ tasks:
       timeout: <% ctx().rebuilding_timeout %> 
     next:
       - when: <% succeeded() %>
-        publish: msg=<% result().stdout %>
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
       - when: <% failed() %>
-        publish: msg=<% result().stderr %>
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
 
 output:
-  - output: <% ctx().msg %>
+  - stdout: <% ctx().stdout %>
+  - stderr: <% ctx().stderr %>

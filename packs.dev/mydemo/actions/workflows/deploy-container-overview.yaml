@@ -17,11 +17,18 @@ tasks:
     next:
       - when: <% succeeded() and (result().output.output != 'Already up-to-date.') %>
         do: main
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
       - when: <% succeeded() %>
-        publish: msg=<% result().output.output %>
+        publish:
+          - stdout: <% result().output.stdout %>
+          - stderr: <% result().stderr %>
       - when: <% failed() %>
-        publish: msg=<% result().output.output %>
         do: last
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
   
   main:
     action: mydemo.deploy-container-main
@@ -31,11 +38,15 @@ tasks:
       rebuilding_timeout:  <% ctx().rebuilding_timeout %>
     next:
       - when: <% succeeded() %>
-        publish: msg=<% result().output.output %>
         do: last
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
       - when: <% failed() %>
-        publish: msg=<% result().output.output %>
         do: last
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
 
   last:
     action: slack.post_message
@@ -43,9 +54,14 @@ tasks:
       message: <% ctx().msg %>
     next:
       - when: <% succeeded() %>
-        publish: msg=<% result().stdout %>
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
       - when: <% failed() %>
-        publish: msg=<% result().stderr %>
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
 
 output:
-  - output: <% ctx().msg %>
+  - stdout: <% ctx().stdout %>
+  - stderr: <% ctx().stderr %>

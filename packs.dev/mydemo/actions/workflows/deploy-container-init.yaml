@@ -7,27 +7,82 @@ input:
   - branch
 
 tasks:
-  checkout:
-    action: >
-      core.local
-      cmd="sudo git checkout <% ctx().branch %>"
-      cwd=<% ctx().working_dir %>
-    next:
-      - when: <% succeeded() %>
-        do: pull
-      - when: <% failed() %>
-        publish: msg=<% result().stderr %>
-
-  pull:
+  git_fetch:
     action: core.local 
     input:
-      cmd: sudo git pull
+      cmd: sudo git fetch
       cwd: <% ctx().working_dir %>
     next:
       - when: <% succeeded() %>
-        publish: msg=<% result().stdout %>
+        do: checkout
+        publish: 
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
       - when: <% failed() %>
-        publish: msg=<% result().stderr %>
+        publish: 
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+
+  git_checkout:
+    action: core.local
+    input:
+      cmd: sudo git checkout <% ctx().branch %>
+      cwd: <% ctx().working_dir %>
+    next:
+      - when: <% succeeded() %>
+        do: status
+      - when: <% failed() %>
+        publish: 
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+  
+  git_status:
+    action: core.local
+    input:
+      cmd: sudo git status
+      cwd: <% ctx().working_dir %>
+    next:
+      - when: <% succeeded() %>
+        do: validate
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+      - when: <% failed() %>
+        publish: 
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+  
+  validate:
+    action: mydemo.validate
+    input:
+      filter: <% ctx().filter %>
+      stdout: <% result().stdout %>
+    next:
+      - when: <% succeeded() %>
+        do: merge
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+      - when: <% failed() %>
+        publish: 
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+  
+  merge:
+    action: core.local
+    input:
+      cmd: sudo git merge origin/<% ctx().branch %>
+      cwd: <% ctx().working_dir %>
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+      - when: <% failed() %>
+        publish: 
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
 
 output:
-  - output: <% ctx().msg %>
+  - stdout: <% ctx().stdout %>
+  - stderr: <% ctx().stderr %>
