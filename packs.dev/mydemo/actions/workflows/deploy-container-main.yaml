@@ -1,0 +1,36 @@
+version: 1.0
+
+description: deploy-container
+
+input:
+  - containers_name
+  - working_dir
+  - rebuilding_seconds
+
+tasks:
+  stop_rm_container:
+    with: <% ctx(containers_name) %>
+    action: >
+      core.local 
+      cmd="for i in $(docker container ls | grep -E '<% item() %>.*Up' | awk '{print $1}'); do 
+            docker container stop $i && docker container rm $i; done"
+    next:
+      - when: <% succeeded() %>
+        do: rebuild_container
+      - when: <% failed() %>
+        publish: msg=<% result().stderr %>
+  
+  rebuild_container:
+    action: core.local 
+    input:
+      cmd: sudo docker-compose up -d --build
+      cwd: <% ctx().working_dir %> 
+      timeout: <% ctx().rebuilding_seconds %> 
+    next:
+      - when: <% succeeded() %>
+        publish: msg=<% result().stdout %>
+      - when: <% failed() %>
+        publish: msg=<% result().stderr %>
+
+output:
+  - output: <% ctx().msg %>

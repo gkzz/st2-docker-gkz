@@ -1,0 +1,51 @@
+version: 1.0
+
+description: deploy-container-overview
+
+input:
+  - working_dir
+  - branch
+  - containers_name
+  - rebuilding_time
+
+tasks:
+  init:
+    action: mydemo.deploy-container-init
+    input:
+      working_dir: <% ctx().working_dir %>
+      branch: <% ctx().branch %>
+    next:
+      - when: <% succeeded() and (result().output.output != 'Already up-to-date.') %>
+        do: main
+      - when: <% succeeded() %>
+        publish: msg=<% result().output.output %>
+      - when: <% failed() %>
+        publish: msg=<% result().output.output %>
+        do: last
+  
+  main:
+    action: mydemo.deploy-container-main
+    input:
+      containers_name:  <% ctx().containers_name %>
+      working_dir:  <% ctx().working_dir %>
+      rebuilding_seconds:  <% ctx().rebuilding_seconds %>
+    next:
+      - when: <% succeeded() %>
+        publish: msg=<% result().output.output %>
+        do: last
+      - when: <% failed() %>
+        publish: msg=<% result().output.output %>
+        do: last
+
+  last:
+    action: slack.post_message
+    input:
+      message: <% ctx().msg %>
+    next:
+      - when: <% succeeded() %>
+        publish: msg=<% result().stdout %>
+      - when: <% failed() %>
+        publish: msg=<% result().stderr %>
+
+output:
+  - output: <% ctx().msg %>

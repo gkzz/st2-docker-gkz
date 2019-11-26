@@ -17,36 +17,12 @@ tasks:
         do: pull
       - when: <% failed() %>
         publish: msg=<% result().stderr %>
-        do: last
 
   pull:
     action: core.local 
     input:
       cmd: sudo git pull
       cwd: <% ctx().working_dir %>
-    next:
-      - when: <% succeeded() and (result().stdout != 'Already up-to-date.') %>
-        do: main
-      - when: <% succeeded() %>
-        publish: msg=<% result().stdout %>
-      - when: <% failed() %>
-        publish: msg=<% result().stderr %>
-        do: last
-        
-  main:
-    action: mydemo.deploy-container
-    next:
-      - when: <% succeeded() %>
-        publish: msg=<% result().output.output %>
-        do: last
-      - when: <% failed() %>
-        publish: msg=<% result().output.output %>
-        do: last
-
-  last:
-    action: slack.post_message
-    input:
-      message: <% ctx().msg %>
     next:
       - when: <% succeeded() %>
         publish: msg=<% result().stdout %>

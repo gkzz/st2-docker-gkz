@@ -1,0 +1,25 @@
+---
+name: deploy-container-overview
+pack: mydemo
+description: Deploy Container Overview
+runner_type: orquesta
+entry_point: workflows/deploy-container-overview.yaml
+parameters:
+  working_dir:
+    required: true
+    type: string
+    default: /usr/src/app/flask-docker
+  branch:
+    required: true
+    type: string
+    default: master
+  containers_name:
+    required: true
+    type: array
+    default:
+      - flask-docker_flask
+      - flask-docker_nginx
+  rebuilding_time:
+    required: true
+    type: integer
+    default: 600
