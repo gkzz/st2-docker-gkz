@@ -13,6 +13,11 @@ parameters:
     required: true
     type: string
     default: master
+  filters:
+    required: true
+    type: array
+    default:
+      - Already up-to-date.
   containers_name:
     required: true
     type: array

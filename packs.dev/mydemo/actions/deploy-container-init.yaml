@@ -11,3 +11,6 @@ parameters:
   branch:
     required: true
     type: string
+  filters:
+      required: true
+      type: array
