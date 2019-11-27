@@ -4,8 +4,12 @@
 class ValidateAction(Action):
     def run(self, filters, stdout):
         stderr = ""
-        print("type(stdout): {type}".format(
-            type=type(stdout)
-        ))
+        try:
+            type_stdout=type(stdout)
+            print("type(stdout): {type}".format(
+                type=type_stdout
+            ))
+        except:
+            stdout = ""
 
         return stdout, stderr
