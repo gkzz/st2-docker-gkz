@@ -1,10 +1,16 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+
+from st2actions.runners.pythonrunner import Action
+
 class ValidateAction(Action):
     def run(self, filters, stdout):
-        stderr = ""
-        if type(stdout) is str:
+        stderr = " "
+        if stdout is None:
+            stdout = " "
+        elif type(stdout) is str:
             print('type: stdout => str')
         elif type(stdout) is int:
             print('type: stdout => int')

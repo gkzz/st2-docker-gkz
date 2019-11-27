@@ -2,7 +2,8 @@
 name: validate
 pack: mydemo
 description: Validate Stdout/Stderr
-runner_type: orquesta
+enabled: true
+runner_type: python-script
 entry_point: scripts/validate.py
 parameters:
   filters:

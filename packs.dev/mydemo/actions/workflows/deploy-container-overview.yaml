@@ -24,7 +24,7 @@ tasks:
           - stderr: <% result().stderr %>
       - when: <% succeeded() %>
         publish:
-          - stdout: <% result().output.stdout %>
+          - stdout: <% result()..stdout %>
           - stderr: <% result().stderr %>
       - when: <% failed() %>
         do: last
