@@ -3,7 +3,9 @@
 
 class ValidateAction(Action):
     def run(self, filters, stdout):
-        stderr = None
-        print(type(stdout))
+        stderr = ""
+        print("type(stdout): {type}".format(
+            type=type(stdout)
+        )
 
         return stdout, stderr
