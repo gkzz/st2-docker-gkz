@@ -6,6 +6,6 @@ class ValidateAction(Action):
         stderr = ""
         print("type(stdout): {type}".format(
             type=type(stdout)
-        )
+        ))
 
         return stdout, stderr
