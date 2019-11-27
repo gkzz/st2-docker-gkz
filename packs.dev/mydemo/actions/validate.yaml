@@ -1,0 +1,13 @@
+---
+name: validate
+pack: mydemo
+description: Validate Stdout/Stderr
+runner_type: orquesta
+entry_point: scripts/validate.py
+parameters:
+  #filters:
+  #  required: true
+  #  type: array
+  stdout:
+    required: true
+    type: string

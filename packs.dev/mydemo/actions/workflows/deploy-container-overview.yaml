@@ -51,7 +51,9 @@ tasks:
   last:
     action: slack.post_message
     input:
-      message: <% ctx().msg %>
+      message: >
+        "stdout: <% ctx().stdout %>
+        stderr: <% ctx().stderr %>"
     next:
       - when: <% succeeded() %>
         publish:

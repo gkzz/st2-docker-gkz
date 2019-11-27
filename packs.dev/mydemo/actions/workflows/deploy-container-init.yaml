@@ -14,7 +14,7 @@ tasks:
       cwd: <% ctx().working_dir %>
     next:
       - when: <% succeeded() %>
-        do: checkout
+        do: git_checkout
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
@@ -30,7 +30,7 @@ tasks:
       cwd: <% ctx().working_dir %>
     next:
       - when: <% succeeded() %>
-        do: status
+        do: git_status
       - when: <% failed() %>
         publish: 
           - stdout: <% result().stdout %>
@@ -55,11 +55,11 @@ tasks:
   validate:
     action: mydemo.validate
     input:
-      filter: <% ctx().filter %>
+      filters: <% ctx().filters %>
       stdout: <% result().stdout %>
     next:
       - when: <% succeeded() %>
-        do: merge
+        do: git_merge
         publish:
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
@@ -68,7 +68,7 @@ tasks:
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
   
-  merge:
+  git_merge:
     action: core.local
     input:
       cmd: sudo git merge origin/<% ctx().branch %>
