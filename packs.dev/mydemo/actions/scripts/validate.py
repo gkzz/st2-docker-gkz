@@ -18,6 +18,3 @@ class ValidateAction(Action):
             print('type: stdout => list')
         else:
             print('type: stdout => Unknowon')
-
-
-        return stdout, stderr
