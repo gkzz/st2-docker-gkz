@@ -5,6 +5,7 @@ description: deploy-container-overview
 input:
   - working_dir
   - branch
+  - filter
   - containers_name
   - rebuilding_timeout
 
@@ -14,6 +15,7 @@ tasks:
     input:
       working_dir: <% ctx().working_dir %>
       branch: <% ctx().branch %>
+      filter: <% ctx().filter %>
     next:
       - when: <% succeeded() and (result().output.output != 'Already up-to-date.') %>
         do: main

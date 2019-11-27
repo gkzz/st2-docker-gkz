@@ -5,6 +5,7 @@ description: deploy-container-init
 input:
   - working_dir
   - branch
+  - filter
 
 tasks:
   git_fetch:
@@ -55,8 +56,8 @@ tasks:
   validate:
     action: mydemo.validate
     input:
-      filters: <% ctx().filters %>
-      stdout: <% result().stdout %>
+      filter: <% ctx().filter %>
+      stdout: <% ctx().stdout %>
     next:
       - when: <% succeeded() %>
         do: git_merge

@@ -3,6 +3,7 @@
 
 class ValidateAction(Action):
     def run(self, stdout):
+        stderr = None
         print(type(stdout))
 
-        return stdout
+        return stdout, stderr
