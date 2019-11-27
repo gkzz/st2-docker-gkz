@@ -4,12 +4,14 @@
 class ValidateAction(Action):
     def run(self, filters, stdout):
         stderr = ""
-        try:
-            type_stdout=type(stdout)
-            print("type(stdout): {type}".format(
-                type=type_stdout
-            ))
-        except:
-            stdout = ""
+        if type(stdout) is str:
+            print('type: stdout => str')
+        elif type(stdout) is int:
+            print('type: stdout => int')
+        elif type(stdout) is list:
+            print('type: stdout => list')
+        else:
+            print('type: stdout => Unknowon')
+
 
         return stdout, stderr
