@@ -20,13 +20,13 @@ tasks:
       - when: <% succeeded() %>
         do: main
         publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - stdout: <% result().output.stdout %>
+          - stderr: <% result().output.stderr %>
       - when: <% failed() %>
         do: last
         publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - stdout: <% result().output.stdout %>
+          - stderr: <% result().output.stderr %>
   
   main:
     action: mydemo.deploy-container-main
@@ -38,13 +38,13 @@ tasks:
       - when: <% succeeded() %>
         do: last
         publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - stdout: <% result().output.stdout %>
+          - stderr: <% result().output.stderr %>
       - when: <% failed() %>
         do: last
         publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - stdout: <% result().output.stdout %>
+          - stderr: <% result().output.stderr %>
 
   last:
     action: slack.post_message
