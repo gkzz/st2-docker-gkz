@@ -30,38 +30,12 @@ tasks:
       cmd: sudo git checkout <% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
-      - when: <% succeeded() %>
-        do: git_status
-      - when: <% failed() %>
-        publish: 
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
-  
-  git_status:
-    action: core.local
-    input:
-      cmd: sudo git status
-      cwd: <% ctx().working_dir %>
-    next:
-      - when: <% succeeded() %>
-        do: validate
-        publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
-      - when: <% failed() %>
-        publish: 
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
-  
-  validate:
-    action: mydemo.validate
-    input:
-      filters: <% ctx().filters %>
-      stdout: <% ctx().stdout %>
-    next:
-      - when: <% succeeded() %>
+      - when: >
+          <% succeeded() and 
+          (result().stdout != 'Your branch is up-to-date with "origin/<% ctx().branch %>'.") %>
         do: git_merge
-        publish:
+      - when: <% succeeded() %>
+        publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
       - when: <% failed() %>

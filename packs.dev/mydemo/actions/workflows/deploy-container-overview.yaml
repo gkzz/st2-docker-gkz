@@ -17,12 +17,8 @@ tasks:
       branch: <% ctx().branch %>
       filters: <% ctx().filters %>
     next:
-      - when: <% succeeded() and (result().output.output != 'Already up-to-date.') %>
-        do: main
-        publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
       - when: <% succeeded() %>
+        do: main
         publish:
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
