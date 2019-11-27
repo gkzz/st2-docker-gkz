@@ -32,8 +32,8 @@ tasks:
     next:
       - when: >
           <% succeeded() and 
-          (result().stdout != 'Your branch is up-to-date with "origin/$branch".') and
-          (result().stdout != 'Already up-to-date') %>
+          (result().stdout != "Your branch is up-to-date with 'origin/$branch'.") or
+          (result().stdout != "Already up-to-date") %>
         do: git_merge
       - when: <% succeeded() %>
         publish: 
