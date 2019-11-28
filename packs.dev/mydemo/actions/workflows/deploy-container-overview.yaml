@@ -17,12 +17,12 @@ tasks:
       branch: <% ctx().branch %>
       filters: <% ctx().filters %>
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() or result().output.stderr = "" %>
         do: main
         publish:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %>
-      - when: <% failed() %>
+      - when: <% failed() or result().output.stderr != "" %>
         do: last
         publish:
           - stdout: <% result().output.stdout %>
@@ -35,12 +35,12 @@ tasks:
       working_dir:  <% ctx().working_dir %>
       rebuilding_timeout:  <% ctx().rebuilding_timeout %>
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() or result().output.stderr = "" %>
         do: last
         publish:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %>
-      - when: <% failed() %>
+      - when: <% failed() or result().output.stderr != "" %>
         do: last
         publish:
           - stdout: <% result().output.stdout %>

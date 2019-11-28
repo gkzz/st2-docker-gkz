@@ -8,17 +8,17 @@ input:
 
 tasks:
   git_fetch:
-    action: mydemo.scripts.git_fetch.sh
+    action: mydemo.git_fetch
     input:
       branch: <% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() and result().stderr = "" %>
         do: git_merge
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
-      - when: <% failed() %>
+      - when: <% failed() or result().stderr != "" %>
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
@@ -31,11 +31,11 @@ tasks:
         sudo git merge origin/<% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() and result().stderr = "" %>
         publish:
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
-      - when: <% failed() %>
+      - when: <% failed() or result().stderr != "" %>
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
