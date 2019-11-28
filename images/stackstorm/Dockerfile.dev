@@ -30,6 +30,7 @@ RUN dpkg-divert /etc/bash.bashrc && \
 #RUN echo -e "#!/bin/sh\nexit 101\n" > /usr/sbin/policy-rc.d \
 #    && rm /sbin/initctl; dpkg-divert --rename --remove /sbin/initctl \
 #    && locale-gen en_US.UTF-8
+RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
@@ -75,7 +76,8 @@ RUN ./opt/install.sh
 # Unless these lines are changed, the services are not started when runlevel -> 2
 # Call mistral-db-manage before mistral starts
 
-RUN ls /etc/init/
+RUN ls -la /etc/init/
+RUN ls -la /etc/st2/
 
 RUN sed -i 's/start on filesystem and net-device-up IFACE!=lo/start on runlevel \[2345\]/' /etc/init/st2*.conf \
     && sed -i 's/stop on starting rc RUNLEVEL=\[016\]/stop on runlevel \[!2345\]/' /etc/init/st2*.conf \
