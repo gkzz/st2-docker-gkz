@@ -27,7 +27,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 RUN dpkg-divert /etc/bash.bashrc && \
     sed -i '/^# enable bash completion/,/^# sudo hint/{//p;//d;s/^#//}' /etc/bash.bashrc
 
-RUN ls /sbin/init_1/
+RUN ls /sbin/initctl/
 
 #RUN echo -e "#!/bin/sh\nexit 101\n" > /usr/sbin/policy-rc.d \
 #    && rm /sbin/initctl; dpkg-divert --rename --remove /sbin/initctl \
