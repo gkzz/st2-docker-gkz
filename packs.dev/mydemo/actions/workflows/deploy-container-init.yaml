@@ -5,37 +5,16 @@ description: deploy-container-init
 input:
   - working_dir
   - branch
-  - filters
 
 tasks:
   git_fetch:
-    action: core.local 
+    action: mydemo.scripts.git_fetch.sh
     input:
-      cmd: sudo git fetch
+      branch: <% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
       - when: <% succeeded() %>
-        do: git_checkout
-        publish: 
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
-      - when: <% failed() %>
-        publish: 
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
-
-  git_checkout:
-    action: core.local
-    input:
-      cmd: sudo git checkout <% ctx().branch %>
-      cwd: <% ctx().working_dir %>
-    next:
-      - when: >
-          <% succeeded() and 
-          (result().stdout != "Your branch is up-to-date with 'origin/$branch'.") or
-          (result().stdout != "Already up-to-date") %>
         do: git_merge
-      - when: <% succeeded() %>
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
@@ -47,7 +26,9 @@ tasks:
   git_merge:
     action: core.local
     input:
-      cmd: sudo git merge origin/<% ctx().branch %>
+      cmd: >
+        sudo git checkout <% ctx().branch %> && 
+        sudo git merge origin/<% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
       - when: <% succeeded() %>
