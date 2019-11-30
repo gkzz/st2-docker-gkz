@@ -27,7 +27,6 @@ tasks:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %>
       - when: <% failed() %>
-        do: last
         publish:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %>
@@ -40,39 +39,13 @@ tasks:
       rebuilding_timeout:  <% ctx().rebuilding_timeout %>
     next:
       - when: <% succeeded() %>
-        do: last
         publish:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %>
       - when: <% failed() %>
-        do: last
         publish:
           - stdout: <% result().output.stdout %>
-          - stderr: <% result().output.stderr %>
-  
-  last:
-    action: slack.post_message
-    input:
-      message: >
-        "########################
-        ########################
-        [stdout] 
-        <% ctx().stdout %>
-        ########################
-        ########################
-        [stderr]
-        <% ctx().stderr %>
-        ########################
-        ########################"
-    next:
-      - when: <% succeeded() %>
-        publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
-      - when: <% failed() %>
-        publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - stderr: <% result().output.stderr %> 
 
 output:
   - stdout: <% ctx().stdout %>
