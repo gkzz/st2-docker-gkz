@@ -15,18 +15,13 @@ services:
       - SLACKBOT_NAME
       - SLACKBOT_TOKEN
       - INCOMING_WEBHOOK_URL
-      - INCOMING_WEBHOOK_URL_SLACKFORMAT
       - DST_CHANNEL
       - WEBAPP_IP
       - JUNOS_USER
       - JUNOS_PASS
       - JUNOS_PORT
       - JUNOS_IP
-      - GITHUB_OAUTH_TOKEN
-      - TOKEN_OWNERNAME
-      - TOKEN_OWNERPASSWORD
-      - REPO_OWNERNAME
-      - REPO_ACCTNAME
+      - SECRET_GITHUB_CLONE_URL
     env_file:
       - conf/stackstorm.env
       - conf/mongo.env
