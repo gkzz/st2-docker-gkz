@@ -7,6 +7,10 @@ input:
   - working_dir
   - rebuilding_timeout
 
+vars:
+  - stdout: null
+  - stderr: null
+
 tasks:
   stop_rm_container:
     with: <% ctx(containers_name) %>

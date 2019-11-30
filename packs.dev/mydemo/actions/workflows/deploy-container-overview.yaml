@@ -9,6 +9,10 @@ input:
   - containers_name
   - rebuilding_timeout
 
+vars:
+  - stdout: null
+  - stderr: null
+
 tasks:
   init:
     action: mydemo.deploy-container-init

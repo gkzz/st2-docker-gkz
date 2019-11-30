@@ -6,6 +6,10 @@ input:
   - working_dir
   - branch
 
+vars:
+  - stdout: null
+  - stderr: null
+
 tasks:
   git_fetch:
     action: mydemo.git_fetch
