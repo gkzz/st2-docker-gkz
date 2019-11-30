@@ -17,12 +17,12 @@ tasks:
       branch: <% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
-      - when: <% succeeded() and result().stderr = "" %>
+      - when: <% succeeded() %>
         do: git_merge
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
-      - when: <% failed() or result().stderr != "" %>
+      - when: <% failed() %>
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
@@ -35,11 +35,11 @@ tasks:
         sudo git merge origin/<% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
-      - when: <% succeeded() and result().stderr = "" %>
+      - when: <% succeeded() %>
         publish:
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
-      - when: <% failed() or result().stderr != "" %>
+      - when: <% failed() %>
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>

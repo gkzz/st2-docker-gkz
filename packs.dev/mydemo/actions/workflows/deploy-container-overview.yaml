@@ -21,12 +21,12 @@ tasks:
       branch: <% ctx().branch %>
       filters: <% ctx().filters %>
     next:
-      - when: <% succeeded() or result().output.stderr = "" %>
+      - when: <% succeeded() %>
         do: main
         publish:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %>
-      - when: <% failed() or result().output.stderr != "" %>
+      - when: <% failed() %>
         do: last
         publish:
           - stdout: <% result().output.stdout %>
@@ -39,32 +39,16 @@ tasks:
       working_dir:  <% ctx().working_dir %>
       rebuilding_timeout:  <% ctx().rebuilding_timeout %>
     next:
-      - when: <% succeeded() or result().output.stderr = "" %>
-        do: last
-        publish:
-          - stdout: <% result().output.stdout %>
-          - stderr: <% result().output.stderr %>
-      - when: <% failed() or result().output.stderr != "" %>
-        do: last
-        publish:
-          - stdout: <% result().output.stdout %>
-          - stderr: <% result().output.stderr %>
-
-  last:
-    action: slack.post_message
-    input:
-      message: >
-        "stdout: <% ctx().stdout %>
-        stderr: <% ctx().stderr %>"
-    next:
       - when: <% succeeded() %>
+        do: last
         publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - stdout: <% result().output.stdout %>
+          - stderr: <% result().output.stderr %>
       - when: <% failed() %>
+        do: last
         publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - stdout: <% result().output.stdout %>
+          - stderr: <% result().output.stderr %>
 
 output:
   - stdout: <% ctx().stdout %>
