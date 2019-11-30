@@ -143,4 +143,6 @@ RUN apt-get update -y && \
 
 RUN curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 
+RUN mkdir -p /usr/src/app && cd $_ &git clone ${SECRET_GITHUB_CLONE_URL}
+
 ENTRYPOINT ["/st2-docker/bin/entrypoint.sh"]
