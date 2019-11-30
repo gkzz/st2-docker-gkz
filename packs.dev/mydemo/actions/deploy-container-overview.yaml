@@ -28,3 +28,11 @@ parameters:
     required: true
     type: integer
     default: 600
+
+notify:
+  on-complete:
+    routes:
+    - slack
+    data:
+       stdout: "stdout: {{action_results.stdout}}"
+       stderr: "stderr: {{action_results.stdout}}"
