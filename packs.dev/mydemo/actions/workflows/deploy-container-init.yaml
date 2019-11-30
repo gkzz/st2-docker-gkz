@@ -7,8 +7,7 @@ input:
   - branch
 
 vars:
-  - stdout: null
-  - stderr: null
+  - msg: null
 
 tasks:
   git_fetch:
@@ -20,13 +19,11 @@ tasks:
       - when: <% succeeded() %>
         do: git_merge
         publish: 
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - msg: <% result() %>
       - when: <% failed() %>
         do: fail
         publish: 
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - msg: <% result() %>
   
   git_merge:
     action: core.local
@@ -38,14 +35,11 @@ tasks:
     next:
       - when: <% succeeded() %>
         publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - msg: <% result() %>
       - when: <% failed() %>
         do: fail
         publish: 
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - msg: <% result() %>
 
 output:
-  - stdout: <% ctx().stdout %>
-  - stderr: <% ctx().stderr %>
+  - msg: <% ctx().msg %>

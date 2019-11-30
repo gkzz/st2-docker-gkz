@@ -10,8 +10,7 @@ input:
   - rebuilding_timeout
 
 vars:
-  - stdout: null
-  - stderr: null
+  - msg: null
 
 tasks:
   init:
@@ -24,13 +23,11 @@ tasks:
       - when: <% succeeded() %>
         do: main
         publish:
-          - stdout: <% result().output.stdout %>
-          - stderr: <% result().output.stderr %>
+          - msg: <% result().output.msg %>
       - when: <% failed() %>
         do: fail
         publish:
-          - stdout: <% result().output.stdout %>
-          - stderr: <% result().output.stderr %>
+          - msg: <% result().output.msg %>
   
   main:
     action: mydemo.deploy-container-main
@@ -41,14 +38,11 @@ tasks:
     next:
       - when: <% succeeded() %>
         publish:
-          - stdout: <% result().output.stdout %>
-          - stderr: <% result().output.stderr %>
+          - msg: <% result().output.msg %>
       - when: <% failed() %>
         do: fail
         publish:
-          - stdout: <% result().output.stdout %>
-          - stderr: <% result().output.stderr %> 
+          - msg: <% result().output.msg %>
 
 output:
-  - stdout: <% ctx().stdout %>
-  - stderr: <% ctx().stderr %>
+  - msg: <% ctx().msg %>
