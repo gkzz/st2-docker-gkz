@@ -42,11 +42,11 @@ notify:
     - slack
     data:
        stdout: "stdout: {{action_results.stdout}}"
-       stderr: "stderr: {{action_results.stdout}}"
+       #stderr: "stderr: {{action_results.stdout}}"
   
   on-failure:
     routes:
     - slack
     data:
-       stdout: "stdout: {{action_results.stdout}}"
+       #stdout: "stdout: {{action_results.stdout}}"
        stderr: "stderr: {{action_results.stdout}}"
