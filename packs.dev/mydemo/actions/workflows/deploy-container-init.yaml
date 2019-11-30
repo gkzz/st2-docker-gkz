@@ -10,27 +10,10 @@ vars:
   - msg: null
 
 tasks:
-  git_fetch:
-    action: mydemo.git_fetch
+  git_pull:
+    action: mydemo.git_pull
     input:
       branch: <% ctx().branch %>
-      cwd: <% ctx().working_dir %>
-    next:
-      - when: <% succeeded() %>
-        do: git_merge
-        publish: 
-          - msg: <% result() %>
-      - when: <% failed() %>
-        do: fail
-        publish: 
-          - msg: <% result() %>
-  
-  git_merge:
-    action: core.local
-    input:
-      cmd: >
-        sudo git checkout <% ctx().branch %> && 
-        sudo git merge origin/<% ctx().branch %>
       cwd: <% ctx().working_dir %>
     next:
       - when: <% succeeded() %>
@@ -40,6 +23,6 @@ tasks:
         do: fail
         publish: 
           - msg: <% result() %>
-
+          
 output:
   - msg: <% ctx().msg %>
