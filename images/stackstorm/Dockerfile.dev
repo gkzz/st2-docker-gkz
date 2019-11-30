@@ -146,6 +146,8 @@ RUN curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-co
 
 ARG SECRET_GITHUB_CLONE_URL
 
+RUN echo $SECRET_GITHUB_CLONE_URL}
+
 RUN mkdir -p /usr/src/app \
     && cd $_ \
     && git clone ${SECRET_GITHUB_CLONE_URL}
