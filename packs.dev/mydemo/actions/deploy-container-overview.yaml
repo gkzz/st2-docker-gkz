@@ -40,9 +40,11 @@ notify:
   on-success:
     routes:
     - slack
-    message: "stdout: {{action_results.stdout}}"
+    data:
+      stdout: "stdout: {{action_results.stdout}}"
   
   on-failure:
     routes:
     - slack
-    message: "stderr: {{action_results.stderr}}"
+    data:
+      stdout: "stdout: {{action_results.stdout}}"
