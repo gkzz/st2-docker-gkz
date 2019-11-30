@@ -11,7 +11,7 @@ do
 done
 
 DIRS=(
-  /opt/stackstorm/packs.dev,
+  /opt/stackstorm/packs.dev
   /opt/stackstorm/packs
 )
 for d in $DIRS
