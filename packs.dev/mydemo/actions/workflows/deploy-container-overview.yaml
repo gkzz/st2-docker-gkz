@@ -15,11 +15,9 @@ tasks:
   build:
     action: mydemo.build
     input:
-      #working_dir: <% ctx().working_dir %>
+      working_dir: <% ctx().working_dir %>
       branch: <% ctx().branch %>
       containers_name: <% ctx().containers_name %> 
-      cwd: <% ctx().working_dir %> 
-      timeout: <% ctx().rebuilding_timeout %> 
     next:
       - when: <% succeeded() %>
         publish:

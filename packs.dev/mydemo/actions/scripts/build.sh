@@ -2,15 +2,14 @@
 
 function gitPull() 
 {
-    #cd $1
-    #OUTPUT=$(sudo git fetch | grep -E "$2\+->\s+origin/$2" | awk "{print $2}")
-    OUTPUT=$(sudo git fetch | grep -E "$1\+->\s+origin/$1" | awk "{print $2}")
+    cd $1
+    OUTPUT=$(sudo git fetch | grep -E "$2\+->\s+origin/$2" | awk "{print $2}")
     for o in "$OUTPUT"
     do
-        if [[ $o =~ origin/$1 ]]
+        if [[ $o =~ origin/$2 ]]
         then
-            sudo git checkout $1 \
-            && sudo git merge origin/$1
+            sudo git checkout $2 \
+            && sudo git merge origin/$2
             return 0
         fi
     done
@@ -34,8 +33,8 @@ function rmContainer()
 function main()
 {
   OUTPUT=null
-  if [ gitPull $1 -eq 0 ]; then
-    if [ rmContainer $2 -eq 0 ]; then
+  if [ gitPull $1 $2 -eq 0 ]; then
+    if [ rmContainer $3 -eq 0 ]; then
       OUTPUT=$(sudo docker-compose up -d --build)
     fi
     echo "GIT PULL: true"
@@ -44,12 +43,8 @@ function main()
   echo "GIT PULL: false"
 }
 
-#WORKING_DIR=$1
-#BRANCH=$2
-#CONTAINER_NAME=$3
+WORKING_DIR=$1
+BRANCH=$2
+CONTAINER_NAME=$3
 
-BRANCH=$1
-CONTAINER_NAME=$2
-
-#main WORKING_DIR BRANCH CONTAINER_NAME
-main BRANCH CONTAINER_NAME
+main WORKING_DIR BRANCH CONTAINER_NAME

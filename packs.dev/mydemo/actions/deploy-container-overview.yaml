@@ -5,6 +5,10 @@ description: Deploy Container Overview
 runner_type: orquesta
 entry_point: workflows/deploy-container-overview.yaml
 parameters:
+  working_dir:
+    required: true
+    type: string
+    default: /usr/src/app/flask-docker
   branch:
     required: true
     type: string
@@ -15,14 +19,8 @@ parameters:
     default:
       - flask-docker_flask
       - flask-docker_nginx
-  working_dir:
-    required: true
-    type: string
-    default: /usr/src/app/flask-docker
-  rebuilding_timeout:
-    required: true
-    type: integer
-    default: 600
+
+
 
 notify:
   #on-complete:

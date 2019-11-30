@@ -6,18 +6,14 @@ enabled: true
 runner_type: local-shell-script
 entry_point: scripts/build.sh
 parameters:
-  #working_dir:
-  #  required: true
-  #  type: string
+  working_dir:
+    required: true
+    type: string
   branch:
     required: true
     type: string
   containers_name:
     required: true
     type: array
-  working_dir:
-    required: true
-    type: string
-  rebuilding_timeout:
-    required: true
-    type: integer
+
+
