@@ -21,7 +21,9 @@ services:
       - JUNOS_PASS
       - JUNOS_PORT
       - JUNOS_IP
-      - SECRET_GITHUB_CLONE_URL
+      - GITHUB_ACCT
+      - GITHUB_SECRET_TOKEN
+      - SERVICE_DIR
     env_file:
       - conf/stackstorm.env
       - conf/mongo.env
