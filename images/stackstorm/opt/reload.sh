@@ -13,6 +13,7 @@ done
 DIRS=(
   /opt/stackstorm/packs.dev
   /opt/stackstorm/packs
+  /opt/stackstorm/packs/mydemo
 )
 for d in $DIRS
 do
