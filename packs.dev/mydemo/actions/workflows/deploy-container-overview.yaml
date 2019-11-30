@@ -3,40 +3,26 @@ version: 1.0
 description: deploy-container-overview
 
 input:
-  - working_dir
   - branch
-  - filters
   - containers_name
+  - working_dir
   - rebuilding_timeout
 
 vars:
   - msg: null
 
 tasks:
-  init:
-    action: mydemo.deploy-container-init
+  build:
+    action: mydemo.build
     input:
-      working_dir: <% ctx().working_dir %>
+      #working_dir: <% ctx().working_dir %>
       branch: <% ctx().branch %>
-      filters: <% ctx().filters %>
+      containers_name: <% ctx().containers_name %> 
+      cwd: <% ctx().working_dir %> 
+      timeout: <% ctx().rebuilding_timeout %> 
     next:
       - when: <% succeeded() %>
         do: main
-        publish:
-          - msg: <% result().output.msg %>
-      - when: <% failed() %>
-        do: fail
-        publish:
-          - msg: <% result().output.msg %>
-  
-  main:
-    action: mydemo.deploy-container-main
-    input:
-      containers_name:  <% ctx().containers_name %>
-      working_dir:  <% ctx().working_dir %>
-      rebuilding_timeout:  <% ctx().rebuilding_timeout %>
-    next:
-      - when: <% succeeded() %>
         publish:
           - msg: <% result().output.msg %>
       - when: <% failed() %>
