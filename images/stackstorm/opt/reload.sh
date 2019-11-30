@@ -10,3 +10,12 @@ do
   bash "$f" -H
 done
 
+DIRS=(
+  /opt/stackstorm/packs.dev,
+  /opt/stackstorm/packs
+)
+for d in $DIRS
+do
+  chown -R root:st2packs $d
+done
+
