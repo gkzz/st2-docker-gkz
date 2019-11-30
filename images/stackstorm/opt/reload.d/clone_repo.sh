@@ -1,8 +1,7 @@
 #!/bin/bash
 
 mkdir -p /usr/src/app \
-    && chown -R root:st2packs app/ \
-    && cd /usr/src/app
+    && cd $_
 
 if [ ! -d ${SERVICE_DIR} ] 
 then

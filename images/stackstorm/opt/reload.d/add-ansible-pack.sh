@@ -2,6 +2,7 @@
 
 apt-get install gcc libkrb5-dev -y
 st2 pack install ansible
+sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install --upgrade pip
 sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install paramiko
 st2ctl reload --register-all
 
