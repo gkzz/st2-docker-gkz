@@ -50,9 +50,6 @@ tasks:
     action: core.local
     input:
       cmd: exit1
-    publish: 
-      - stdout: <% result().stdout %>
-      - stderr: <% result().stderr %>
 
 output:
   - stdout: <% ctx().stdout %>
