@@ -22,7 +22,6 @@ tasks:
       timeout: <% ctx().rebuilding_timeout %> 
     next:
       - when: <% succeeded() %>
-        do: main
         publish:
           - msg: <% result().output.msg %>
       - when: <% failed() %>
