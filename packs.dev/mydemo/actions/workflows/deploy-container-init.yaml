@@ -23,7 +23,7 @@ tasks:
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
       - when: <% failed() %>
-        do: exit1
+        do: fail
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
@@ -41,15 +41,10 @@ tasks:
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
       - when: <% failed() %>
-        do: exit1
+        do: fail
         publish: 
           - stdout: <% result().stdout %>
           - stderr: <% result().stderr %>
-
-  exit1:
-    action: core.local
-    input:
-      cmd: exit1
 
 output:
   - stdout: <% ctx().stdout %>

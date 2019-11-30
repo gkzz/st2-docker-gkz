@@ -43,6 +43,7 @@ tasks:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %>
       - when: <% failed() %>
+        do: fail
         publish:
           - stdout: <% result().output.stdout %>
           - stderr: <% result().output.stderr %> 
