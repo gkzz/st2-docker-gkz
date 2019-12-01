@@ -4,7 +4,7 @@ pack: mydemo
 description: rebuild
 enabled: true
 runner_type: local-shell-script
-entry_point: scripts/build.sh
+entry_point: scripts/rebuild.sh
 parameters:
   containers_name:
     required: true
