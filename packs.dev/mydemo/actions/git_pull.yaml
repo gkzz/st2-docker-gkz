@@ -1,0 +1,17 @@
+---
+name: build
+pack: mydemo
+description: build
+enabled: true
+runner_type: local-shell-script
+entry_point: scripts/build.sh
+parameters:
+  working_dir:
+    required: true
+    type: string
+  branch:
+    required: true
+    type: string
+
+
+

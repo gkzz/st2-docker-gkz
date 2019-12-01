@@ -4,6 +4,7 @@ description: deploy-container-overview
 
 input:
   - working_dir
+  - repo_url
   - branch
   - containers_name
   - timeout
@@ -12,12 +13,26 @@ vars:
   - msg: null
 
 tasks:
-  build:
-    action: mydemo.build
+  git_pull:
+    action: mydemo.git_pull
     input:
       working_dir: <% ctx().working_dir %>
+      repo_url: <% ctx().repo_url %>
       branch: <% ctx().branch %>
-      containers_name: <% ctx().containers_name %> 
+      timeout: <% ctx().timeout %>
+    next:
+      - when: <% succeeded() %>
+        do: rebuild
+        publish:
+          - msg: <% result() %>
+      - when: <% failed() %>
+        do: fail
+        publish:
+          - msg: <% result() %>
+  rebuid:
+    action: mydemo.rebuild
+    input:
+      containers_name: <% ctx().containers_name %>
       timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
