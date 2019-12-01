@@ -1,0 +1,17 @@
+---
+name: rebuild
+pack: mydemo
+description: rebuild
+enabled: true
+runner_type: local-shell-script
+entry_point: scripts/build.sh
+parameters:
+  containers_name:
+    required: true
+    type: array
+  timeout:
+    required: true
+    type: integer
+
+
+

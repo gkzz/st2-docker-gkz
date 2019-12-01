@@ -1,10 +1,10 @@
 ---
-name: build
+name: git_pull
 pack: mydemo
-description: build
+description: git pull
 enabled: true
 runner_type: local-shell-script
-entry_point: scripts/build.sh
+entry_point: scripts/git_pull.sh
 parameters:
   working_dir:
     required: true
@@ -12,6 +12,10 @@ parameters:
   branch:
     required: true
     type: string
+  timeout:
+    required: true
+    type: integer
+    default: 300
 
 
 
