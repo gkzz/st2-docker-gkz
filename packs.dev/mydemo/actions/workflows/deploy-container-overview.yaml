@@ -4,7 +4,6 @@ description: deploy-container-overview
 
 input:
   - working_dir
-  - repo_url
   - branch
   - containers_name
   - timeout
@@ -17,7 +16,6 @@ tasks:
     action: mydemo.git_pull
     input:
       working_dir: <% ctx().working_dir %>
-      repo_url: <% ctx().repo_url %>
       branch: <% ctx().branch %>
       timeout: <% ctx().timeout %>
     next:

@@ -9,10 +9,6 @@ parameters:
     required: true
     type: string
     default: /usr/src/app/flask-docker
-  repo_url:
-    required: true
-    type: string
-    default: /usr/src/app/flask-docker
   branch:
     required: true
     type: string

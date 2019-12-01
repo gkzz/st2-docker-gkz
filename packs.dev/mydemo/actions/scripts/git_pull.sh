@@ -4,8 +4,7 @@ function main()
 {
   
   WORKING_DIR=$1
-  REPO_URL=$2
-  BRANCH=$3
+  BRANCH=$2
 
   OUTPUT=null
   
@@ -22,14 +21,11 @@ function main()
       return
     fi
   else
-    $OUTPUT=$(git clone $REPO_URL $WORKING_DIR))
-    echo $OUTPUT
-    return
+    return 1
   fi
 }
 
 WORKING_DIR=$1
-REPO_URL=$2
-BRANCH=$3
+BRANCH=$2
 
-main $WORKING_DIR $REPO_URL $BRANCH
+main $WORKING_DIR $BRANCH
