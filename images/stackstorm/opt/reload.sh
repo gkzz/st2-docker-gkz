@@ -10,13 +10,8 @@ do
   bash "$f" -H
 done
 
-DIRS=(
-  /opt/stackstorm/packs.dev
-  /opt/stackstorm/packs
-  /opt/stackstorm/packs/mydemo
-)
-for d in $DIRS
-do
-  chown -R root:st2packs $d
-done
+cd /opt/stackstorm/packs
+chown -R root:st2packs mydemo && chown -R +x mydemo
+
+st2ctl reload --register-all
 
