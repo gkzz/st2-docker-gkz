@@ -6,6 +6,9 @@ enabled: true
 runner_type: local-shell-script
 entry_point: scripts/rebuild.sh
 parameters:
+  working_dir:
+    required: true
+    type: string
   containers_name:
     required: true
     type: array

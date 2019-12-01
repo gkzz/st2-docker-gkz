@@ -19,8 +19,12 @@ tasks:
       branch: <% ctx().branch %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() and result() != null %>
         do: rebuild
+        publish:
+          - msg: <% result() %>
+      - when: <% succeeded() and result() == null %>
+        do: last
         publish:
           - msg: <% result() %>
       - when: <% failed() %>
@@ -31,6 +35,7 @@ tasks:
     action: mydemo.rebuild
     input:
       containers_name: <% ctx().containers_name %>
+      cwd: <% ctx().working_dir %>
       timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
