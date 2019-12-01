@@ -23,7 +23,7 @@ tasks:
         do: rebuild
         publish:
           - msg: <% result() %>
-      - when: <% succeeded() and result() == null %>
+      - when: <% succeeded() and result() = null %>
         do: last
         publish:
           - msg: <% result() %>
