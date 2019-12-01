@@ -3,10 +3,10 @@ version: 1.0
 description: deploy-container-overview
 
 input:
+  - working_dir
   - branch
   - containers_name
-  - working_dir
-  - rebuilding_timeout
+  - timeout
 
 vars:
   - msg: null
@@ -18,14 +18,15 @@ tasks:
       working_dir: <% ctx().working_dir %>
       branch: <% ctx().branch %>
       containers_name: <% ctx().containers_name %> 
+      timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
         publish:
-          - msg: <% result().output.msg %>
+          - msg: <% result() %>
       - when: <% failed() %>
         do: fail
         publish:
-          - msg: <% result().output.msg %>
+          - msg: <% result() %>
 
 output:
   - msg: <% ctx().msg %>

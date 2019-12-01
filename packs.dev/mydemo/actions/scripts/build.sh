@@ -33,8 +33,8 @@ function rmContainer()
 function main()
 {
   OUTPUT=null
-  if [ gitPull $1 $2 -eq 0 ]; then
-    if [ rmContainer $3 -eq 0 ]; then
+  if [ $(gitPull $1 $2) -eq 0 ]; then
+    if [ $(rmContainer $3) -eq 0 ]; then
       OUTPUT=$(sudo docker-compose up -d --build)
     fi
     echo "GIT PULL: true"

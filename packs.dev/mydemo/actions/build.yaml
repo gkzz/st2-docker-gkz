@@ -15,5 +15,9 @@ parameters:
   containers_name:
     required: true
     type: array
+  timeout:
+    required: true
+    type: integer
+
 
 
