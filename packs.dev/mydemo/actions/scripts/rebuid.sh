@@ -26,7 +26,7 @@ function main()
 OUTPUT=null
 CONTAINERS_NAME=$1
 
-if [[ $(main $CONTAINERS_NAME) ]]; then
+if [ $(main $CONTAINERS_NAME) -eq 0 ]; then
   OUTPUT=$(sudo docker-compose up -d --build)
 fi
 

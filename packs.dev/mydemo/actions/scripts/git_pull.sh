@@ -16,16 +16,16 @@ function main()
     current_rev=$(git rev-parse HEAD)
     if [ "$latest_rev" != "$current_rev" ]; then
       git reset --hard $(git log --pretty=format:%H | tail -1)
-      $OUTPUT=$(git pull)
-      echo $OUTPUT
-      return
+      OUTPUT=$(git pull)
     fi
-  else
-    return 1
   fi
+
+  echo $OUTPUT
+  return
 }
 
 WORKING_DIR=$1
 BRANCH=$2
 
-main $WORKING_DIR $BRANCH
+OUTPUT=$(main $WORKING_DIR $BRANCH)
+echo $OUTPUT
