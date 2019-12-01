@@ -27,7 +27,7 @@ tasks:
         do: fail
         publish:
           - msg: <% result() %>
-  rebuid:
+  rebuild:
     action: mydemo.rebuild
     input:
       containers_name: <% ctx().containers_name %>
