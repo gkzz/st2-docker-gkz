@@ -45,6 +45,20 @@ tasks:
         do: fail
         publish:
           - msg: <% result() %>
+  last:
+    action: slack.post_message
+    input:
+      message: <% ctx().containers_name %>
+      cwd: <% ctx().working_dir %>
+      timeout: <% ctx().timeout %>
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - msg: <% result() %>
+      - when: <% failed() %>
+        do: fail
+        publish:
+          - msg: <% result() %>
 
 output:
   - msg: <% ctx().msg %>
