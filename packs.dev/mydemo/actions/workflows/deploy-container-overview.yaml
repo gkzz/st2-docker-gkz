@@ -48,7 +48,7 @@ tasks:
   last:
     action: slack.post_message
     input:
-      message: <% ctx().containers_name %>
+      message: <% ctx().msg %>
       cwd: <% ctx().working_dir %>
       timeout: <% ctx().timeout %>
     next:
