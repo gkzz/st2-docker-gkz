@@ -9,12 +9,6 @@ parameters:
   containers_name:
     required: true
     type: array
-  working_dir:
-    required: true
-    type: string
-  timeout:
-    required: true
-    type: integer
 
 
 

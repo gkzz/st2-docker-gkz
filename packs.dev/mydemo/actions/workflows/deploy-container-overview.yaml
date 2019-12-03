@@ -49,8 +49,6 @@ tasks:
     action: slack.post_message
     input:
       message: <% ctx().msg %>
-      cwd: <% ctx().working_dir %>
-      timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
         publish:
