@@ -13,26 +13,3 @@ parameters:
     required: true
     type: string
     default: /opt/stackstorm/packs/ansible/inventory/hosts
-    
-
-
-
-notify:
-  #on-complete:
-  #  routes:
-  #  - slack
-  #  data:
-  #     stdout: "stdout: {{action_results.stdout}}"
-  #     stderr: "stderr: {{action_results.stdout}}"
-  
-  on-success:
-    routes:
-    - slack
-    data:
-      stdout: "stdout: {{action_results.stdout}}"
-  
-  on-failure:
-    routes:
-    - slack
-    data:
-      stdout: "stdout: {{action_results.stdout}}"

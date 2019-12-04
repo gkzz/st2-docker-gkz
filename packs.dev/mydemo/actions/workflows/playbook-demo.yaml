@@ -24,16 +24,14 @@ tasks:
   echo:
     action: core.local
     input:
-      cmd: ls && pwd && echo <% ctx().stdout %> 
+      cmd: echo <% ctx().msg %> 
     next:
       - when: <% succeeded() %>
         do: last
         publish:
           - msg: <% result() %>
       - when: <% failed() %>
-        do:
-          - last
-          - fail
+        do: fail
         publish: 
           - msg: <% result() %>
 
@@ -46,7 +44,9 @@ tasks:
         publish:
           - msg: <% result() %>
       - when: <% failed() %>
-        do: fail
+        do: 
+          - last
+          - fail
         publish:
           - msg: <% result() %>
 
