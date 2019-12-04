@@ -8,9 +8,10 @@ function main()
   CONTAINERS_NAME=$1
   for c in $CONTAINERS_NAME;
   do
-    for i in $(docker container ls | grep -E '\$c.*Up' | awk '{print $1}');
+    for i in $(sudo docker container ls | grep -E '\$c.*Up' | awk '{print $1}');
     do
-      docker container stop $i && docker container rm $i;
+      sudo docker container stop $i \
+      && sudo docker container rm $i;
       counter=`expr $counter + 1`
     done
   done
