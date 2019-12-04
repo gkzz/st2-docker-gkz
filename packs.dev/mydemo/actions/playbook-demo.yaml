@@ -5,24 +5,15 @@ description: Playbook Demo
 runner_type: orquesta
 entry_point: workflows/playbook-demo.yaml
 parameters:
-  working_dir:
+  playbook:
     required: true
     type: string
-    default: /usr/src/app/flask-docker
-  branch:
+    default: /opt/stackstorm/packs/ansible/playbook/ping.yaml
+  inventory_file:
     required: true
     type: string
-    default: master
-  containers_name:
-    required: true
-    type: array
-    default:
-      - flask-docker_flask
-      - flask-docker_nginx
-  timeout:
-    required: true
-    type: integer
-    default: 300
+    default: /opt/stackstorm/packs/ansible/inventory/hosts
+    
 
 
 
