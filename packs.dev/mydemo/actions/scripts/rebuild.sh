@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+set -e
 
 function main()
 {
@@ -27,7 +27,9 @@ function main()
 OUTPUT=null
 CONTAINERS_NAME=$1
 
-if [ $(main $CONTAINERS_NAME) -eq 0 ]; then
+OUTPUT=$(main $CONTAINERS_NAME)
+
+if [ $OUTPUT -eq 0 ]; then
   OUTPUT=$(sudo docker-compose up -d --build)
 fi
 

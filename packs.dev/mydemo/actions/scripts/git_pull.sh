@@ -1,12 +1,14 @@
 #!/bin/bash
 
+set -e
+
 function main() 
 {
   
   WORKING_DIR=$1
   BRANCH=$2
 
-  OUTPUT=null
+  output=null
   
   if [ -d "$WORKING_DIR" ]; then
     cd $WORKING_DIR
@@ -16,11 +18,11 @@ function main()
     current_rev=$(sudo git rev-parse HEAD)
     if [ "$latest_rev" != "$current_rev" ]; then
       sudo git reset --hard $(git log --pretty=format:%H | tail -1)
-      OUTPUT=$(sudo git pull)
+      output=$(sudo git pull)
     fi
   fi
 
-  echo $OUTPUT
+  echo $output
   return
 }
 
