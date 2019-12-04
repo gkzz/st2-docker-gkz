@@ -1,0 +1,47 @@
+---
+name: playbook-demo
+pack: mydemo
+description: Playbook Demo
+runner_type: orquesta
+entry_point: workflows/playbook-demo.yaml
+parameters:
+  working_dir:
+    required: true
+    type: string
+    default: /usr/src/app/flask-docker
+  branch:
+    required: true
+    type: string
+    default: master
+  containers_name:
+    required: true
+    type: array
+    default:
+      - flask-docker_flask
+      - flask-docker_nginx
+  timeout:
+    required: true
+    type: integer
+    default: 300
+
+
+
+notify:
+  #on-complete:
+  #  routes:
+  #  - slack
+  #  data:
+  #     stdout: "stdout: {{action_results.stdout}}"
+  #     stderr: "stderr: {{action_results.stdout}}"
+  
+  on-success:
+    routes:
+    - slack
+    data:
+      stdout: "stdout: {{action_results.stdout}}"
+  
+  on-failure:
+    routes:
+    - slack
+    data:
+      stdout: "stdout: {{action_results.stdout}}"

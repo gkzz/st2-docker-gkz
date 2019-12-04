@@ -10,8 +10,9 @@ do
   bash "$f" -H
 done
 
-cd /opt/stackstorm/packs
-chown -R root:st2packs mydemo && chown -R +x mydemo
+chown -R root:st2packs /opt/stackstorm/packs/mydemo/ \
+&& chmod -R +x /opt/stackstorm/packs/mydemo/
+
 
 st2ctl reload --register-all
 

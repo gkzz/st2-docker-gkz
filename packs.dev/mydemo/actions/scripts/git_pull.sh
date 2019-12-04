@@ -10,13 +10,13 @@ function main()
   
   if [ -d "$WORKING_DIR" ]; then
     cd $WORKING_DIR
-    git fetch -p
-    git checkout -q $BRANCH
-    latest_rev=$(git ls-remote origin HEAD | awk '{print $1}')
-    current_rev=$(git rev-parse HEAD)
+    sudo git fetch -p
+    sudo git checkout -q $BRANCH
+    latest_rev=$(sudo git ls-remote origin HEAD | awk '{print $1}')
+    current_rev=$(sudo git rev-parse HEAD)
     if [ "$latest_rev" != "$current_rev" ]; then
-      git reset --hard $(git log --pretty=format:%H | tail -1)
-      OUTPUT=$(git pull)
+      sudo git reset --hard $(git log --pretty=format:%H | tail -1)
+      OUTPUT=$(sudo git pull)
     fi
   fi
 

@@ -1,5 +1,4 @@
 ---
-'''
 name: "notify"
 pack: "mydemo"
 # ref
@@ -18,4 +17,3 @@ action:
   ref: "slack.post_message"
   parameters:
     message: "{{trigger.message}}"
-'''
