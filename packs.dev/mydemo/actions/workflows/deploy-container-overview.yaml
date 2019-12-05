@@ -7,6 +7,7 @@ input:
   - branch
   - containers_name
   - timeout
+  - output
 
 vars:
   - msg: null
@@ -19,11 +20,11 @@ tasks:
       branch: <% ctx().branch %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and result() != null %>
+      - when: <% succeeded() and result().output != null %>
         do: rebuild
         publish:
           - msg: <% result() %>
-      - when: <% succeeded() and result() = null %>
+      - when: <% succeeded() and result().output = null %>
         do: last
         publish:
           - msg: <% result() %>
