@@ -7,7 +7,7 @@ function main()
   working_dir=$1
   branch=$2
 
-  output=null
+  counter=0
   
   if [ -d "$working_dir" ]; then
     cd $working_dir
@@ -18,10 +18,11 @@ function main()
     if [ "$latest_rev" != "$current_rev" ]; then
       sudo git reset --hard $(git log --pretty=format:%H | tail -1)
       output=$(sudo git pull)
+      counter=`expr $counter + 1`
     fi
   fi
 
-  echo $output
+  echo $counter
   return
 }
 
@@ -29,5 +30,10 @@ function main()
 working_dir=$1
 branch=$2
 
-return_value=$(main $working_dir $branch)
-echo ${return_value:=null}
+counter=$(main $working_dir $branch)
+
+  if [ $counter -eq 1 ]; then
+    exit 0
+  else
+    exit 1
+  fi
