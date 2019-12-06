@@ -5,6 +5,10 @@ description: Deploy Container Overview
 runner_type: orquesta
 entry_point: workflows/deploy-container-overview.yaml
 parameters:
+  main_action_name:
+    required: true
+    type: string
+    default: deploy-container-overview
   working_dir:
     required: true
     type: string

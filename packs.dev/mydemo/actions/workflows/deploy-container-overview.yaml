@@ -3,19 +3,21 @@ version: 1.0
 description: deploy-container-overview
 
 input:
+  - main_action_name
   - working_dir
   - branch
   - ptn
   - timeout
 
 vars:
-  - stdout: 
-  - stderr: 
-  - failed: 
+  - failed:
+  - msg: 
+  - return_value: 
+
 
 output:
-  - stdout: <% ctx().stdout %>
-  - stderr: <% ctx().stderr %>
+  - main_action_name: <% ctx().main_action_name %>
+  - failed: <% ctx().failed %>
 
   
 
@@ -30,25 +32,23 @@ tasks:
       - when: <% succeeded() %>
         do: after_git_pull
         publish:
-          - stdout: <% result().stdout %>
+          - return_value: <% result().return_value %>
       - when: <% failed() %>
-        do: last
+        do: post_msg
         publish:
           - failed: True
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - return_value: <% result().return_value %>
 
   after_git_pull:
     action: core.noop
     next:
-      - when: <% ctx().stdout != null %>
+      - when: <% ctx().return_value != null %>
         do: rebuild
-      - when: <% ctx().stdout = null %>
-        do: last
+      - when: <% ctx().return_value = null %>
+        do: post_msg
         publish:
           - failed: False
-          - stdout: "[git_pull] None"
-          - stderr: "None"
+          - msg: "[git_pull] null"
       
   rebuild:
     action: mydemo.rebuild
@@ -60,46 +60,40 @@ tasks:
       - when: <% succeeded() %>
         do: after_rebuild
         publish:
-          - stdout: <% result().stdout %>
+          - return_value: <% result().return_value %>
       - when: <% failed() %>
-        do: last
+        do: post_msg
         publish:
           - failed: True
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - msg: <% result().return_value %>
         
   after_rebuild:
     action: core.noop
     next:
-      - when: <% ctx().stdout != null %>
-        do: last
+      - when: <% ctx().return_value != null %>
+        do: post_msg
         publish:
           - failed: False
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
+          - msg: <% result() %>
       - when: <% ctx().stdout = null %>
-        do: last
+        do: post_msg
         publish:
           - failed: True
-          - stdout: |-
-              "##### Unknown Error May Occur To You ########
-              [rebuild] None"
-          - stderr: "None"
+          - msg: <% result() %>
 
-  last:
+  post_msg:
     action: slack.post_message
     input:
       message: |-
-         [failed] <% ctx().failed %>
-         [stdout] <% ctx().stdout %>
-         [stderr] <% ctx().stderr %>
+        <% ctx().main_action_name %>
+        <% ctx().failed %>
+        <% ctx().msg %>
     next:
-      - when: <% succeeded() %>
-        publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>
-      - when: <% failed() %>
+      - when: <% succeeded() or failed() %>
+        do: last
+  
+  last:
+    action: core.noop
+    next:
+      - when: <% ctx().failed %>
         do: fail
-        publish:
-          - stdout: <% result().stdout %>
-          - stderr: <% result().stderr %>

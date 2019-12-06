@@ -24,8 +24,8 @@ function main()
 }
 
 
-WORKING_DIR=$1
-BRANCH=$2
+working_dir=$1
+branch=$2
 
-OUTPUT=$(main $WORKING_DIR $BRANCH)
-echo ${OUTPUT:=null}
+result=$(main $working_dir $branch)
+echo ${result:=null}
