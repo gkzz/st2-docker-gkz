@@ -9,9 +9,9 @@ input:
   - timeout
 
 vars:
-  - stdout: null
-  - stderr: null
-  - failed: null
+  - stdout: 
+  - stderr: 
+  - failed: 
 
 output:
   - stdout: <% ctx().stdout %>

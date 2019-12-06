@@ -20,15 +20,12 @@ function main()
 
 }
 
-OUTPUT=null
-COUNTER=null
 WORKING_DIR=$1
 PTN=$2
-
 COUNTER=$(main $WORKING_DIR $PTN)
 
 if [ $COUNTER -eq 2 ]; then
   OUTPUT=$(sudo docker-compose up -d --build)
 fi
 
-echo ${OUTPUT}
+echo ${OUTPUT:=null}
