@@ -90,9 +90,9 @@ tasks:
     action: slack.post_message
     input:
       message: |-
-        "[failed] <% ctx().failed %>
+         [failed] <% ctx().failed %>
          [stdout] <% ctx().stdout %>
-         [stderr] <% ctx().stderr %>"
+         [stderr] <% ctx().stderr %>
     next:
       - when: <% succeeded() %>
         publish:
