@@ -1,10 +1,7 @@
 #!/bin/bash
 
-set -e
-
 function main() 
 {
-  
   WORKING_DIR=$1
   BRANCH=$2
 
