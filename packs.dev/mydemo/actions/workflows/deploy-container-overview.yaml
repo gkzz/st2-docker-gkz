@@ -32,12 +32,12 @@ tasks:
       - when: <% succeeded() %>
         do: after_git_pull
         publish:
-          - return_value: <% result().return_value %>
+          - return_value: <% result() %>
       - when: <% failed() %>
         do: post_msg
         publish:
           - failed: True
-          - return_value: <% result().return_value %>
+          - return_value: <% result() %>
 
   after_git_pull:
     action: core.noop
@@ -60,12 +60,12 @@ tasks:
       - when: <% succeeded() %>
         do: after_rebuild
         publish:
-          - return_value: <% result().return_value %>
+          - return_value: <% result() %>
       - when: <% failed() %>
         do: post_msg
         publish:
           - failed: True
-          - msg: <% result().return_value %>
+          - msg: <% result() %>
         
   after_rebuild:
     action: core.noop
