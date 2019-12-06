@@ -12,13 +12,11 @@ parameters:
   branch:
     required: true
     type: string
-    default: master
-  containers_name:
+    default: devel-views
+  ptn:
     required: true
     type: array
-    default:
-      - flask-docker_flask
-      - flask-docker_nginx
+    default: flask-docker_flask|flask-docker_nginx
   timeout:
     required: true
     type: integer

@@ -1,35 +1,33 @@
 #!/bin/bash
 
-set -e
-
 function main()
 {
-  counter=0
-  CONTAINERS_NAME=$1
-  for c in $CONTAINERS_NAME;
-  do
-    for i in $(sudo docker container ls | grep -E '\$c.*Up' | awk '{print $1}');
-    do
-      sudo docker container stop $i \
-      && sudo docker container rm $i;
-      counter=`expr $counter + 1`
-    done
-  done
+  working_dir=$1
+  ptn=$2
 
-  if [ $counter -eq 2 ]; then
-    exit 0
-  else
-    exit 1
-  fi
+  counter=0
+  ids=$(sudo docker container ls | grep -E "${ptn}" | awk '{print $1}')
+
+  for i in $ids;
+  do
+    sudo docker container stop $i \
+    && sudo docker container rm $i;
+    counter=`expr $counter + 1`
+  done
+  
+  echo $counter
+  return
 
 }
 
 OUTPUT=null
-CONTAINERS_NAME=$1
+COUNTER=null
+WORKING_DIR=$1
+PTN=$2
 
-OUTPUT=$(main $CONTAINERS_NAME)
+COUNTER=$(main $WORKING_DIR $PTN)
 
-if [ $OUTPUT -eq 0 ]; then
+if [ $COUNTER -eq 2 ]; then
   OUTPUT=$(sudo docker-compose up -d --build)
 fi
 

@@ -35,17 +35,28 @@ tasks:
   rebuild:
     action: mydemo.rebuild
     input:
-      containers_name: <% ctx().containers_name %>
-      cwd: <% ctx().working_dir %>
+      working_dir: <% ctx().working_dir %>
+      ptn: <% ctx().ptn %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() and result().output != null %>
+        do: last
         publish:
-          - msg: <% result() %>
+          - msg: |-
+              [sudo docker-compose up -d --build]
+              <% result() %>
+      - when: <% succeeded() and result().output = null %>
+        do: last
+        publish:
+          - msg: |-
+              [sudo docker-compose up -d --build] None
+              <% result() %>
       - when: <% failed() %>
         do: fail
         publish:
-          - msg: <% result() %>
+          - msg: |-
+              [docker container stop/rm]
+              <% result() %>
   last:
     action: slack.post_message
     input:

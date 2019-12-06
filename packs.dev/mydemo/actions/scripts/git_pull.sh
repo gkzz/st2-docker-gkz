@@ -26,6 +26,8 @@ function main()
   return
 }
 
+OUTPUT=null
+
 WORKING_DIR=$1
 BRANCH=$2
 
