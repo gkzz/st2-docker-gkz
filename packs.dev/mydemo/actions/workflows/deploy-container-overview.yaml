@@ -15,7 +15,7 @@ vars:
 
 output:
   - stdout: <% ctx().stdout %>
-  - stderr: <% result().stderr %>
+  - stderr: <% ctx().stderr %>
 
   
 

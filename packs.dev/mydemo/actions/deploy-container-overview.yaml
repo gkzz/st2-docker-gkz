@@ -21,25 +21,3 @@ parameters:
     required: true
     type: integer
     default: 300
-
-
-
-notify:
-  #on-complete:
-  #  routes:
-  #  - slack
-  #  data:
-  #     stdout: "stdout: {{action_results.stdout}}"
-  #     stderr: "stderr: {{action_results.stdout}}"
-  
-  on-success:
-    routes:
-    - slack
-    data:
-      stdout: "stdout: {{action_results.stdout}}"
-  
-  on-failure:
-    routes:
-    - slack
-    data:
-      stdout: "stdout: {{action_results.stdout}}"
