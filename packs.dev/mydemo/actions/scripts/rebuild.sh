@@ -25,7 +25,7 @@ ptn=$2
 counter=$(main $working_dir $ptn)
 
 if [ $counter -eq 2 ]; then
-  result=$(sudo docker-compose up -d --build)
+  return_value=$(sudo docker-compose up -d --build)
 fi
 
-echo ${result:=null}
+echo ${return_value:=null}

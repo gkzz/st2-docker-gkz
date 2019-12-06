@@ -75,7 +75,7 @@ tasks:
         publish:
           - failed: False
           - msg: <% result() %>
-      - when: <% ctx().stdout = null %>
+      - when: <% ctx().eturn_value = null %>
         do: post_msg
         publish:
           - failed: True

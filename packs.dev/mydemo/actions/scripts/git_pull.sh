@@ -27,5 +27,5 @@ function main()
 working_dir=$1
 branch=$2
 
-result=$(main $working_dir $branch)
-echo ${result:=null}
+return_value=$(main $working_dir $branch)
+echo ${return_value:=null}
