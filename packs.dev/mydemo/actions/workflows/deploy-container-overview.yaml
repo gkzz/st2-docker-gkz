@@ -75,7 +75,7 @@ tasks:
         publish:
           - failed: False
           - msg: <% result() %>
-      - when: <% ctx().eturn_value = null %>
+      - when: <% ctx().return_value = null %>
         do: post_msg
         publish:
           - failed: True
@@ -85,8 +85,11 @@ tasks:
     action: slack.post_message
     input:
       message: |-
+        [main_action_name] 
         <% ctx().main_action_name %>
+        [failed]
         <% ctx().failed %>
+        [msg]
         <% ctx().msg %>
     next:
       - when: <% succeeded() or failed() %>

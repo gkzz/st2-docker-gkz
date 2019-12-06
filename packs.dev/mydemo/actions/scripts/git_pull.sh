@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 function main() 
 {
   working_dir=$1

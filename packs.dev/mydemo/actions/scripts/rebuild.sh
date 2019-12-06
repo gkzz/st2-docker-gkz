@@ -1,9 +1,13 @@
 #!/bin/bash
 
+set -e
+
 function main()
 {
   working_dir=$1
   ptn=$2
+
+  cd $working_dir
 
   counter=0
   ids=$(sudo docker container ls | grep -E "${ptn}" | awk '{print $1}')
