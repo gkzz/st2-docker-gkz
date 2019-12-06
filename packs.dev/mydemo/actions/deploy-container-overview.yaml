@@ -15,7 +15,7 @@ parameters:
     default: devel-views
   ptn:
     required: true
-    type: array
+    type: string
     default: flask-docker_flask|flask-docker_nginx
   timeout:
     required: true

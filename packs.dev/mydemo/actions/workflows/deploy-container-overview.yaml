@@ -5,12 +5,19 @@ description: deploy-container-overview
 input:
   - working_dir
   - branch
-  - containers_name
+  - ptn
   - timeout
-  - output
 
 vars:
-  - msg: null
+  - stdout: null
+  - stderr: null
+  - failed: null
+
+output:
+  - stdout: <% ctx().stdout %>
+  - stderr: <% result().stderr %>
+
+  
 
 tasks:
   git_pull:
@@ -20,18 +27,29 @@ tasks:
       branch: <% ctx().branch %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and result().output != null %>
-        do: rebuild
+      - when: <% succeeded() %>
+        do: after_git_pull
         publish:
-          - msg: <% result() %>
-      - when: <% succeeded() and result().output = null %>
+          - stdout: <% result().stdout %>
+      - when: <% failed() %>
         do: last
         publish:
-          - msg: <% result() %>
-      - when: <% failed() %>
-        do: fail
+          - failed: True
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+
+  after_git_pull:
+    action: core.noop
+    next:
+      - when: <% ctx().stdout != null %>
+        do: rebuild
+      - when: <% ctx().stdout = null %>
+        do: last
         publish:
-          - msg: <% result() %>
+          - failed: False
+          - stdout: "[git_pull] None"
+          - stderr: "None"
+      
   rebuild:
     action: mydemo.rebuild
     input:
@@ -39,36 +57,49 @@ tasks:
       ptn: <% ctx().ptn %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and result().output != null %>
-        do: last
+      - when: <% succeeded() %>
+        do: after_rebuild
         publish:
-          - msg: |-
-              [sudo docker-compose up -d --build]
-              <% result() %>
-      - when: <% succeeded() and result().output = null %>
-        do: last
-        publish:
-          - msg: |-
-              [sudo docker-compose up -d --build] None
-              <% result() %>
+          - stdout: <% result().stdout %>
       - when: <% failed() %>
-        do: fail
+        do: last
         publish:
-          - msg: |-
-              [docker container stop/rm]
-              <% result() %>
+          - failed: True
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+        
+  after_rebuild:
+    action: core.noop
+    next:
+      - when: <% ctx().stdout != null %>
+        do: last
+        publish:
+          - failed: False
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+      - when: <% ctx().stdout = null %>
+        do: last
+        publish:
+          - failed: True
+          - stdout: |-
+              "##### Unknown Error May Occur To You ########
+              [rebuild] None"
+          - stderr: "None"
+
   last:
     action: slack.post_message
     input:
-      message: <% ctx().msg %>
+      message: |-
+        "[failed] <% ctx().failed %>
+         [stdout] <% ctx().stdout %>
+         [stderr] <% ctx().stderr %>"
     next:
       - when: <% succeeded() %>
         publish:
-          - msg: <% result() %>
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
       - when: <% failed() %>
         do: fail
         publish:
-          - msg: <% result() %>
-
-output:
-  - msg: <% ctx().msg %>
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
