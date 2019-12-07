@@ -12,6 +12,9 @@ parameters:
   branch:
     required: true
     type: string
+  merged:
+    required: true
+    type: boolean
   timeout:
     required: true
     type: integer

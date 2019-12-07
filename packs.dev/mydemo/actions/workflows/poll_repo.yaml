@@ -1,0 +1,71 @@
+version: 1.0
+
+description: poll remote repo
+
+input:
+  - action_name
+  - working_dir
+  - branch
+  - timeout
+
+vars:
+  - action_result: 
+
+
+output:
+  - failed: <% ctx().failed %>
+  - action_name: <% ctx().action_name %>
+  - action_result: <% ctx().action_result %>
+  
+
+tasks:
+  init:
+    action: core.noop
+    next:
+    - publish:
+      - failed: False
+      - merged: False
+        do: git_status
+  
+  git_status:
+    action: mydemo.git_status
+    input:
+      working_dir: <% ctx().working_dir %>
+      branch: <% ctx().branch %>
+      merged: <% ctx().merged %>
+      timeout: <% ctx().timeout %>
+    next:
+      - when: <% succeeded() and not ctx().merged %>
+        do: git_merge
+      - when: <% succeeded() and ctx().merged %>
+        do: last
+        publish:
+          - action_result: <% result() %>
+      - when: <% failed() %>
+        do: last
+        publish:
+          - failed: True
+          - action_result: <% result() %>
+      
+  git_merge:
+    action: core.local
+    input:
+      cmd: sudo git merge origin/<% ctx().branch %>
+      cwd: <% ctx().working_dir %>
+      timeout: <% ctx().timeout %>
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - merged: True
+        do: git_status
+      - when: <% failed() %>
+        do: last
+        publish:
+          - failed: True
+          - action_result: <% result() %>
+  
+  last:
+    action: core.noop
+    next:
+      - when: <% ctx().failed %>
+        do: fail
