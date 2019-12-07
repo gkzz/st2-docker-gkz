@@ -15,8 +15,9 @@ vars:
 
 
 output:
-  - main_action_name: <% ctx().main_action_name %>
   - failed: <% ctx().failed %>
+  - main_action_name: <% ctx().main_action_name %>
+
 
   
 

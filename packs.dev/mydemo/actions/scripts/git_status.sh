@@ -2,19 +2,20 @@
 
 set -e
 
-function main()
+function main() 
 {
   working_dir=$1
   branch=$2
 
   counter=0
-
+  
   if [ -d "$working_dir" ]; then
     cd $working_dir
+    sudo git fetch -p
     sudo git checkout -q $branch
-
-    status=$(sudo git status | grep -E "Your branch is up to date with 'origin/${ptn}'." | awk '{print $8}')
-    if [ "$status" = "'origin/${ptn}'." ]; then
+    latest_rev=$(sudo git ls-remote origin HEAD | awk '{print $1}')
+    current_rev=$(sudo git rev-parse HEAD)
+    if [ "$latest_rev" = "$current_rev" ]; then
       counter=`expr $counter + 1`
     fi
   fi
@@ -23,10 +24,11 @@ function main()
   return
 }
 
+
 working_dir=$1
 branch=$2
-counter=$(main $working_dir $branch)
 
+counter=$(main $working_dir $branch)
 
   if [ $counter -eq 1 ]; then
     exit 0
