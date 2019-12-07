@@ -1,10 +1,10 @@
 ---
-name: git_pull
+name: git_status
 pack: mydemo
-description: git pull
+description: git status
 enabled: true
 runner_type: local-shell-script
-entry_point: scripts/git_pull.sh
+entry_point: scripts/git_status.sh
 parameters:
   working_dir:
     required: true

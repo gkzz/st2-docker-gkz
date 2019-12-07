@@ -30,25 +30,10 @@ tasks:
       timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
-        do: after_git_pull
-        publish:
-          - return_value: <% result() %>
-      - when: <% failed() %>
-        do: post_msg
-        publish:
-          - failed: True
-          - return_value: <% result() %>
-
-  after_git_pull:
-    action: core.noop
-    next:
-      - when: <% ctx().return_value != null %>
         do: rebuild
-      - when: <% ctx().return_value = null %>
-        do: post_msg
-        publish:
-          - failed: False
-          - msg: "[git_pull] null"
+      - when: <% failed() %>
+        do: git_status
+
       
   rebuild:
     action: mydemo.rebuild
@@ -58,28 +43,32 @@ tasks:
       timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
-        do: after_rebuild
+        do: post_msg
         publish:
+          - failed: False
           - return_value: <% result() %>
       - when: <% failed() %>
         do: post_msg
         publish:
           - failed: True
           - msg: <% result() %>
-        
-  after_rebuild:
-    action: core.noop
+  
+  git_status:
+    action: mydemo.git_status
+    input:
+      working_dir: <% ctx().working_dir %>
+      branch: <% ctx().branch %>
     next:
-      - when: <% ctx().return_value != null %>
+      - when: <% succeeded() %>
         do: post_msg
         publish:
           - failed: False
-          - msg: <% result() %>
-      - when: <% ctx().return_value = null %>
+          - return_value: <% result() %>
+      - when: <% failed() %>
         do: post_msg
         publish:
           - failed: True
-          - msg: <% result() %>
+          - return_value: <% result() %>
 
   post_msg:
     action: slack.post_message
