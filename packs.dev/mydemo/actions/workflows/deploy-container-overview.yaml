@@ -11,8 +11,7 @@ input:
 
 vars:
   - failed:
-  - msg: 
-  - return_value: 
+  - action_result: 
 
 
 output:
@@ -46,12 +45,12 @@ tasks:
         do: post_msg
         publish:
           - failed: False
-          - return_value: <% result() %>
+          - action_result: <% result() %>
       - when: <% failed() %>
         do: post_msg
         publish:
           - failed: True
-          - msg: <% result() %>
+          - action_result: <% result() %>
   
   git_status:
     action: mydemo.git_status
@@ -63,12 +62,12 @@ tasks:
         do: post_msg
         publish:
           - failed: False
-          - return_value: <% result() %>
+          - action_result: <% result() %>
       - when: <% failed() %>
         do: post_msg
         publish:
           - failed: True
-          - return_value: <% result() %>
+          - action_result: <% result() %>
 
   post_msg:
     action: slack.post_message
@@ -78,8 +77,8 @@ tasks:
         <% ctx().main_action_name %>
         [failed]
         <% ctx().failed %>
-        [msg]
-        <% ctx().msg %>
+        [action_result]
+        <% ctx().action_result %>
     next:
       - when: <% succeeded() or failed() %>
         do: last
