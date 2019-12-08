@@ -9,11 +9,6 @@ input:
   - expected
   - timeout
 
-vars:
-  - action_result: 
-  - expected:
-
-
 output:
   - failed: <% ctx().failed %>
   - action_name: <% ctx().action_name %>
@@ -25,15 +20,8 @@ tasks:
     action: core.noop
     next:
     - publish:
-      - failed: False
-      do: check_expected
-  
-  check_expected:
-    action: core.local
-    input:
-      cmd: echo <% ctx().expected %>
-    next:
-      - do: git_status
+        - failed: False
+      do: git_status
   
   git_status:
     action: mydemo.git_status
@@ -43,30 +31,35 @@ tasks:
       expected: <% ctx().expected %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and not (ctx().expected  = 'not_up_to_date') %>
+      - when: <% succeeded() and (ctx().expected = 'not_up_to_date') %>
         do: git_merge
-      - when: <% succeeded() and (ctx().expected  = 'up_to_date') %>
+      - when: <% succeeded() and (ctx().expected = 'up_to_date') %>
+        do: last
         publish:
-          - action_result: >
-             "git merge completed
+          - action_result: |-
+             "[failed_task]
+             none, completed git_status after git_merge 
              <% result() %>"
-        do: last
       - when: <% failed() and (ctx().expected = "not_up_to_date") %>
+        do: last
         publish:
           - failed: True
-          - action_result: >
-              "[failed_when]
-              checking git status before merging repo
+          - action_result: |-
+              "[failed_task]
+              git_status
+              [the previous]
+              init
               <% result() %>"
+      - when: <% failed() and (ctx().expected = "up_to_date") %>
         do: last
-      - when: <% failed() and (ctx().expected  = "up_to_date") %>
         publish:
           - failed: True
-          - action_result: >
-              "[failed_when]
-              checking git status after merging repo
+          - action_result: |-
+              "[failed_task]
+              git_status
+              [the previous]
+              git_merge
                <% result() %>"
-        do: last
       
   git_merge:
     action: core.local
@@ -76,20 +69,40 @@ tasks:
       timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
+        do: git_status
         publish:
           - expected: "up_to_date"
-        do: git_status
       - when: <% failed() %>
+        do: 
+          - post_msg
+          - last
         publish:
           - failed: True
-          - action_result: >
-              "[failed_when]
-              merging repo
+          - action_result: |-
+              "[failed_task]
+              git merge
+              [the previous]
+              git_status
               <% result() %>"
-        do: last
+  
+  post_msg:
+    action: slack.post_message
+    input:
+      message: |-
+        [action_name] 
+        <% ctx().action_name %>
+        [failed]
+        <% ctx().failed %>
+        [action_result]
+        <% ctx().action_result %>
   
   last:
     action: core.noop
     next:
+      - when: >
+          <% ( not failed()) 
+          and (ctx().expected = "up_to_date") 
+          and (ctx().working_dir = "working_dir") %>
+        do: mydemo.rebuild_app
       - when: <% ctx().failed %>
         do: fail
