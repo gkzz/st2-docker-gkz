@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 working_dir=$1
 branch=$2
 expected=$3
@@ -21,13 +23,6 @@ if [ -d "$working_dir" ]; then
 
   if [ "$output" = "$branch" ]; then
     exit 0
-  elif [ "$output" = "unknown" ]; then
-    exit 102
-  else
-    echo "output: $output"
-    exit 103
   fi
 
 fi
-
-exit 104

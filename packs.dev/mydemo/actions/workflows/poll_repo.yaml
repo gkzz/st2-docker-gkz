@@ -40,9 +40,15 @@ tasks:
              [failed_task]
              none, completed git_status after git_merge 
              <% result() %>
-      - when: <% failed() %>
+      - when: <% failed() and ctx().expected = "not_up_to_date" %>
         do: git_status_on_failure
         publish:
+          - failed: True
+          - rc_on_failure: <% result().return_code %>
+      - when: <% failed() and ctx().expected = "up_to_date" %>
+        do: git_status_on_failure
+        publish:
+          - failed: True
           - rc_on_failure: <% result().return_code %>
       
   git_merge:
@@ -61,7 +67,6 @@ tasks:
           - post_msg
           - last
         publish:
-          - failed: True
           - action_result: |-
               [failed_task]
               git merge
@@ -72,12 +77,7 @@ tasks:
   git_status_on_failure:
     action: core.noop
     next:
-      - when: >
-          <% (ctx().expected = "not_up_to_date") 
-          and (ctx().rc_on_failure = 102 
-              or ctx().rc_on_failure = 103 
-              or ctx().rc_on_failure = 104) %>
-        do: last
+      - do: last
         publish:
           - failed: True
           - action_result: |-
@@ -85,22 +85,6 @@ tasks:
               git_status
               [the previous]
               init
-              <% result() %>
-              [rc_on_failure]
-              <% ctx().rc_on_failure %>
-      - when: >
-          <% (ctx().expected = "up_to_date")
-          and (ctx().rc_on_failure = 102 
-              or ctx().rc_on_failure = 103 
-              or ctx().rc_on_failure = 104) %>
-        do: last
-        publish:
-          - failed: True
-          - action_result: |-
-              [failed_task]
-              git_status
-              [the previous]
-              git_merge
               <% result() %>
               [rc_on_failure]
               <% ctx().rc_on_failure %>
@@ -120,7 +104,7 @@ tasks:
     action: core.noop
     next:
       - when: >
-          <% ( not failed()) 
+          <% not failed() 
           and (ctx().expected = "up_to_date") 
           and (ctx().working_dir = "working_dir") %>
         do: move_next
@@ -128,6 +112,4 @@ tasks:
         do: fail
   
   move_next:
-    action: core.noop
-    next:
-    - do: mydemo.rebuild_app
+    action: mydemo.rebuild_app
