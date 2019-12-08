@@ -36,9 +36,9 @@ tasks:
       up_to_date: <% ctx().up_to_date %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and not ctx().merged %>
+      - when: <% succeeded() and not ctx().up_to_date %>
         do: git_merge
-      - when: <% succeeded() and ctx().merged %>
+      - when: <% succeeded() and ctx().up_to_date %>
         do: last
         publish:
           - action_result: <% result() %>
