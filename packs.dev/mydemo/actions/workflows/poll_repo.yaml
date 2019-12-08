@@ -123,6 +123,11 @@ tasks:
           <% ( not failed()) 
           and (ctx().expected = "up_to_date") 
           and (ctx().working_dir = "working_dir") %>
-        do: mydemo.rebuild_app
+        do: move_next
       - when: <% ctx().failed %>
         do: fail
+  
+  move_next:
+    action: core.noop
+    next:
+    - do: mydemo.rebuild_app
