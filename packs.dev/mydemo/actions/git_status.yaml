@@ -12,9 +12,10 @@ parameters:
   branch:
     required: true
     type: string
-  merged:
+  up_to_date:
     required: true
     type: boolean
+    default: false
   timeout:
     required: true
     type: integer
