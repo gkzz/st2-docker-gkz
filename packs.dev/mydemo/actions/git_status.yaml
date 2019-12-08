@@ -12,11 +12,10 @@ parameters:
   branch:
     required: true
     type: string
-  up_to_date:
+  expected:
     required: true
-    type: boolean
-    default: false
+    type: string
   timeout:
     required: true
     type: integer
-    default: 300
+

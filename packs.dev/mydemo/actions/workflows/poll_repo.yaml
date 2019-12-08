@@ -6,7 +6,7 @@ input:
   - action_name
   - working_dir
   - branch
-  - up_to_date
+  - expected
   - timeout
 
 vars:
@@ -33,19 +33,32 @@ tasks:
     input:
       working_dir: <% ctx().working_dir %>
       branch: <% ctx().branch %>
-      up_to_date: <% ctx().up_to_date %>
+      expected: <% ctx().expected %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and not ctx().up_to_date %>
+      - when: <% succeeded() and not ctx().expected %>
         do: git_merge
-      - when: <% succeeded() and ctx().up_to_date %>
+      - when: <% succeeded() and ctx().expected %>
         publish:
-          - action_result: <% result() %>
+          - action_result: >
+             "git merge completed
+             <% result() %>"
         do: last
-      - when: <% failed() %>
+      - when: <% failed()  and not ctx().expected %>
         publish:
           - failed: True
-          - action_result: <% result() %>
+          - action_result: >
+              "[failed_when]
+              checking git status before merging repo
+              <% result() %>"
+        do: last
+      - when: <% failed()  and ctx().expected %>
+        publish:
+          - failed: True
+          - action_result: >
+              "[failed_when]
+              checking git status after merging repo
+               <% result() %>"
         do: last
       
   git_merge:
@@ -57,12 +70,15 @@ tasks:
     next:
       - when: <% succeeded() %>
         publish:
-          - up_to_date: true
+          - expected: "up_to_date"
         do: git_status
       - when: <% failed() %>
         publish:
           - failed: True
-          - action_result: <% result() %>
+          - action_result: >
+              "[failed_when]
+              merging repo
+              <% result() %>"
         do: last
   
   last:

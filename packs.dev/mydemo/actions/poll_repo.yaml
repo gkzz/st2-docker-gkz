@@ -17,10 +17,10 @@ parameters:
     required: true
     type: string
     default: devel-views
-  up_to_date:
+  expected:
     required: true
-    type: boolean
-    default: false
+    type: string
+    default: not_up_to_date  #or up_to_date
   timeout:
     required: true
     type: integer
