@@ -1,10 +1,11 @@
 version: 1.0
 
-description: Rebuild App Containers
+description: poll remote repo
 
 input:
   - working_dir
-  - ptn
+  - branch
+  - expected
   - timeout
 
 output:
@@ -13,15 +14,29 @@ output:
   - action_result: <% ctx().action_result %>
   
 
-tasks:  
+tasks:
   init:
     action: core.noop
     next:
     - publish:
         - failed: False
-        - action_name: rebuild_app
-      do: rebuild_app
-
+      do: poll_repo
+  
+  poll_repo:
+    action: mydemo.poll_repo
+    input:
+      working_dir: <% ctx().working_dir %>
+      branch: <% ctx().branch %>
+      expected: <% ctx().expected %>
+      timeout: <% ctx().timeout %>
+    next:
+      - when: <% succeeded() %>
+        do: rebuild_app
+      - when: <% failed() %>
+        do: last
+        publish:
+          - failed: True
+  
   rebuild_app:
     action: mydemo.rebuild_app
     input:
@@ -30,28 +45,11 @@ tasks:
       timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
-        do: post_msg
-        publish:
-          - failed: False
-          - action_result: <% result() %>
+        do: last
       - when: <% failed() %>
-        do: post_msg
+        do: last
         publish:
           - failed: True
-          - action_result: <% result() %>
-
-  post_msg:
-    action: slack.post_message
-    input:
-      message: |-
-        [action_name] 
-        <% ctx().action_name %>
-        [failed]
-        <% ctx().failed %>
-        [action_result]
-        <% ctx().action_result %>
-    next:
-      - do: last
   
   last:
     action: core.noop

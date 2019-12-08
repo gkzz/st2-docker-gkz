@@ -23,6 +23,10 @@ if [ -d "$working_dir" ]; then
 
   if [ "$output" = "$branch" ]; then
     exit 0
-  fi
-
+  elif [ "$output" = "unknown" ]; then
+    exit 102
+  else
+    exit 103
 fi
+
+exit 104

@@ -3,7 +3,6 @@ version: 1.0
 description: poll remote repo
 
 input:
-  - action_name
   - working_dir
   - branch
   - expected
@@ -21,6 +20,7 @@ tasks:
     next:
     - publish:
         - failed: False
+        - action_name: poll_repo
       do: git_status
   
   git_status:
@@ -34,7 +34,7 @@ tasks:
       - when: <% succeeded() and (ctx().expected = 'not_up_to_date') %>
         do: git_merge
       - when: <% succeeded() and (ctx().expected = 'up_to_date') %>
-        do: last
+        do: post_msg
         publish:
           - action_result: |-
              [failed_task]
@@ -63,9 +63,7 @@ tasks:
         publish:
           - expected: "up_to_date"
       - when: <% failed() %>
-        do: 
-          - post_msg
-          - last
+        do: post_msg
         publish:
           - action_result: |-
               [failed_task]
@@ -77,9 +75,8 @@ tasks:
   git_status_on_failure:
     action: core.noop
     next:
-      - do: last
+      - do: post_msg
         publish:
-          - failed: True
           - action_result: |-
               [failed_task]
               git_status
@@ -99,17 +96,12 @@ tasks:
         <% ctx().failed %>
         [action_result]
         <% ctx().action_result %>
+    next:
+      - do: last
   
   last:
     action: core.noop
     next:
-      - when: >
-          <% not failed() 
-          and (ctx().expected = "up_to_date") 
-          and (ctx().working_dir = "working_dir") %>
-        do: move_next
       - when: <% ctx().failed %>
         do: fail
   
-  move_next:
-    action: mydemo.rebuild_app

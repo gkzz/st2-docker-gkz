@@ -1,0 +1,27 @@
+---
+name: app_mng_overview
+pack: mydemo
+description: overview of app management
+runner_type: orquesta
+entry_point: workflows/app_mng_overview.yaml
+parameters:
+  working_dir:
+    required: true
+    type: string
+    default: /usr/src/app/flask-docker
+  branch:
+    required: true
+    type: string
+    default: devel-views
+  expected:
+    required: true
+    type: string
+    default: not_up_to_date  #or up_to_date
+  ptn:
+    required: true
+    type: string
+    default: flask-docker_flask|flask-docker_nginx
+  timeout:
+    required: true
+    type: integer
+    default: 300

@@ -5,23 +5,15 @@ description: poll remote repo
 runner_type: orquesta
 entry_point: workflows/poll_repo.yaml
 parameters:
-  action_name:
-    required: true
-    type: string
-    default: poll-repo
   working_dir:
     required: true
     type: string
-    default: /usr/src/app/flask-docker
   branch:
     required: true
     type: string
-    default: devel-views
   expected:
     required: true
     type: string
-    default: not_up_to_date  #or up_to_date
   timeout:
     required: true
     type: integer
-    default: 300
