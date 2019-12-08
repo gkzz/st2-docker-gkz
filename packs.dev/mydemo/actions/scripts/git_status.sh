@@ -9,7 +9,7 @@ function main()
   merged=$3
 
   ptn=null
-  if "$merged"; then
+  if $merged; then
     ptn="Your branch is up to date with 'origin/$branch'." 
   else
     ptn="Your branch is behind 'origin/$branch'"

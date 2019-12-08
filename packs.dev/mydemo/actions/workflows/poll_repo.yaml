@@ -7,6 +7,7 @@ input:
   - working_dir
   - branch
   - timeout
+  - merged
 
 vars:
   - action_result: 
@@ -22,9 +23,9 @@ tasks:
   init:
     action: core.noop
     next:
-    - publish:
+    - when: <% succeeded() or failed() %>
+      publish:
       - failed: False
-      - merged: False
         do: git_status
   
   git_status:

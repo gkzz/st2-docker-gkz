@@ -17,6 +17,10 @@ parameters:
     required: true
     type: string
     default: devel-views
+  merged:
+    required: true
+    type: boolean
+    default: false
   timeout:
     required: true
     type: integer
