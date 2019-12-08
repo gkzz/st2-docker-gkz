@@ -6,8 +6,8 @@ input:
   - action_name
   - working_dir
   - branch
+  - up_to_date
   - timeout
-  - merged
 
 vars:
   - action_result: 
@@ -33,7 +33,7 @@ tasks:
     input:
       working_dir: <% ctx().working_dir %>
       branch: <% ctx().branch %>
-      merged: <% ctx().merged %>
+      up_to_date: <% ctx().up_to_date %>
       timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() and not ctx().merged %>
@@ -57,7 +57,7 @@ tasks:
     next:
       - when: <% succeeded() %>
         publish:
-          - merged: True
+          - up_to_date: true
         do: git_status
       - when: <% failed() %>
         do: last

@@ -17,9 +17,9 @@ parameters:
     required: true
     type: string
     default: devel-views
-  merged:
+  up_to_date:
     required: true
-    type: boolean
+    type: string
     default: false
   timeout:
     required: true
