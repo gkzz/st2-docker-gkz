@@ -19,7 +19,7 @@ parameters:
     default: devel-views
   up_to_date:
     required: true
-    type: string
+    type: boolean
     default: false
   timeout:
     required: true
