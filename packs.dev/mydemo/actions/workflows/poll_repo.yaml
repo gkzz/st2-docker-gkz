@@ -37,29 +37,29 @@ tasks:
         do: last
         publish:
           - action_result: |-
-             "[failed_task]
+             [failed_task]
              none, completed git_status after git_merge 
-             <% result() %>"
+             <% result() %>
       - when: <% failed() and (ctx().expected = "not_up_to_date") %>
         do: last
         publish:
           - failed: True
           - action_result: |-
-              "[failed_task]
+              [failed_task]
               git_status
               [the previous]
               init
-              <% result() %>"
+              <% result() %>
       - when: <% failed() and (ctx().expected = "up_to_date") %>
         do: last
         publish:
           - failed: True
           - action_result: |-
-              "[failed_task]
+              [failed_task]
               git_status
               [the previous]
               git_merge
-               <% result() %>"
+               <% result() %>
       
   git_merge:
     action: core.local
@@ -79,11 +79,11 @@ tasks:
         publish:
           - failed: True
           - action_result: |-
-              "[failed_task]
+              [failed_task]
               git merge
               [the previous]
               git_status
-              <% result() %>"
+              <% result() %>
   
   post_msg:
     action: slack.post_message

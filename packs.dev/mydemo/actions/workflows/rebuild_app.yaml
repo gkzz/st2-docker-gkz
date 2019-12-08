@@ -1,0 +1,62 @@
+version: 1.0
+
+description: Rebuild App Containers
+
+input:
+  - action_name
+  - working_dir
+  - branch
+  - ptn
+  - timeout
+
+vars:
+  - failed:
+  - action_result: 
+
+
+output:
+  - failed: <% ctx().failed %>
+  - action_name: <% ctx().action_name %>
+  - action_result: <% ctx().action_result %>
+
+
+  
+
+tasks:      
+  rebuild:
+    action: mydemo.rebuild
+    input:
+      working_dir: <% ctx().working_dir %>
+      ptn: <% ctx().ptn %>
+      timeout: <% ctx().timeout %>
+    next:
+      - when: <% succeeded() %>
+        do: post_msg
+        publish:
+          - failed: False
+          - action_result: <% result() %>
+      - when: <% failed() %>
+        do: post_msg
+        publish:
+          - failed: True
+          - action_result: <% result() %>
+
+  post_msg:
+    action: slack.post_message
+    input:
+      message: |-
+        [main_action_name] 
+        <% ctx().main_action_name %>
+        [failed]
+        <% ctx().failed %>
+        [action_result]
+        <% ctx().action_result %>
+    next:
+      - when: <% succeeded() or failed() %>
+        do: last
+  
+  last:
+    action: core.noop
+    next:
+      - when: <% ctx().failed %>
+        do: fail
