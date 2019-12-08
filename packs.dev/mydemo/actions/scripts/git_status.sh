@@ -16,15 +16,13 @@ function main()
     sudo git checkout -q $branch
     if $up_to_date; then
       status=$(sudo git status | grep -E "Your branch is up to date with 'origin/$branch'." | awk '{print $8}')
-      status=$(echo ${status:-unknown})
-      if [ "$status" = "'$branch'." ]; then
-        counter=`expr $counter + 1`
-      fi
     else
       status=$(sudo git status | grep -E "Your branch is behind 'origin/$branch'.*" | awk '{print $5}')
-      if [ "$status" = "'$branch'" ]; then
-        counter=`expr $counter + 1`
-      fi
+    fi
+
+    status=$(echo ${status:-unknown})
+    if [ "$status" = "'$branch'" ]; then
+      counter=`expr $counter + 1`
     fi
   fi
 
