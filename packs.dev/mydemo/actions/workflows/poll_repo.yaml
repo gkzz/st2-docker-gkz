@@ -26,7 +26,7 @@ tasks:
     - when: <% succeeded() or failed() %>
       publish:
       - failed: False
-        do: git_status
+      do: git_status
   
   git_status:
     action: mydemo.git_status
@@ -39,14 +39,14 @@ tasks:
       - when: <% succeeded() and not ctx().up_to_date %>
         do: git_merge
       - when: <% succeeded() and ctx().up_to_date %>
-        do: last
         publish:
           - action_result: <% result() %>
-      - when: <% failed() %>
         do: last
+      - when: <% failed() %>
         publish:
           - failed: True
           - action_result: <% result() %>
+        do: last
       
   git_merge:
     action: core.local
@@ -60,10 +60,10 @@ tasks:
           - up_to_date: true
         do: git_status
       - when: <% failed() %>
-        do: last
         publish:
           - failed: True
           - action_result: <% result() %>
+        do: last
   
   last:
     action: core.noop
