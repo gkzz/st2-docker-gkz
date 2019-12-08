@@ -11,6 +11,7 @@ input:
 
 vars:
   - action_result: 
+  - expected:
 
 
 output:
@@ -23,10 +24,16 @@ tasks:
   init:
     action: core.noop
     next:
-    #- when: <% succeeded() or failed() %>
     - publish:
       - failed: False
-      do: git_status
+      do: check_expected
+  
+  check_expected:
+    action: core.local
+    input:
+      cmd: echo <% ctx().expected %>
+    next:
+      - do: git_status
   
   git_status:
     action: mydemo.git_status
@@ -36,9 +43,9 @@ tasks:
       expected: <% ctx().expected %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and not (ctx().expected  = "not_up_to_date") %>
+      - when: <% succeeded() and not (ctx().expected  = 'not_up_to_date') %>
         do: git_merge
-      - when: <% succeeded() and (ctx().expected  = "up_to_date") %>
+      - when: <% succeeded() and (ctx().expected  = 'up_to_date') %>
         publish:
           - action_result: >
              "git merge completed
