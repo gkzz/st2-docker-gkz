@@ -45,8 +45,8 @@ tasks:
     action: slack.post_message
     input:
       message: |-
-        [main_action_name] 
-        <% ctx().main_action_name %>
+        [action_name] 
+        <% ctx().action_name %>
         [failed]
         <% ctx().failed %>
         [action_result]
