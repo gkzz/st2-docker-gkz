@@ -10,22 +10,21 @@ function main()
 
   counter=0
 
-  ptn=null
-  if $up_to_date; then
-    ptn="Your branch is up to date with 'origin/$branch'." 
-  else
-    ptn="Your branch is behind 'origin/$branch'"
-  fi
-  
-
   if [ -d "$working_dir" ]; then
     cd $working_dir
     sudo git fetch -p
     sudo git checkout -q $branch
-    status=$(git status | grep -E "$ptn")
-    status=$(echo ${status:-unknown})
-    if [ "$status" = "$ptn" ]; then
-      counter=`expr $counter + 1`
+    if $up_to_date; then
+      status=$(sudo git status | grep -E "Your branch is up to date with 'origin/$branch'." | awk '{print $8}')
+      status=$(echo ${status:-unknown})
+      if [ "$status" = "'$branch'." ]; then
+        counter=`expr $counter + 1`
+      fi
+    else
+      status=$(sudo git status | grep -E "Your branch is behind 'origin/$branch'.*" | awk '{print $5}')
+      if [ "$status" = "'$branch'" ]; then
+        counter=`expr $counter + 1`
+      fi
     fi
   fi
 
