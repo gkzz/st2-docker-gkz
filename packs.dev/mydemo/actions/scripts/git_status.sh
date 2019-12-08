@@ -15,13 +15,13 @@ function main()
     sudo git fetch -p
     sudo git checkout -q $branch
     if $up_to_date; then
-      status=$(sudo git status | grep -E "Your branch is up to date with 'origin/$branch'." | awk '{print $8}')
+      output=$(sudo git status | grep -E "(Your)\s+(branch)\s+(is)\s+(up-to-date)\s+(with)\s+('origin/$branch')." | awk '{print $6') | grep -oP "$branch"
     else
-      status=$(sudo git status | grep -E "Your branch is behind 'origin/$branch'.*" | awk '{print $5}')
+      output=$(sudo git status | grep -E "(Your)\s+(branch)\s+(is)\s+(behind)\s+('origin/$branch')\s+.*" | awk '{print $5}')
     fi
 
-    status=$(echo ${status:-unknown})
-    if [ "$status" = "'$branch'" ]; then
+    output=$(echo ${output:-unknown})
+    if [ "$output" = "'$branch'" ]; then
       counter=`expr $counter + 1`
     fi
   fi

@@ -23,8 +23,8 @@ tasks:
   init:
     action: core.noop
     next:
-    - when: <% succeeded() or failed() %>
-      publish:
+    #- when: <% succeeded() or failed() %>
+    - publish:
       - failed: False
       do: git_status
   
