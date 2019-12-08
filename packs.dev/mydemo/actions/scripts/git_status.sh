@@ -17,7 +17,7 @@ function main()
     if $up_to_date; then
       output=$(sudo git status | grep -E "(Your)\s+(branch)\s+(is)\s+(up-to-date)\s+(with)\s+('origin/$branch')." | awk '{print $6') | grep -oP "$branch"
     else
-      output=$(sudo git status | grep -E "(Your)\s+(branch)\s+(is)\s+(behind)\s+('origin/$branch')\s+.*" | awk '{print $5}')
+      output=$(sudo git status | grep -E "(Your)\s+(branch)\s+(is)\s+(behind)\s+('origin/$branch')\s+.*" | awk '{print $5}') | grep -oP "$branch"
     fi
 
     output=$(echo ${output:-unknown})
