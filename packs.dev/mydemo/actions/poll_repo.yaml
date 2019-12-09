@@ -1,5 +1,5 @@
 ---
-name: poll-repo
+name: poll_repo
 pack: mydemo
 description: poll remote repo
 runner_type: orquesta
