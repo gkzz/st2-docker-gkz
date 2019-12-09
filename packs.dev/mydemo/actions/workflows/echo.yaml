@@ -4,7 +4,6 @@ description: return code depends on the output of echo
 
 input:
   - saying
-  - expected
   - timeout
 
 output:
@@ -23,18 +22,17 @@ tasks:
     action: mydemo.hello_world
     input:
       saying: <% ctx().saying %>
-      expected: <% ctx().expected %>
       timeout:  <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
         do: post_msg
         publish:
           - msg: <% result() %>
-      - when: <% failed() and (ctx().expected = 'good_evening') %>
+      - when: <% failed() and (ctx().saying = 'hello st2') %>
         do: hello_world
         publish:
-          - expected: <% ctx().saying %>
-      - when: <% failed() and (ctx().expected != 'good_evening') %>
+          - saying: "hello world"
+      - when: <% failed() and (ctx().saying != 'hello st2') %>
         do: post_msg
         publish:
           - failed: True

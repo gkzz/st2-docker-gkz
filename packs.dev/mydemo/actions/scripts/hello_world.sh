@@ -1,9 +1,8 @@
 #!/bin/bash
 
 saying=$1
-expected=$2
 
-if [ "$saying" = "$expected" ]; then
+if [ "$saying" = "hello world" ]; then
   echo "success"
   exit 0
 else

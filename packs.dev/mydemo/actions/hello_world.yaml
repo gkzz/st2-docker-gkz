@@ -8,9 +8,6 @@ parameters:
   saying:
     required: true
     type: string
-  expected:
-    required: true
-    type: string
   timeout:
     required: true
     type: integer

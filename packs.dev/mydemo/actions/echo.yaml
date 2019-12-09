@@ -8,11 +8,7 @@ parameters:
   saying:
     required: true
     type: string
-    default: hello_world
-  expected:
-    required: true
-    type: string
-    default: good_evening
+    default: "hello st2"
   timeout:
     required: true
     type: integer
