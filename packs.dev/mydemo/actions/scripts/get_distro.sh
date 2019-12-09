@@ -4,7 +4,8 @@ set -e
 
 distro=$1
 
-output=$(cat /etc/os-release | grep -E "^ID=$distro" | grep -oP "$distro")
+output=$(cat /etc/os-release)
+echo $output | grep -E "ID=$distro" | awk '{print $5}' | grep -oP "$distro"
 
 if [ "$output" = "ubuntu" ]; then
   echo "success"
