@@ -30,23 +30,23 @@ tasks:
         do: post_msg
         publish:
           - msg: <% result() %>
-      - when: <% failed() and (ctx().expected = 'good evening') %>
+      - when: <% failed() and (ctx().expected = 'good_evening') %>
         do: hello_world
         publish:
-          - expected: "hello world"
-      - when: <% failed() and (ctx().expected != 'good evening') %>
+          - expected: <% ctx().saying %>
+      - when: <% failed() and (ctx().expected != 'good_evening') %>
         do: post_msg
         publish:
           - failed: True
-          - msg: <% result() %>
+          - msg: "result: <% result() %>"
   
   post_msg:
-    #action: slack.post_message
-    #input:
-    #  message: <% ctx().msg %>
-    action: core.local
+    action: slack.post_message
     input:
-      cmd: echo <% ctx().msg %>
+      message: <% ctx().msg %>
+    #action: core.local
+    #input:
+    #  cmd: echo <% ctx().msg %>
     next:
       - do: last
   

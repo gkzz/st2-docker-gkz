@@ -3,10 +3,10 @@
 saying=$1
 expected=$2
 
-output=$(echo "$saying")
-
-if [ "$output" = "$expected" ]; then
+if [ "$saying" = "$expected" ]; then
+  echo "success"
   exit 0
 else
+  echo "failed"
   exit 12
 fi
