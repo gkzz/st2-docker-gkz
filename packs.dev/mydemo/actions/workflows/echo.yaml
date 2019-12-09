@@ -41,9 +41,12 @@ tasks:
           - msg: <% result() %>
   
   post_msg:
-    action: slack.post_message
+    #action: slack.post_message
+    #input:
+    #  message: <% ctx().msg %>
+    action: core.local
     input:
-      message: <% ctx().msg %>
+      cmd: echo <% ctx().msg %>
     next:
       - do: last
   
