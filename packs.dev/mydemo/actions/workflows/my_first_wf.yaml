@@ -16,7 +16,7 @@ tasks:
     next:
     - publish:
         - failed: False
-      do: hello_world
+      do: main
   
   main:
     action: mydemo.get_distro
