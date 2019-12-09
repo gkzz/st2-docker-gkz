@@ -31,7 +31,7 @@ tasks:
         publish:
           - msg: <% result() %>
       - when: <% failed() and (ctx().expected = 'good evening') %>
-        do: continue
+        do: hello_world
         publish:
           - expected: "hello world"
       - when: <% failed() and (ctx().expected != 'good evening') %>
