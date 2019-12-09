@@ -1,0 +1,55 @@
+version: 1.0
+
+description: return code depends on the output of echo
+
+input:
+  - saying
+  - expected
+  - timeout
+
+output:
+  - failed: <% ctx().failed %>
+  
+
+tasks:
+  init:
+    action: core.noop
+    next:
+    - publish:
+        - failed: False
+      do: hello_world
+  
+  hello_world:
+    action: mydemo.hello_world
+    input:
+      saying: <% ctx().saying %>
+      expected: <% ctx().expected %>
+      timeout:  <% ctx().timeout %>
+    next:
+      - when: <% succeeded() %>
+        do: post_msg
+        publish:
+          - msg: <% result() %>
+      - when: <% failed() and (ctx().expected = 'good evening') %>
+        do: continue
+        publish:
+          - expected: "hello world"
+      - when: <% failed() and (ctx().expected != 'good evening') %>
+        do: post_msg
+        publish:
+          - failed: True
+          - msg: <% result() %>
+  
+  post_msg:
+    action: slack.post_message
+    input:
+      message: <% ctx().msg %>
+    next:
+      - do: last
+  
+  last:
+    action: core.noop
+    next:
+      - when: <% ctx().failed %>
+        do: fail
+  

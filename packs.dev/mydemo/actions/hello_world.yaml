@@ -1,0 +1,17 @@
+---
+name: hello_world
+pack: mydemo
+description: echo $saying
+runner_type: orquesta
+entry_point: scripts/hello_world.sh
+parameters:
+  saying:
+    required: true
+    type: string
+  expected:
+    required: true
+    type: string
+  timeout:
+    required: true
+    type: integer
+

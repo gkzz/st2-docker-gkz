@@ -1,0 +1,19 @@
+---
+name: echo
+pack: mydemo
+description: return code depends on the output of echo
+runner_type: orquesta
+entry_point: workflows/echo.yaml
+parameters:
+  saying:
+    required: true
+    type: string
+    default: "hello world"
+  expected:
+    required: true
+    type: string
+    default: "good evening"
+  timeout:
+    required: true
+    type: integer
+    default: 60
