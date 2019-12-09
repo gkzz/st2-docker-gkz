@@ -2,7 +2,7 @@
 name: hello_world
 pack: mydemo
 description: echo $saying
-runner_type: orquesta
+runner_type: local-shell-script
 entry_point: scripts/hello_world.sh
 parameters:
   saying:

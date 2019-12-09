@@ -3,7 +3,7 @@
 saying=$1
 expected=$2
 
-output=$(echo "$saying")
+output=$(echo "$saying, everyday" | awk '{print $1}' | grep -oP "$expected")
 
 if [ "$output" = "$expected" ]; then
   exit 0
