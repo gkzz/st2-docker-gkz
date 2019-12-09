@@ -1,0 +1,53 @@
+version: 1.0
+
+description: return code depends on the result
+
+input:
+  - distro_name
+  - timeout
+
+output:
+  - failed: <% ctx().failed %>
+  
+
+tasks:
+  init:
+    action: core.noop
+    next:
+    - publish:
+        - failed: False
+      do: hello_world
+  
+  main:
+    action: mydemo.get_distro
+    input:
+      distro_name: <% ctx().distro_name %>
+      timeout:  <% ctx().timeout %>
+    next:
+      - when: <% succeeded() %>
+        do: post_msg
+        publish:
+          - msg: <% result() %>
+      - when: <% failed() and (ctx().distro_name = 'centos') %>
+        do: main
+        publish:
+          - distro_name: "ubuntu"
+      - when: <% failed() and (ctx().distro_name != 'centos') %>
+        do: post_msg
+        publish:
+          - failed: True
+          - msg: "result: <% result() %>"
+  
+  post_msg:
+    action: slack.post_message
+    input:
+      message: <% ctx().msg %>
+    next:
+      - do: last
+  
+  last:
+    action: core.noop
+    next:
+      - when: <% ctx().failed %>
+        do: fail
+  
