@@ -20,7 +20,7 @@ tasks:
     next:
     - publish:
         - failed: False
-        - action_name: poll_repo
+        - action_name: 'poll_repo'
       do: git_status
   
   git_status:
@@ -31,21 +31,21 @@ tasks:
       expected: <% ctx().expected %>
       timeout: <% ctx().timeout %>
     next:
-      - when: <% succeeded() and (ctx().expected = 'not_up_to_date') %>
+      - when: <% succeeded() and ctx().expected = 'not_up_to_date' %>
         do: git_merge
-      - when: <% succeeded() and (ctx().expected = 'up_to_date') %>
+      - when: <% succeeded() and ctx().expected = 'up_to_date' %>
         do: post_msg
         publish:
           - action_result: |-
              [failed_task]
              none, completed git_status after git_merge 
              <% result() %>
-      - when: <% failed() and (ctx().expected = 'not_up_to_date') %>
+      - when: <% failed() and ctx().expected = 'not_up_to_date' %>
         do: git_status_on_failure
         publish:
           - failed: True
           - rc_on_failure: <% result().return_code %>
-      - when: <% failed() and (ctx().expected = 'up_to_date') %>
+      - when: <% failed() and ctx().expected = 'up_to_date' %>
         do: git_status_on_failure
         publish:
           - failed: True
@@ -61,7 +61,7 @@ tasks:
       - when: <% succeeded() %>
         do: git_status
         publish:
-          - expected: "up_to_date"
+          - expected: 'up_to_date'
       - when: <% failed() %>
         do: post_msg
         publish:

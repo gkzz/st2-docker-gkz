@@ -1,7 +1,7 @@
 ---
 name: poll-repo
 pack: mydemo
-description: poll remote repo
+description: poll-repo
 runner_type: orquesta
 entry_point: workflows/poll-repo.yaml
 parameters:
