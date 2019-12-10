@@ -19,14 +19,15 @@ if [ -d "$working_dir" ]; then
     echo "None of the condition met"
   fi
   
-  output=$(echo ${output:=unknown})
+  output=$(echo ${output:="unknown"})
 
-  if [ "$output" = "$branch" ]; then
-    exit 0
-  elif [ "$output" = "unknown" ]; then
+  if [ "$output" = "unknown" ]; then
     exit 102
+  elif [ "$output" = "$branch" ]; then
+    exit 0
   else
     exit 103
+  fi
 fi
 
 exit 104
