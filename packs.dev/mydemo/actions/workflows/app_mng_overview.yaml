@@ -9,6 +9,12 @@ input:
   - ptn
   - timeout
 
+vars:
+  - failed: False
+  - action_name:
+  - action_result:
+
+
 output:
   - failed: <% ctx().failed %>
   - action_name: <% ctx().action_name %>
@@ -21,6 +27,7 @@ tasks:
     next:
     - publish:
         - failed: False
+        - action_name: "poll_repo"
       do: poll_repo
   
   poll_repo:
@@ -33,10 +40,15 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: rebuild_app
+        publish:
+          - action_name: "rebuild_app"
+          - action_result: <% ctx().output.action_result %>
       - when: <% failed() %>
         do: last
         publish:
           - failed: True
+          - action_name: "rebuild_app"
+          - action_result: <% ctx().output.action_result %>
   
   rebuild_app:
     action: mydemo.rebuild_app
