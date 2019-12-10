@@ -2,12 +2,12 @@ version: 1.0
 
 description: poll remote repo
 
-#input:
-#  - working_dir
-#  - branch
-#  - expected
-#  - ptn
-#  - timeout
+input:
+  - working_dir
+  - branch
+  - expected
+  - ptn
+  - timeout
 
 vars:
   - failed: False
@@ -30,45 +30,3 @@ tasks:
         - action_name: "poll_repo"
       do: poll_repo
   
-  poll_repo:
-    action: mydemo.poll_repo
-    #input:
-    #  working_dir: <% ctx().working_dir %>
-    #  branch: <% ctx().branch %>
-    #  expected: <% ctx().expected %>
-    #  timeout: <% ctx().timeout %>
-    next:
-      - when: <% succeeded() %>
-        do: rebuild_app
-        publish:
-          - action_name: "rebuild_app"
-          - action_result: <% result().output.action_result %>
-      - when: <% failed() %>
-        do: last
-        publish:
-          - failed: True
-          - action_name: "rebuild_app"
-          - action_result: <% result().output.action_result %>
-  
-  rebuild_app:
-    action: mydemo.rebuild_app
-    #input:
-    #  working_dir: <% ctx().working_dir %>
-    #  ptn: <% ctx().ptn %>
-    #  timeout: <% ctx().timeout %>
-    next:
-      - when: <% succeeded() %>
-        do: last
-        publish:
-          - action_result: <% result().output.action_result %>
-      - when: <% failed() %>
-        do: last
-        publish:
-          - failed: True
-          - action_result: <% result().output.action_result %>
-  
-  last:
-    action: core.noop
-    next:
-      - when: <% ctx().failed %>
-        do: fail
