@@ -1,0 +1,20 @@
+---
+name: poll-repo
+pack: mydemo
+description: poll remote repo
+runner_type: orquesta
+entry_point: workflows/poll-repo.yaml
+parameters:
+  working_dir:
+    required: true
+    type: string
+  branch:
+    required: true
+    type: string
+  expected:
+    required: true
+    type: string
+  timeout:
+    required: true
+    type: integer
+
