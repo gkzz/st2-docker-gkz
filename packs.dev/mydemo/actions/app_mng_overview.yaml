@@ -8,19 +8,19 @@ parameters:
   working_dir:
     required: true
     type: string
-    default: /usr/src/app/flask-docker
+    default: "/usr/src/app/flask-docker"
   branch:
     required: true
     type: string
-    default: devel-views
+    default: "devel-views"
   expected:
     required: true
     type: string
-    default: not_up_to_date  #or up_to_date
+    default: "not_up_to_date"  #or up_to_date
   ptn:
     required: true
     type: string
-    default: flask-docker_flask|flask-docker_nginx
+    default: "flask-docker_flask|flask-docker_nginx"
   timeout:
     required: true
     type: integer
