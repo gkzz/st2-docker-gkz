@@ -42,13 +42,13 @@ tasks:
         do: rebuild_app
         publish:
           - action_name: "rebuild_app"
-          - action_result: <% ctx().output.action_result %>
+          - action_result: <% result().output.action_result %>
       - when: <% failed() %>
         do: last
         publish:
           - failed: True
           - action_name: "rebuild_app"
-          - action_result: <% ctx().output.action_result %>
+          - action_result: <% result().output.action_result %>
   
   rebuild_app:
     action: mydemo.rebuild_app
@@ -59,10 +59,13 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: last
+        publish:
+          - action_result: <% result().output.action_result %>
       - when: <% failed() %>
         do: last
         publish:
           - failed: True
+          - action_result: <% result().output.action_result %>
   
   last:
     action: core.noop
