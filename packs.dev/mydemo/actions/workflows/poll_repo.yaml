@@ -26,10 +26,10 @@ tasks:
   git_status:
     action: mydemo.git_status
     input:
-      working_dir: <% ctx().working_dir %>
-      branch: <% ctx().branch %>
-      expected: <% ctx().expected %>
-      timeout: <% ctx().timeout %>
+      working_dir: /usr/src/app/flask-docker
+      branch: devel-views
+      expected: not_up_to_date
+      timeout: 300
     next:
       - when: <% succeeded() and (ctx().expected = 'not_up_to_date') %>
         do: git_merge
