@@ -1,7 +1,0 @@
----
-name: app_mng_overview
-pack: mydemo
-description: overview of app management
-runner_type: orquesta
-entry_point: workflows/app_mng_overview.yaml
-
