@@ -2,12 +2,12 @@ version: 1.0
 
 description: poll remote repo
 
-input:
-  - working_dir
-  - branch
-  - expected
-  - ptn
-  - timeout
+#input:
+#  - working_dir
+#  - branch
+#  - expected
+#  - ptn
+#  - timeout
 
 vars:
   - failed: False
@@ -32,11 +32,11 @@ tasks:
   
   poll_repo:
     action: mydemo.poll_repo
-    input:
-      working_dir: <% ctx().working_dir %>
-      branch: <% ctx().branch %>
-      expected: <% ctx().expected %>
-      timeout: <% ctx().timeout %>
+    #input:
+    #  working_dir: <% ctx().working_dir %>
+    #  branch: <% ctx().branch %>
+    #  expected: <% ctx().expected %>
+    #  timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
         do: rebuild_app
@@ -52,10 +52,10 @@ tasks:
   
   rebuild_app:
     action: mydemo.rebuild_app
-    input:
-      working_dir: <% ctx().working_dir %>
-      ptn: <% ctx().ptn %>
-      timeout: <% ctx().timeout %>
+    #input:
+    #  working_dir: <% ctx().working_dir %>
+    #  ptn: <% ctx().ptn %>
+    #  timeout: <% ctx().timeout %>
     next:
       - when: <% succeeded() %>
         do: last

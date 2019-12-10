@@ -8,9 +8,12 @@ parameters:
   working_dir:
     required: true
     type: string
+    default: "/usr/src/app/flask-docker"
   ptn:
     required: true
     type: string
+    default: "flask-docker_flask|flask-docker_nginx"
   timeout:
     required: true
     type: integer
+    default: 300
