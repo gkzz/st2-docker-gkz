@@ -5,7 +5,8 @@ description: poll remote repo
 input:
   - working_dir
   - branch
-  - expectedst2 run mydemo.app_mng_overview
+  - expected
+  - ptn
   - timeout
 
 output:

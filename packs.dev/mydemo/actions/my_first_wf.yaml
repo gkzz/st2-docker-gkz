@@ -12,4 +12,4 @@ parameters:
   timeout:
     required: true
     type: integer
-    default: 60
+    default: 300
