@@ -20,6 +20,7 @@ if [ -d "$working_dir" ]; then
   fi
   
   output=$(echo ${output:="unknown"})
+  echo "output: $output"
 
   if [ "$output" = "unknown" ]; then
     exit 102
