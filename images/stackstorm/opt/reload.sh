@@ -14,8 +14,9 @@ chown -R root:st2packs /opt/stackstorm/packs/mydemo/ \
 && chmod -R +x /opt/stackstorm/packs/mydemo/
 
 actions_dir="/opt/stackstorm/packs/mydemo/actions"
+files=$(ls $actions_dir | sed 's/\.[^\.]*$//')
 
-fo f in `ls $actions_dir`;
+fo f in $files;
 do
   st2 action create /opt/stackstorm/packs/mydemo/actions/$f
 done
