@@ -1,0 +1,21 @@
+---
+name: git_status
+pack: mydemo
+description: git status
+enabled: true
+runner_type: local-shell-script
+entry_point: scripts/git_status.sh
+parameters:
+  working_dir:
+    required: true
+    type: string
+  branch:
+    required: true
+    type: string
+  expected:
+    required: true
+    type: string
+  timeout:
+    required: true
+    type: integer
+
