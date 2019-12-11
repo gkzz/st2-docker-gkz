@@ -13,6 +13,12 @@ done
 chown -R root:st2packs /opt/stackstorm/packs/mydemo/ \
 && chmod -R +x /opt/stackstorm/packs/mydemo/
 
+actions_dir="/opt/stackstorm/packs/mydemo/actions"
+
+fo f in `ls $actions_dir`;
+do
+  st2 action create /opt/stackstorm/packs/mydemo/actions/$f
+done
 
 st2ctl reload --register-all
 
