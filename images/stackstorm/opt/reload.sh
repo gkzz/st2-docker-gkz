@@ -14,7 +14,7 @@ chown -R root:st2packs /opt/stackstorm/packs/mydemo/ \
 && chmod -R +x /opt/stackstorm/packs/mydemo/
 
 actions_dir="/opt/stackstorm/packs/mydemo/actions" \
-&& files=$(ls $actions_dir | grep *.yaml) \
+&& files=$(ls $actions_dir | grep -E "*.yaml")
 
 for f in $files;
 do
