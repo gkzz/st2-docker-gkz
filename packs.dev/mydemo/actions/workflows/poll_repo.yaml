@@ -33,12 +33,12 @@ tasks:
       timeout: <% ctx().timeout %>
     next:
       - when: >
-          <% succeeded() and not ctx().merged and ctx().expected = 'not_up_to_date' %>
+          <% succeeded() and not ctx().merged and (ctx().expected = 'not_up_to_date') %>
         do: git_merge
         publish:
           - expected: 'up_to_date'
       - when: >
-          <% succeeded() and ctx().merged and ctx().expected = 'up_to_date' %>
+          <% succeeded() and ctx().merged and (ctx().expected = 'up_to_date') %>
         do: post_msg
         publish:
           - action_result: |-
@@ -46,7 +46,7 @@ tasks:
              none, completed git_status after git_merge 
              <% result() %>
       - when: >
-          <% failed() and not ctx().failed and not ctx().merged and ctx().expected = 'not_up_to_date' %>
+          <% failed() and not ctx().failed and not ctx().merged and (ctx().expected = 'not_up_to_date') %>
         do: git_status
         publish:
           - failed: True
