@@ -6,6 +6,12 @@ working_dir=$1
 branch=$2
 expected=$3
 
+args=($working_dir $branch $expected)
+for a in $args;
+do
+  echo $a
+done
+
 
 if [ -d "$working_dir" ]; then
   cd $working_dir

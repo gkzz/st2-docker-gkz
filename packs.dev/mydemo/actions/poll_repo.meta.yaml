@@ -9,16 +9,20 @@ parameters:
     required: true
     type: string
     default: /usr/src/app/flask-docker
+    position: 0
   branch:
     required: true
     type: string
     default: devel-views
+    position: 1
   expected:
     required: true
     type: string
     default: up_to_date
+    position: 2
   timeout:
     required: true
     type: integer
     default: 300
+    position: 3
 
