@@ -9,15 +9,11 @@ sed -i -e 's|webhook_url: "https://hooks.slack.com/services/<replace me>"|webhoo
     -i -e 's|- "<DST_CHANNEL>"|- "'"$DST_CHANNEL"'"|' \
     /opt/stackstorm/configs/slack.yaml
 
-st2ctl reload --register-all
-
 
 OUTPUT=`st2 pack list | grep slack`
 if ! echo ${OUTPUT} > /dev/null 2>&1; then
     echo "[ Failed ] Add Slack Pack"
 else
     echo "[ Succeeded ] Add Slack Pack"
-    st2 run slack.post_message \
-    message="Hello World! $HOSTNAME by $SLACKBOT_NAME"
 fi
 echo "SLACK_PACK_INSTALLED: ${OUTPUT}" 

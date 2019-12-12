@@ -23,4 +23,11 @@ done
 
 st2ctl reload --register-all
 
+st2 run ansible.playbook \
+inventory_file=/opt/stackstorm/packs/ansible/inventory/hosts \
+playbook=/opt/stackstorm/packs/ansible/playbook/ping.yaml
+
+st2 run slack.post_message \
+message="Hello World! $HOSTNAME by $SLACKBOT_NAME"
+
 

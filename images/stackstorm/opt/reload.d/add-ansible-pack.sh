@@ -4,7 +4,6 @@ apt-get install gcc libkrb5-dev -y
 st2 pack install ansible
 sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install --upgrade pip
 sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install paramiko
-st2ctl reload --register-all
 
 OUTPUT=`st2 pack list | grep ansible`
 if ! echo ${ANSIBLE_OUTPUT} > /dev/null 2>&1; then
@@ -20,10 +19,6 @@ else
     sed -i -e 's|<WEBAPP_IP>|'"$WEBAPP_IP"'|' \
         -i -e 's|<JUNOS_IP>|'"$JUNOS_IP"'|' \
         /opt/stackstorm/packs/ansible/inventory/hosts
-
-    st2 run ansible.playbook \
-    inventory_file=/opt/stackstorm/packs/ansible/inventory/hosts \
-    playbook=/opt/stackstorm/packs/ansible/playbook/ping.yaml
 
     #st2 run ansible.playbook \
     #inventory_file=/opt/stackstorm/packs/ansible/inventory/hosts \
