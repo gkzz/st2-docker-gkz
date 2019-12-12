@@ -11,8 +11,6 @@ input:
 output:
   - failed: <% ctx().failed %>
   - action_name: <% ctx().action_name %>
-  - action_result: <% ctx().action_result %>
-  
 
 tasks:
   init:
