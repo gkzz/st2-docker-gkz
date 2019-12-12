@@ -6,6 +6,7 @@ working_dir=$1
 branch=$2
 expected=$3
 
+
 if [ -d "$working_dir" ]; then
   cd $working_dir
   sudo git fetch -p
@@ -20,7 +21,6 @@ if [ -d "$working_dir" ]; then
   fi
   
   output=$(echo ${output:="unknown"})
-  echo "output: $output"
 
   if [ "$output" = "unknown" ]; then
     exit 102
@@ -31,4 +31,4 @@ if [ -d "$working_dir" ]; then
   fi
 fi
 
-exit 104
+exit 202

@@ -10,7 +10,7 @@ echo $content | grep -E "ID=$distro" | awk '{print $5}' | grep -oP "$distro"
 output=$(echo ${content:="unknown"})
 echo "output: $output"
 
-if [ "$output" = "ubuntu" ]; then
+if [ "$output" = "$distro" ]; then
   echo "success"
   exit 0
 else

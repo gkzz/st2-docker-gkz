@@ -28,11 +28,12 @@ tasks:
         do: post_msg
         publish:
           - msg: <% result() %>
-      - when: <% failed() and (ctx().distro_name = 'centos') %>
+      - when: <% failed() and not ctx().failed and (ctx().distro_name = 'centos') %>
         do: main
         publish:
           - distro_name: "ubuntu"
-      - when: <% failed() and (ctx().distro_name != 'centos') %>
+          - failed: True
+      - when: <% failed() and ctx().failed %>
         do: post_msg
         publish:
           - failed: True
