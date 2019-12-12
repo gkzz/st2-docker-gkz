@@ -40,12 +40,12 @@ tasks:
         do: git_merge
         publish:
           - failed: False
-      - when: <% failed() and (not ctx().failed %>
+      - when: <% failed() and (not ctx().failed) %>
         do: git_status_before_merged
         publish:
           - failed: True
           - expected: 'not_up_to_date'
-      - when: <% failed() and (ctx().failed %>
+      - when: <% failed() and (ctx().failed) %>
         do: post_msg
         publish:
           - action_result: |-
