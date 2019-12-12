@@ -1,9 +1,9 @@
 ---
-name: playbook-demo
+name: playbook_demo
 pack: mydemo
 description: Playbook Demo
 runner_type: orquesta
-entry_point: workflows/playbook-demo.yaml
+entry_point: workflows/playbook_demo.yaml
 parameters:
   playbook:
     required: true
