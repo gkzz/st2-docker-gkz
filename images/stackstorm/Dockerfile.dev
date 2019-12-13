@@ -66,10 +66,10 @@ ARG ST2_TAG
 ARG ST2_VERSION
 ARG ST2WEB_VERSION
 ARG ST2MISTRAL_VERSION
-COPY bin/install.sh ./opt/install.sh
+COPY bin/install.sh /install.sh
 # It is not possible to dynamically set ARG's, so we do the needful in bin/install.sh
 # Install st2, st2web, st2mistral and st2chatops
-RUN ./opt/install.sh
+RUN /install.sh
 # Unless these lines are changed, the services are not started when runlevel -> 2
 # Call mistral-db-manage before mistral starts
 RUN sed -i 's/start on filesystem and net-device-up IFACE!=lo/start on runlevel \[2345\]/' /etc/init/st2*.conf \
