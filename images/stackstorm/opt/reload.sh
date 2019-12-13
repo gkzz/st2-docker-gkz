@@ -23,7 +23,8 @@ do
   st2 action create /opt/stackstorm/packs/mydemo/actions/$f
 done
 
-st2 run packs.setup_virtualenv
+pack_name="mydemo_pack" \
+&& st2 run packs.setup_virtualenv packs=$pack_name
 
 st2ctl reload --register-all
 
