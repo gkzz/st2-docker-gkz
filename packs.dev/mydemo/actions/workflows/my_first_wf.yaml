@@ -36,7 +36,6 @@ tasks:
       - when: <% failed() and ctx().failed %>
         do: post_msg
         publish:
-          - failed: True
           - msg: "result: <% result() %>"
   
   post_msg:
