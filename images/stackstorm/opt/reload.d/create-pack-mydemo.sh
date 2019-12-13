@@ -1,5 +1,12 @@
 #!/bin/bash
 
-PACKNAME="mydemo"
+pack="mydemo"
 
-cp -r /opt/stackstorm/packs.dev/$PACKNAME /opt/stackstorm/packs/
+if [ -d "/opt/stackstorm/packs" ]; then
+  cd /opt/stackstorm/packs
+  if [ ! -d "/opt/stackstorm/packs/$pack" ]; then
+    git clone \
+      "https://${GITHUB_SECRET_TOKEN}:x-oauth-basic@github.com/${GITHUB_ACCT}/$pack.git"
+    chown -R root:st2packs $pack
+  fi
+fi
