@@ -13,6 +13,7 @@ services:
     ### tail ~/.bashrc
     # export SLACKBOT_NAME='xxx'
     environment:
+      - HOST_IP
       - SLACKBOT_NAME
       - SLACKBOT_TOKEN
       - INCOMING_WEBHOOK_URL
