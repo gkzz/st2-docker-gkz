@@ -19,15 +19,15 @@ chown -R root:st2packs /opt/stackstorm/packs/mydemo_pack/ \
 && chmod -R +x /opt/stackstorm/packs/mydemo_pack/
 
 # create, and reload my actions
-actions_dir="/opt/stackstorm/packs/mydemo_pack/actions" \
-&& files=$(ls $actions_dir | grep -E "*.yaml")
-for f in $files;
-do
-  st2 action create /opt/stackstorm/packs/mydemo_pack/actions/$f
-done
-
-pack_name="mydemo_pack" \
-&& st2 run packs.setup_virtualenv packs=$pack_name
+#actions_dir="/opt/stackstorm/packs/mydemo_pack/actions" \
+#&& files=$(ls $actions_dir | grep -E "*.yaml")
+#for f in $files;
+#do
+#  st2 action create /opt/stackstorm/packs/mydemo_pack/actions/$f
+#done
+#
+#pack_name="mydemo_pack" \
+#&& st2 run packs.setup_virtualenv packs=$pack_name
 
 st2ctl reload --register-all
 
@@ -39,8 +39,8 @@ playbook=/opt/stackstorm/packs/ansible/playbook/ping.yaml
 st2 run slack.post_message \
 message="Hello World! $HOSTNAME by $SLACKBOT_NAME"
 
-st2 run mydemo_pack.poll-repo
+#st2 run mydemo_pack.poll-repo
 
-st2 run mydemo_pack.my-first-wf
+#st2 run mydemo_pack.my-first-wf
 
 
