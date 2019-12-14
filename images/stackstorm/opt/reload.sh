@@ -15,10 +15,10 @@ done
 chown -R root:st2packs /opt/stackstorm/packs/mydemo_pack/ \
 && chmod -R +x /opt/stackstorm/packs/mydemo_pack/
 
-actions_dir="/opt/stackstorm/packs/mydemo/actions" \
+actions_dir="/opt/stackstorm/packs/mydemo_pack/actions" \
 && files=$(ls $actions_dir | grep -E "*.yaml")
 
-"""
+
 for f in $files;
 do
   st2 action create /opt/stackstorm/packs/mydemo_pack/actions/$f
@@ -26,7 +26,7 @@ done
 
 pack_name="mydemo_pack" \
 && st2 run packs.setup_virtualenv packs=$pack_name
-"""
+
 
 st2ctl reload --register-all
 
