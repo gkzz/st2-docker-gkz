@@ -132,7 +132,7 @@ COPY ./config/ansible.cfg.tmpl /opt/stackstorm/configs/ansible.cfg.tmpl
 COPY ./opt/. /st2-docker/opt/
 
 # add docker group
-ARG DOCKER_GROUP_ID
+#ARG DOCKER_GROUP_ID
 #RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} root
 
 # install docker, docker-compose

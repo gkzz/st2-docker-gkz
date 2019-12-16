@@ -7,8 +7,8 @@ services:
     build:
       context: ./images/stackstorm
       dockerfile: Dockerfile.dev
-      args:
-        - DOCKER_GROUP_ID=${DOCKER_GROUP_ID}
+      #args:
+      #  - DOCKER_GROUP_ID=${DOCKER_GROUP_ID}
 
     ### tail ~/.bashrc
     # export SLACKBOT_NAME='xxx'
