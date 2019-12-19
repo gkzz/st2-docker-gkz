@@ -5,9 +5,13 @@ st2 pack install ansible
 sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install --upgrade pip
 sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install paramiko
 
-OUTPUT=`st2 pack list | grep ansible`
-if ! echo ${ANSIBLE_OUTPUT} > /dev/null 2>&1; then
-    echo "[ Failed ] Add Ansible Pack"
+
+target=ansible
+content=$(st2 pack list | grep -E "$target" | awk '{print $2}')
+output=$(echo ${content:="unknown"})
+
+if [ "$output" = "unknown" ]; then
+  echo "[ Failed ] Add Ansible Pack"
 else
     echo "[ Succeeded ] Add Ansible Pack"
     cp -r /opt/stackstorm/packs.dev/ansible/* /opt/stackstorm/packs/ansible/
@@ -25,4 +29,4 @@ else
     #playbook=/opt/stackstorm/packs/ansible/playbook/gather_facts_junos.yaml
 
 fi
-echo "ANSIBLE_PACK_INSTALLED: ${OUTPUT}" 
+echo "ANSIBLE_PACK_INSTALLED: ${output}" 
