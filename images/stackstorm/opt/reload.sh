@@ -18,7 +18,10 @@ done
 chown -R root:st2packs /opt/stackstorm/packs/mydemo_pack/ \
 && chmod -R +x /opt/stackstorm/packs/mydemo_pack/
 
-# create, and reload my actions
+# create, and reload my specified actions one by one
+# if you don't need to, just run the following commnad
+st2ctl reload --register-all
+
 #actions_dir="/opt/stackstorm/packs/mydemo_pack/actions" \
 #&& files=$(ls $actions_dir | grep -E "*.yaml")
 #for f in $files;
@@ -29,7 +32,7 @@ chown -R root:st2packs /opt/stackstorm/packs/mydemo_pack/ \
 #pack_name="mydemo_pack" \
 #&& st2 run packs.setup_virtualenv packs=$pack_name
 
-st2ctl reload --register-all
+
 
 # run actions
 st2 run ansible.playbook \
