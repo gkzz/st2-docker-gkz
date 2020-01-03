@@ -10,5 +10,5 @@
       register: result
       when: ansible_network_os == "junos"
     - debug: 
-        msg: "{{ result.stdout_lines[0] }}"
+        msg: "{{ result }}"
 
