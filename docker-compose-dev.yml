@@ -2,8 +2,8 @@ version: '3'
 
 services:
   stackstorm:
-    image: stackstorm/stackstorm:${ST2_IMAGE_TAG:-latest}
-    #image: stackstorm/stackstorm:3.1
+    #image: stackstorm/stackstorm:${ST2_IMAGE_TAG:-latest}
+    image: stackstorm/stackstorm:3.1
     build:
       context: ./images/stackstorm
       dockerfile: Dockerfile.dev
