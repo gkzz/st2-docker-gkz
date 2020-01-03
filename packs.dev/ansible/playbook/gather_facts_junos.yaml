@@ -7,10 +7,11 @@
   tasks:
     - name: show version
       junos_command:
+        commands:
           - show version
           - show interface terse
-      register: result
       when: ansible_network_os == "junos"
-    #- debug: 
-    #    msg: "{{ result }}"
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"
 
