@@ -5,6 +5,9 @@ st2 pack install ansible
 sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install --upgrade pip
 sudo /opt/stackstorm/virtualenvs/ansible/bin/pip install paramiko
 
+sudo chmod -R 755 /opt/stackstorm/packs/ansible
+sudo chown -R root:st2packs /opt/stackstorm/packs/ansible
+
 
 target=ansible
 content=$(st2 pack list | grep -E "$target" | awk '{print $2}')
