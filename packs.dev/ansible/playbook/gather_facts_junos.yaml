@@ -2,6 +2,7 @@
 - hosts: junos
   connection: network_cli
   gather_facts: no
+  become: yes
 
   tasks:
     - name: show version
