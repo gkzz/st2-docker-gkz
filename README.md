@@ -14,10 +14,8 @@
 ## TL;DR
 
 - Set Your Environment Variables
-
-
-tail ~/.bashrc
 ```
+tail ~/.bashrc
 # Don't forget to execute `source ~/.bashrc` 
 #   before building your container
 
@@ -32,11 +30,9 @@ export JUNOS_IP='xxx.xxx.xxx.xxx'
 export GITHUB_ACCT='$NAME'           # https://qiita.com/$NAME
 export GITHUB_SECRET_TOKEN='xxxxxxxxxxxxxxxxxxxxxxx'
 export SERVICE_DIR='flask-docker'
-
 ```
 
 - Build Your Container on `Docker Host`
-
 ```
 $ git clone git@github.com/gkzz/st2-docker-gkz.git 
 $ cd st2-docker-gkz
@@ -51,10 +47,11 @@ $ docker-compose exec stackstorm bash
 root@$HOSTNAME:/# . st2-docker/opt/reload.sh
 ````
 
-### Notes
 
-root@$HOSTNAME:/# tree /st2-docker/opt/
+## Notes
+
 ```
+root@$HOSTNAME:/# tree /st2-docker/opt/
 /st2-docker/opt/
 ├── reload.d
 │   ├── add-ansible-pack.sh             # Add ansible pack
