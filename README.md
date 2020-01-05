@@ -48,5 +48,5 @@ $ docker-compose exec stackstorm bash
 
 - Execute `. st2-docker/opt/reload.sh` on `Docker Container`
 ```
-. st2-docker/opt/reload.sh
+root@$HOSTNAME:/# . st2-docker/opt/reload.sh
 ````
