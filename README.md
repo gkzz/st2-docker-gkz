@@ -15,7 +15,7 @@
 
 - Set Your Environment Variables
 ```
-tail ~/.bashrc
+$ tail ~/.bashrc
 # Don't forget to execute `source ~/.bashrc` 
 #   before building your container
 
