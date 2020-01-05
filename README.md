@@ -21,17 +21,17 @@ tail ~/.bashrc
 # Don't forget to execute `source ~/.bashrc` 
 #   before building your container
 
-SLACKBOT_NAME          # e.g. st2-bot
-SLACKBOT_TOKEN         # xob-xxxxxx
-INCOMING_WEBHOOK_URL   # https://hooks.slack.com/services/xxxyyy/  zzz
-DST_CHANNEL            # e.g. dev
-JUNOS_USER             # e.g. hoge
-JUNOS_PASS             # e.g. password
-JUNOS_PORT             
-JUNOS_IP               
-GITHUB_ACCT           # https://qiita.com/$NAME
-GITHUB_SECRET_TOKEN
-SERVICE_DIR           # e.g. #flask-docker
+export SLACKBOT_NAME='st2-bot'
+export SLACKBOT_TOKEN='xoxb-xxxxxx'
+export INCOMING_WEBHOOK_URL='https://hooks.slack.com/services/xxxyyy/zzz'
+export DST_CHANNEL='dev'
+export JUNOS_USER='hoge'
+export JUNOS_PASS='password'
+export JUNOS_PORT='xx'            
+export JUNOS_IP='xxx.xxx.xxx.xxx'               
+export GITHUB_ACCT='$NAME'           # https://qiita.com/$NAME
+export GITHUB_SECRET_TOKEN='xxxxxxxxxxxxxxxxxxxxxxx'
+export SERVICE_DIR='flask-docker'
 
 ```
 
