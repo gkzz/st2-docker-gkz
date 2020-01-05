@@ -50,3 +50,19 @@ $ docker-compose exec stackstorm bash
 ```
 root@$HOSTNAME:/# . st2-docker/opt/reload.sh
 ````
+
+### Notes
+
+root@$HOSTNAME:/# tree /st2-docker/opt/
+```
+/st2-docker/opt/
+├── reload.d
+│   ├── add-ansible-pack.sh             # Add ansible pack
+│   ├── add-slack-pack.sh               # Add slack pack
+│   ├── clone_repo.sh                   # Git clone the repo of your app, if it does NOT exist
+│   └── create-pack-mydemo.sh           # Add mydemo pack
+├── reload.sh                           # Shellscript to run `/st2-docker/opt/reload.d/*.sh` one by one
+└── requirements.txt.dev                # python libraries like mock
+
+1 directory, 6 files
+```

@@ -7,7 +7,7 @@ st2 login $ST2_USER -p $ST2_PASSWORD
 export ST2_API_KEY=$(st2 apikey create -k -m '{"used_by": "my integration"}')
 
 # install packs, clone my repo
-FILES=/st2-docker/opt/reload.d/*
+FILES=/st2-docker/opt/reload.d/*.sh
 for f in $FILES; 
 do
   echo "Execute $f"
