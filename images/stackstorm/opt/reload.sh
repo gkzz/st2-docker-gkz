@@ -11,7 +11,7 @@ FILES=/st2-docker/opt/reload.d/*.sh
 for f in $FILES; 
 do
   echo "Execute $f"
-  bash "$f" -H
+  bash "$f"
 done
 
 # change owner, mode of mydemo_pack
