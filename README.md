@@ -1,5 +1,6 @@
 # StackStorm in Docker containers
 
+<img src="/docs/img/st2_deumo_junos.gif" alt="st2_deumo_junos" style="max-width:5%;">
 
 ## READ FIRST!!
 
@@ -42,10 +43,49 @@ $ docker-compose -f docker-compose-dev.yml up -d --build
 $ docker-compose exec stackstorm bash
 ```
 
+## Technologies Used
+
+<img src="/docs/img/st2_docker_ansible.png" alt="technologies_used" style="max-width:5%;">
+
+- AWS (EC2, VPC, EIP, etc)
+    - Ubuntu 18.04.3 LTS
+    - t2.large
+    - Public Subnet Only
+    - Auto-assign Public IP Enable
+    - General Purpose SSD (gp2)、8size 
+    - Security Group
+        - ssh: accepted from local
+        - HTTP/HTTPS: Fully Open
+            - HTTP for App Container
+            - HTTPS for Web Portal of Stackstormweb
+
+- Stackstorm
+    - Stackstorm: 3.1.0, on Python 2.7.6 
+        - Stackstorm version 3.0 + is requiered in order to make a use of `orquesta`
+    - RabbitMQ: 3.6
+    - MongoDB: 3.4
+    - Redis: 4.0
+    - Postgresql: 9.6
+    - Docker version 19.03.5, build 633a0ea838
+    - docker-compose version 1.24.1, build 4667896b
+
+
+## Usage
+
 - Execute `. st2-docker/opt/reload.sh` on `Docker Container`
 ```
 root@$HOSTNAME:/# . st2-docker/opt/reload.sh
 ````
+
+- Run `playbook-demo-junos`
+```
+root@$HOSTNAME:/# st2 run playbook-demo-junos
+```
+
+- Run `poll-repo-python`
+```
+root@$HOSTNAME:/# st2 run poll-repo-python
+```
 
 
 ## Notes
